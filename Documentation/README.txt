@@ -1,0 +1,1 @@
+Ce dossier sert uniquement à la documentation !
