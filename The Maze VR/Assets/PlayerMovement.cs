@@ -1,7 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private const float MovementAmount = 0.08f;
+    private const float RotationAmount = 5f;
+
     public Rigidbody Rb;
     // Start is called before the first frame update
     void Start()
@@ -12,25 +16,9 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (Input.GetKey("z"))
-        {
-            Debug.Log("Go Forwards !");
-            Rb.AddForce(200f * Time.deltaTime,0,0);
-        }
-        
-        if (Input.GetKey("s"))
-        {
-            Rb.AddForce(-200f * Time.deltaTime,0,0);
-        }
-        
-        if (Input.GetKey("q"))
-        {
-            Rb.AddForce(0,0,200f * Time.deltaTime);
-        }
-        
-        if (Input.GetKey("d"))
-        {
-            Rb.AddForce(0,0,-200f * Time.deltaTime);
-        }
+        int forwardMovement = Convert.ToInt32(Input.GetKey("z")) - Convert.ToInt32(Input.GetKey("s"));
+        int rotation = Convert.ToInt32(Input.GetKey("d")) - Convert.ToInt32(Input.GetKey("q"));
+        transform.position += transform.forward * MovementAmount * forwardMovement;
+        transform.Rotate(Vector3.up * rotation * RotationAmount, Space.World); 
     }
 }
