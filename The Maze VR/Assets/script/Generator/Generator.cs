@@ -36,6 +36,8 @@ public class Generator : MonoBehaviour
                 }
                 else if (i % 2 == 1 && j % 2 == 1)
                 {
+                    if (c==Color.red)
+                        create("Player",i,j);
                     create("GroundTile", i, j);
                 }
             }
@@ -64,6 +66,10 @@ public class Generator : MonoBehaviour
                             break;
                         case ("GroundTile"):
                             v = new Vector3(2*x,0,2*y);
+                            Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            break;
+                        case ("Player"):
+                            v=new Vector3(2*x,(float)1.5 ,2*y);
                             Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                     }
