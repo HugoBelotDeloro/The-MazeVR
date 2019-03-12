@@ -15,7 +15,7 @@ public class Generator : MonoBehaviour
                 Color c = map.GetPixel(i, j);
                 if (i % 2 == 0 && j % 2 == 0)
                 {
-                    if (c == Color.black)
+                    if (c == new Color(0,0,0,1))
                         create("Pillar", i, j,false);
                 }
                 else if (i % 2 == 1 && j % 2 == 0)
