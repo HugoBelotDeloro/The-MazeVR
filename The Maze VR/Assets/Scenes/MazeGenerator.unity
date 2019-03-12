@@ -148,11 +148,8 @@ MonoBehaviour:
     name: GroundTile
   - prefab: {fileID: 242779210666313783, guid: ca63d2839de8dbd4fa456d7fedeb4570, type: 3}
     name: Pillar
-  - prefab: {fileID: 4030904630653242728, guid: da85d5c5fa0ca8445b392db39b503c66,
-      type: 3}
-    name: WallZ
   - prefab: {fileID: 128165216539020763, guid: ca5258d8fa1302e4688b0a5a8d7ad7c2, type: 3}
-    name: WallX
+    name: Wall
   - prefab: {fileID: 8518176033978570640, guid: b77d5f47bf8a5ab4496fe5ad3546cda2,
       type: 3}
     name: Player
