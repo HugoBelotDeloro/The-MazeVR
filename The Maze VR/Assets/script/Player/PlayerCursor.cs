@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class PlayerCursor : MonoBehaviour
@@ -7,13 +7,12 @@ public class PlayerCursor : MonoBehaviour
     void Update()
     {
         Vector3 PlayerPosition = transform.position;
-        Vector3 FDirection = transform.forward+PlayerPosition;
         
         Ray InteractionRay = new Ray(PlayerPosition,transform.forward);
         
         RaycastHit InteractionRayHit;
         
-        float InteractionRayLength = 5.0f;
+        float InteractionRayLength = 2.0f;
         
         Vector3 InteractionRayEndPoint = transform.forward * InteractionRayLength+PlayerPosition;
         
@@ -26,7 +25,13 @@ public class PlayerCursor : MonoBehaviour
             
             string HitFeedBack = HitGameObject.name;
             
-            
+            Debug.Log(HitFeedBack);
+
+            if (Input.GetKey("e"))
+            {
+                
+            }
         }
     }
 }
+

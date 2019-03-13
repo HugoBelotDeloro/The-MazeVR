@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net.Mail;
-using System.Security.Cryptography.X509Certificates;
-using UnityEditor.VersionControl;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Generator : MonoBehaviour
 {
@@ -26,17 +20,17 @@ public class Generator : MonoBehaviour
                 }
                 else if (i % 2 == 1 && j % 2 == 0)
                 {
-                    if (c == Color.black)
+                    if (c ==new Color(0,0,0,1))
                         create("Wall", i, j,true);
                 }
                 else if (i % 2 == 0 && j % 2 == 1)
                 {
-                    if (c == Color.black)
+                    if (c ==new Color(0,0,0,1))
                         create("Wall", i, j,false);
                 }
                 else if (i % 2 == 1 && j % 2 == 1)
                 {
-                    if (c==Color.red)
+                    if (c==new Color(1,0,0,1))
                         create("Player",i,j,false);
                     create("GroundTile", i, j,false);
                 }
@@ -53,22 +47,22 @@ public class Generator : MonoBehaviour
                     switch (G.name)
                     {
                         case ("Pillar"):
-                            v = new Vector3(2 * x, (float) 2.5, 2 * y);
+                            v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
                             Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("Wall"):
-                            v = new Vector3(2 * x, (float) 2.5, 2 * y);
+                            v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
                             if (rotate)
                                 Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
                             else
                                 Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("GroundTile"):
-                            v = new Vector3(2*x,0,2*y);
+                            v = new Vector3(2*x+transform.position.x,0+transform.position.y,2*y+transform.position.z);
                             Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("Player"):
-                            v=new Vector3(2*x,(float)1.5 ,2*y);
+                            v=new Vector3(2*x+transform.position.x,(float)1.5 +transform.position.y,2*y+transform.position.z);
                             Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                     }
