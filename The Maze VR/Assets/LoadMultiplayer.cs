@@ -2,11 +2,11 @@
 
 public class LoadMultiplayer : MonoBehaviour
 {
-    private static GameManager gameManager = GameManager.instance;
+    private static GameManager gameManager = GameManager.Instance;
 
     public static void LoadMultiplayerScene(string scene)
     {
-        gameManager.UnloadScene(gameManager.currentSceneName);
+        gameManager.UnloadScene(gameManager.CurrentSceneName);
         gameManager.LoadScene(scene);
     }
 

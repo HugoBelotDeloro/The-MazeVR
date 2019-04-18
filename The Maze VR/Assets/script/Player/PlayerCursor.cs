@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using JetBrains.Annotations;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerCursor : MonoBehaviour
 {
