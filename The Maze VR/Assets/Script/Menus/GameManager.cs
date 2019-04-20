@@ -4,26 +4,26 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
-    public string currentSceneName;
+    public static GameManager Instance;
+    public string CurrentSceneName;
 
     private void Awake()
     {
-        if (instance != null)
+        if (Instance != null)
             Destroy(gameObject);
         else
         {
-            instance = this;
+            Instance = this;
             //DontDestroyOnLoad(gameObject);
             SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
-            currentSceneName = "MainMenu";
+            CurrentSceneName = "MainMenu";
         }
     }
 
     public void LoadScene(string scene)
     {
         SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
-        currentSceneName = scene;
+        CurrentSceneName = scene;
     }
     
     public void UnloadScene(string scene)
