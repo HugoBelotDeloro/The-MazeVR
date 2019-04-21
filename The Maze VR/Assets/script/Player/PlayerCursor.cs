@@ -7,7 +7,7 @@ public class PlayerCursor : MonoBehaviour
     {
         Vector3 PlayerPosition = transform.position;
         
-        Ray InteractionRay = new Ray(PlayerPosition,transform.forward);
+        Ray InteractionRay = new Ray(PlayerPosition, transform.forward);
         
         RaycastHit InteractionRayHit;
         
@@ -18,6 +18,7 @@ public class PlayerCursor : MonoBehaviour
         Debug.DrawLine(PlayerPosition,InteractionRayEndPoint);
         
         bool HitFound = Physics.Raycast(InteractionRay, out InteractionRayHit, InteractionRayLength);
+        
         if (HitFound)
         {
             GameObject HitGameObject = InteractionRayHit.transform.gameObject;

@@ -382,8 +382,11 @@ GameObject:
   - component: {fileID: 8518176033978570645}
   - component: {fileID: 8518176033978570641}
   - component: {fileID: 8518176033978570650}
+<<<<<<< HEAD
   - component: {fileID: 863980880825797490}
   - component: {fileID: 3491394840858255722}
+=======
+>>>>>>> d8f234b84f623b25280826364d12463b3cf6eec6
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -495,6 +498,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+<<<<<<< HEAD
 --- !u!114 &863980880825797490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,6 +525,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BloodOverlay: {fileID: 3533871052367281733}
+=======
+>>>>>>> d8f234b84f623b25280826364d12463b3cf6eec6
 --- !u!1 &8518176034496349980
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,6 +538,7 @@ GameObject:
   - component: {fileID: 8518176034496349955}
   - component: {fileID: 8518176034496349954}
   - component: {fileID: 8518176034496349981}
+  - component: {fileID: 410557278029455972}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: MainCamera
@@ -605,6 +612,19 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8518176034496349980}
   m_Enabled: 1
+--- !u!114 &410557278029455972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8518176034496349980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da8c468a81492d4db85d5478c5c18a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LookingGameObject: {fileID: 0}
 --- !u!1001 &3577289184416754014
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -612,11 +632,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1102410771533161058}
     m_Modifications:
-    - target: {fileID: 7282294402451527790, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
-        type: 3}
-      propertyPath: m_Name
-      value: ItemSlot1
-      objectReference: {fileID: 0}
     - target: {fileID: 3362914338894226710, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -721,6 +736,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282294402451527790, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
+        type: 3}
+      propertyPath: m_Name
+      value: ItemSlot1
       objectReference: {fileID: 0}
     - target: {fileID: 133226349956740752, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
         type: 3}
@@ -787,11 +807,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1102410771533161058}
     m_Modifications:
-    - target: {fileID: 7282294402451527790, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
-        type: 3}
-      propertyPath: m_Name
-      value: ItemSlot0
-      objectReference: {fileID: 0}
     - target: {fileID: 3362914338894226710, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -897,6 +912,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7282294402451527790, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
+        type: 3}
+      propertyPath: m_Name
+      value: ItemSlot0
+      objectReference: {fileID: 0}
     - target: {fileID: 133226349956740752, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -954,11 +974,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1102410771533161058}
     m_Modifications:
-    - target: {fileID: 7282294402451527790, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
-        type: 3}
-      propertyPath: m_Name
-      value: ItemSlot2
-      objectReference: {fileID: 0}
     - target: {fileID: 3362914338894226710, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1063,6 +1078,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7282294402451527790, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
+        type: 3}
+      propertyPath: m_Name
+      value: ItemSlot2
       objectReference: {fileID: 0}
     - target: {fileID: 133226349956740752, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
         type: 3}
