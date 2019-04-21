@@ -331,7 +331,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5da8c468a81492d4db85d5478c5c18a9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier:
+  P:
+  - prefab: {fileID: 5087963523767540926, guid: 0a2a442ec6a87c2429d6c3fe2d4df59e,
+      type: 3}
+    name: Door
 --- !u!1 &8518176034496349980
 GameObject:
   m_ObjectHideFlags: 0
