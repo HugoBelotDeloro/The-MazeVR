@@ -22,11 +22,15 @@ public class Generator : MonoBehaviour
                 {
                     if (c ==new Color(0,0,0,1))
                         create("Wall", i, j,true);
+                    else if (c ==new Color(1,1,0,1))
+                        create("Door", i, j,true);
                 }
                 else if (i % 2 == 0 && j % 2 == 1)
                 {
                     if (c ==new Color(0,0,0,1))
                         create("Wall", i, j,false);
+                    else if (c ==new Color(1,1,0,1))
+                        create("Door", i, j,false);
                 }
                 else if (i % 2 == 1 && j % 2 == 1)
                 {
@@ -64,6 +68,13 @@ public class Generator : MonoBehaviour
                         case ("Player"):
                             v=new Vector3(2*x+transform.position.x,(float)1.5 +transform.position.y,2*y+transform.position.z);
                             Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            break;
+                        case ("Door"):
+                            v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
+                            if (rotate)
+                                Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
+                            else
+                                Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                     }
                 }

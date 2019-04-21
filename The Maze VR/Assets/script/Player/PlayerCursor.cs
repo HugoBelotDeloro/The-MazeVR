@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class PlayerCursor : MonoBehaviour
 {
+    public GameObject LookingGameObject;
     void Update()
     {
         Vector3 PlayerPosition = transform.position;
@@ -22,13 +23,12 @@ public class PlayerCursor : MonoBehaviour
             GameObject HitGameObject = InteractionRayHit.transform.gameObject;
             
             string HitFeedBack = HitGameObject.name;
-            
-            Debug.Log(HitFeedBack);
 
-            if (Input.GetKey("e"))
-            {
-                
-            }
+            LookingGameObject = HitGameObject;
+        }
+        else
+        {
+            LookingGameObject = null;
         }
     }
 }
