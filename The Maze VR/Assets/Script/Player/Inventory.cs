@@ -14,7 +14,7 @@ public class Inventory : MonoBehaviour
         {
             i++;
         }
-        if (items[i] == null)
+        if (i < MaxItems && items[i] == null)
         {
             items[i] = item;
             itemImages[i].sprite = item.sprite;

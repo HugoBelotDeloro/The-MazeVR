@@ -2,11 +2,11 @@
 
 public class LoadSingleplayer : MonoBehaviour
 {
-    private static GameManager gameManager = GameManager.instance;
+    private static GameManager gameManager = GameManager.Instance;
 
     public static void LoadSingleplayerScene(string scene)
     {
-        gameManager.UnloadScene(gameManager.currentSceneName);
+        gameManager.UnloadScene(gameManager.CurrentSceneName);
         gameManager.LoadScene(scene);
     }
 
