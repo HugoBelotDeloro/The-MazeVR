@@ -16,9 +16,9 @@ public class PlayerMovement : MonoBehaviour
         int rotation = Convert.ToInt32(Input.GetKey("d")) - Convert.ToInt32(Input.GetKey("q"));
         transform.position += transform.forward * MovementAmount * forwardMovement;
         transform.Rotate(Vector3.up * rotation * RotationAmount, Space.World);
-        Quaternion r = playerView.transform.rotation;
+        Quaternion r = playerView.transform.localRotation;
         float clamped = Mathf.Clamp(r.x + HeadPanSpeed * (Convert.ToInt32(Input.GetKey("w")) - Convert.ToInt32(Input.GetKey("a"))), MaxHeadTilt, MinHeadTilt);
         r.Set(clamped, r.y, r.z, r.w);
-        playerView.transform.rotation = r;
+        playerView.transform.localRotation = r;
     }
 }
