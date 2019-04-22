@@ -1,11 +1,12 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public string CurrentSceneName;
+    public List<string> ActiveScenes = new List<string>();
 
     private void Awake()
     {
@@ -14,16 +15,14 @@ public class GameManager : MonoBehaviour
         else
         {
             Instance = this;
-            //DontDestroyOnLoad(gameObject);
-            SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
-            CurrentSceneName = "MainMenu";
+            LoadScene("MainMenu");
         }
     }
 
     public void LoadScene(string scene)
     {
         SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
-        CurrentSceneName = scene;
+        ActiveScenes.Add(scene);
     }
     
     public void UnloadScene(string scene)
@@ -34,6 +33,9 @@ public class GameManager : MonoBehaviour
     IEnumerator Unload(string scene)
     {
         yield return null;
-        SceneManager.UnloadSceneAsync(scene);
+        if (ActiveScenes.Contains(scene))
+        {
+            SceneManager.UnloadSceneAsync(scene);
+        }
     }
 }

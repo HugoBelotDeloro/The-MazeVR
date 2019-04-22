@@ -6,7 +6,10 @@ public class LoadMultiplayer : MonoBehaviour
 
     public static void LoadMultiplayerScene(string scene)
     {
-        gameManager.UnloadScene(gameManager.CurrentSceneName);
+        foreach (string activeScene in gameManager.ActiveScenes)
+        {
+            gameManager.UnloadScene(activeScene);
+        }
         gameManager.LoadScene(scene);
     }
 

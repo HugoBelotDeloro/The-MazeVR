@@ -6,7 +6,10 @@ public class LoadSingleplayer : MonoBehaviour
 
     public static void LoadSingleplayerScene(string scene)
     {
-        gameManager.UnloadScene(gameManager.CurrentSceneName);
+        foreach (string activeScene in gameManager.ActiveScenes)
+        {
+            gameManager.UnloadScene(activeScene);
+        }
         gameManager.LoadScene(scene);
     }
 
