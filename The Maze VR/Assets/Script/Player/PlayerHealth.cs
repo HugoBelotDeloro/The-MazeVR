@@ -42,5 +42,6 @@ public class PlayerHealth : MonoBehaviour
     public void Damage(int damage)
     {
         _health -= damage;
+        _framesSinceLastHit = 0;
     }
 }
