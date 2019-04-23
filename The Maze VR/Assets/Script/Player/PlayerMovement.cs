@@ -9,6 +9,12 @@ public class PlayerMovement : MonoBehaviour
     private const float HeadPanSpeed = 0.01f;
     private const float MinHeadTilt = 0.4f;
     private const float MaxHeadTilt = -0.5f;
+    private Rigidbody _playerRigidbody;
+
+    private void Start()
+    {
+        _playerRigidbody = GetComponent<Rigidbody>();
+    }
 
     void FixedUpdate()
     {
@@ -20,5 +26,6 @@ public class PlayerMovement : MonoBehaviour
         float clamped = Mathf.Clamp(r.x + HeadPanSpeed * (Convert.ToInt32(Input.GetKey("w")) - Convert.ToInt32(Input.GetKey("a"))), MaxHeadTilt, MinHeadTilt);
         r.Set(clamped, r.y, r.z, r.w);
         playerView.transform.localRotation = r;
+        _playerRigidbody.angularVelocity = Vector3.zero;
     }
 }

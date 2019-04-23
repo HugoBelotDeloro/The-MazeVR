@@ -12,9 +12,11 @@ public class PlayerHealth : MonoBehaviour
     
     void Start()
     {
-        _health = 1;
-        _framesSinceLastHit = 0;
+        _health = MaxHealth;
+        _framesSinceLastHit = FramesToRegen;
         BloodOverlay.enabled = true;
+        BloodOverlay.size = new Vector2(Screen.height, Screen.width);
+        
     }
 
     void FixedUpdate()
@@ -30,7 +32,6 @@ public class PlayerHealth : MonoBehaviour
             Color blood = BloodOverlay.color;
             blood.a = (float) (MaxHealth - _health) / MaxHealth;
             BloodOverlay.color = blood;
-            Debug.Log(BloodOverlay.color.r);
         }
         else
         {

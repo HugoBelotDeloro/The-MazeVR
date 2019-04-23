@@ -3,5 +3,6 @@
 [CreateAssetMenu]
 public class Item : ScriptableObject
 {
-    public Sprite sprite;
+    public Sprite Sprite;
+    public Equipment.ItemType Type;
 }
