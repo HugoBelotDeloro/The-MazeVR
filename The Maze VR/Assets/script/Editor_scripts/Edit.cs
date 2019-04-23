@@ -30,8 +30,7 @@ public class Edit : MonoBehaviour
     void Start()
     {
         Begin begin = parent.GetComponent<Begin>();
-        map=new int[begin.H*2+1,begin.L*2+1];        
-        Debug.Log("start ok");
+        map=new int[begin.H*2+1,begin.L*2+1];  
         GenerateLab();
         Place();
     }
@@ -120,7 +119,6 @@ public class Edit : MonoBehaviour
 
     void Place()
     {
-        Debug.Log("debut place");
         //variables
         currentgameobject = P[currentobject].prefab;
         Vector3 v;
@@ -136,11 +134,8 @@ public class Edit : MonoBehaviour
                     posX += 1;
             }
             //place
-            while (!done)
-            {
-                c = Console.ReadKey().Key;
-                
-            }
+            done = false;
+            placing = true;
 
         }
         //player et light
@@ -190,11 +185,8 @@ public class Edit : MonoBehaviour
                     posY += 1;
             }
             //place
-            while (!done)
-            {
-                c = Console.ReadKey().Key;
-                
-            }
+            done = false;
+            placing = true;
         }
     }
 
