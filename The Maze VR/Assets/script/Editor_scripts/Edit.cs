@@ -12,7 +12,7 @@ public class Edit : MonoBehaviour
 
     public ListPrefab[] P;
 
-    private int currentobject = 3;
+    private int currentobject = 5;
 
     private int posX = 0;
 
@@ -20,15 +20,20 @@ public class Edit : MonoBehaviour
 
     private ConsoleKey c;
 
-    private bool keydone;
+    private bool placing = false;
+
+    private GameObject currentgameobject;
+
+    private bool done;
     
     // Start is called before the first frame update
     void Start()
     {
         Begin begin = parent.GetComponent<Begin>();
-        map=new int[begin.H*2+1,begin.L*2+1];
+        map=new int[begin.H*2+1,begin.L*2+1];        
+        Debug.Log("start ok");
         GenerateLab();
-        Editing();
+        Place();
     }
 
     public void GenerateLab()
@@ -115,10 +120,9 @@ public class Edit : MonoBehaviour
 
     void Place()
     {
+        Debug.Log("debut place");
         //variables
-        GameObject g = P[currentobject].prefab;
-        ConsoleKey c;
-        bool done = false;
+        currentgameobject = P[currentobject].prefab;
         Vector3 v;
         //wall et door
         if (currentobject == 2 || currentobject == 4)
@@ -150,120 +154,22 @@ public class Edit : MonoBehaviour
                 else
                     posX += 1;
             }
-            if (posY % 2 == 1)
+            if (posY % 2 == 0)
             {
                 if (posY == map.GetLength(0))
                     posY -= 1;
                 else
-                    posY += 0;
+                    posY += 1;
             }
             //creer objet
             if (currentobject==3)
                 v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
             else
                 v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
-            Instantiate(g, v, Quaternion.identity, transform);
+            Instantiate(currentgameobject, v, Quaternion.identity, transform);
             //place
-            while (!done)
-            {
-                keydone = false;
-                StartCoroutine(getkey2());
-                while (!keydone){}
-                StopCoroutine(getkey2());
-                switch (this.c)
-                {
-                    case(ConsoleKey.Add)://change objet +
-                        if (currentobject == P.Length - 1)
-                        {
-                            currentobject = 1;
-                        }
-                        else
-                        {
-                            currentobject += 1;
-                        }
-                        done = true;
-                        Destroy(g.transform);
-                        break;
-                    case (ConsoleKey.Subtract)://change objet -
-                        if (currentobject == 1)
-                        {
-                            currentobject = P.Length-1;
-                        }
-                        else
-                        {
-                            currentobject -= 1;
-                        }
-                        done = true;
-                        Destroy(g.transform);
-                        break;
-                    case (ConsoleKey.NumPad1):
-                        if (posX != 1 && posY != map.GetLength(0) - 1)
-                        {
-                            posX -= 2;
-                            posY += 2;
-                            g.transform.position += transform.right * -2 + transform.forward * 2;
-                        }
-                        break;
-                    case (ConsoleKey.NumPad2):
-                        if (posY != map.GetLength(0) - 1)
-                        {
-                            posY += 2;
-                            g.transform.position += transform.forward * 2;
-                        }
-                        break;
-                    case (ConsoleKey.NumPad3):
-                        if (posX != map.GetLength(1)-1 && posY != map.GetLength(0) - 1)
-                        {
-                            posX += 2;
-                            posY += 2;
-                            g.transform.position += transform.right * 2 + transform.forward * 2;
-                        }
-                        break;
-                    case (ConsoleKey.NumPad4):
-                        if (posX != 1)
-                        {
-                            posX -= 2;
-                            g.transform.position += transform.right * -2;
-                        }
-                        break;
-                    case (ConsoleKey.NumPad6):
-                        if (posX != map.GetLength(1)-1)
-                        {
-                            posX += 2;
-                            g.transform.position += transform.right * 2;
-                        }
-                        break;
-                    case (ConsoleKey.NumPad7):
-                        if (posX != 1 && posY != 1)
-                        {
-                            posX -= 2;
-                            posY -= 2;
-                            g.transform.position += transform.right * -2 + transform.forward * -2;
-                        }
-                        break;
-                    case (ConsoleKey.NumPad8):
-                        if (posY != 1)
-                        {
-                            posY -= 2;
-                            g.transform.position += transform.forward * -2;
-                        }
-                        break;
-                    case (ConsoleKey.NumPad9):
-                        if (posX != map.GetLength(1)-1 && posY != 1)
-                        {
-                            posX += 2;
-                            posY -= 2;
-                            g.transform.position += transform.right * 2 + transform.forward * -2;
-                        }
-                        break;
-                    case (ConsoleKey.NumPad5):
-                    {
-                        done = true;
-                        break;
-                    }
-                }
-            }
-            
+            done = false;
+            placing = true;
         }
         //pillar
         else if (currentobject == 1)
@@ -289,77 +195,138 @@ public class Edit : MonoBehaviour
                 c = Console.ReadKey().Key;
                 
             }
-            
         }
     }
 
-    void Editing()
+    void Update()
     {
-        Place();
-    }
-
-    IEnumerator getkey2()
-    {
-        bool done = false;
-        while (!done)
+        if (placing)
         {
-            yield return new WaitUntil(()=>Input.anyKeyDown);
-            if (Input.GetKeyDown(KeyCode.Keypad1))
+            if (currentobject == 2 || currentobject == 4)
             {
-                c = ConsoleKey.NumPad1;
-                done = true;
+                
             }
-            else if (Input.GetKeyDown(KeyCode.Keypad2))
+            else if (currentobject == 3 || currentobject == 5)
             {
-                c = ConsoleKey.NumPad2;
-                done = true;
+                if (Input.GetKeyDown(KeyCode.KeypadPlus))
+                {
+                    if (currentobject == P.Length - 1)
+                    {
+                        currentobject = 1;
+                    }
+                    else
+                    {
+                        currentobject += 1;
+                    }
+                    done = true;
+                    Destroy(currentgameobject.transform);
+                }
+                else if (Input.GetKeyDown(KeyCode.KeypadMinus))
+                {
+                    if (currentobject == 1)
+                    {
+                        currentobject = P.Length-1;
+                    }
+                    else
+                    {
+                        currentobject -= 1;
+                    }
+                    done = true;
+                    Destroy(currentgameobject.transform);
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad1))
+                {
+                    Debug.Log("1");
+                    if (posX != 1 && posY != map.GetLength(0) - 1)
+                    {
+                        posX -= 2;
+                        posY += 2;
+                        currentgameobject.transform.position += transform.right * -2 + transform.forward * 2;
+                        
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad2))
+                {
+                    Debug.Log("2");
+                    if (posY != map.GetLength(0) - 1)
+                    {
+                        posY += 2;
+                        currentgameobject.transform.position += transform.forward * 2;
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad3))
+                {
+                    Debug.Log("3");
+                    if (posX != map.GetLength(1) - 1 && posY != map.GetLength(0) - 1)
+                    {
+                        posX += 2;
+                        posY += 2;
+                        currentgameobject.transform.position += transform.right * 2 + transform.forward * 2;
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad4))
+                {
+                    Debug.Log("4");
+                    if (posX != 1)
+                    {
+                        posX -= 2;
+                        currentgameobject.transform.position += transform.right * -2;
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad5))
+                {
+                    Debug.Log("5");
+                    done = true;
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad6))
+                {
+                    Debug.Log("6");
+                    if (posX != map.GetLength(1) - 1)
+                    {
+                        posX += 2;
+                        currentgameobject.transform.position += transform.right * 2;
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad7))
+                {
+                    Debug.Log("7");
+                    if (posX != 1 && posY != 1)
+                    {
+                        posX -= 2;
+                        posY -= 2;
+                        currentgameobject.transform.position += transform.right * -2 + transform.forward * -2;
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad8))
+                {
+                    Debug.Log("8");
+                    if (posY != 1)
+                    {
+                        posY -= 2;
+                        currentgameobject.transform.position += transform.forward * -2;
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad9))
+                {
+                    Debug.Log("9");
+                    if (posX != map.GetLength(1) - 1 && posY != 1)
+                    {
+                        posX += 2;
+                        posY -= 2;
+                        currentgameobject.transform.position += transform.right * 2 + transform.forward * -2;
+                    }
+                }
             }
-            else if (Input.GetKeyDown(KeyCode.Keypad3))
+            else if (currentobject == 1)
             {
-                c = ConsoleKey.NumPad3;
-                done = true;
-            }
-            else if (Input.GetKeyDown(KeyCode.Keypad4))
-            {
-                c = ConsoleKey.NumPad4;
-                done = true;
-            }
-            else if (Input.GetKeyDown(KeyCode.Keypad5))
-            {
-                c = ConsoleKey.NumPad5;
-                done = true;
-            }
-            else if (Input.GetKeyDown(KeyCode.Keypad6))
-            {
-                c = ConsoleKey.NumPad6;
-                done = true;
-            }
-            else if (Input.GetKeyDown(KeyCode.Keypad7))
-            {
-                c = ConsoleKey.NumPad7;
-                done = true;
-            }
-            else if (Input.GetKeyDown(KeyCode.Keypad8))
-            {
-                c = ConsoleKey.NumPad8;
-                done = true;
-            }
-            else if (Input.GetKeyDown(KeyCode.Keypad9))
-            {
-                c = ConsoleKey.NumPad9;
-                done = true;
-            }
-            else if (Input.GetKeyDown(KeyCode.KeypadPlus))
-            {
-                c = ConsoleKey.Add;
-                done = true;
-            }
-            else if (Input.GetKeyDown(KeyCode.KeypadMinus))
-            {
-                c = ConsoleKey.Subtract;
-                done = true;
+                
             }
         }
-        keydone = true;
+
+        if (done)
+        {
+            placing = false;
+            Place();
+        }
     }
 }
