@@ -8,3 +8,5 @@ Compression : None
 dans Advanced :
 Non Power of 2 : None
 Read/Write Enabled : oui
+
+FeedFroward-NN sera supprimé après la soutenance 2
