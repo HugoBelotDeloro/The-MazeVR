@@ -5,7 +5,8 @@ Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: cotf_furniture_mirror
   m_Shader: {fileID: 4800000, guid: 02adadf023fc01947adc43ce209fde50, type: 3}
   m_ShaderKeywords: _DETAIL_MULX2 _EMISSION _GLOSSYREFLECTIONS_OFF _METALLICGLOSSMAP
