@@ -1,42 +1,44 @@
 ﻿using UnityEngine;
 
-public class Generator : MonoBehaviour
+public class Generator2 : MonoBehaviour
 {
-    public Texture2D map;
+    public int[,] table;
 
     public ListPrefab[] P;
 
+    public GameObject generator;
+
     public void GenerateLab()
     {
-        for (int j = 0; j < map.height; j++)
+        for (int j = 0; j < table.GetLength(0); j++)
         {
-            for (int i = 0; i < map.width; i++)
+            for (int i = 0; i < table.GetLength(1); i++)
             {
-                Color c = map.GetPixel(i, j);
+                int c = table[i,j];
                 if (i % 2 == 0 && j % 2 == 0)
                 {
-                    if (c == new Color(0,0,0,1))
+                    if (c == 1)
                         create("Pillar", i, j,false);
                 }
                 else if (i % 2 == 1 && j % 2 == 0)
                 {
-                    if (c ==new Color(0,0,0,1))
+                    if (c == 2)
                         create("Wall", i, j,true);
-                    else if (c ==new Color(1,1,0,1))
+                    else if (c == 4)
                         create("Door", i, j,true);
                 }
                 else if (i % 2 == 0 && j % 2 == 1)
                 {
-                    if (c ==new Color(0,0,0,1))
+                    if (c == 2)
                         create("Wall", i, j,false);
-                    else if (c ==new Color(1,1,0,1))
+                    else if (c == 4)
                         create("Door", i, j,false);
                 }
                 else if (i % 2 == 1 && j % 2 == 1)
                 {
-                    if (c==new Color(1, 0.498039216f, 0,1))
+                    if (c== 5)
                         create("Light",i,j,false);
-                    if (c==new Color(1,0,0,1))
+                    if (c== 3)
                         create("Player",i,j,false);
                     create("GroundTile", i, j,false);
                 }
@@ -87,8 +89,12 @@ public class Generator : MonoBehaviour
             }
     }
     
-    void Start()
+    void Update()
     {
+        foreach (Transform child in generator.transform)
+        {
+            Destroy(child.gameObject);
+        }
         GenerateLab();
     }
 }

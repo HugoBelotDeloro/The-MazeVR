@@ -240,7 +240,7 @@ Light:
   m_Type: 0
   m_Color: {r: 0.971965, g: 1, b: 0.7122642, a: 1}
   m_Intensity: 1
-  m_Range: 10
+  m_Range: 20
   m_SpotAngle: 90
   m_InnerSpotAngle: 6
   m_CookieSize: 10
@@ -518,6 +518,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1102410771533161058}
     m_Modifications:
+    - target: {fileID: 7282294402451527790, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
+        type: 3}
+      propertyPath: m_Name
+      value: ItemSlot1
+      objectReference: {fileID: 0}
     - target: {fileID: 3362914338894226710, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -622,11 +627,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7282294402451527790, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
-        type: 3}
-      propertyPath: m_Name
-      value: ItemSlot1
       objectReference: {fileID: 0}
     - target: {fileID: 133226349956740752, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
         type: 3}
@@ -688,6 +688,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1102410771533161058}
     m_Modifications:
+    - target: {fileID: 7282294402451527790, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
+        type: 3}
+      propertyPath: m_Name
+      value: ItemSlot0
+      objectReference: {fileID: 0}
     - target: {fileID: 3362914338894226710, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -793,11 +798,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7282294402451527790, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
-        type: 3}
-      propertyPath: m_Name
-      value: ItemSlot0
-      objectReference: {fileID: 0}
     - target: {fileID: 133226349956740752, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -850,6 +850,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1102410771533161058}
     m_Modifications:
+    - target: {fileID: 7282294402451527790, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
+        type: 3}
+      propertyPath: m_Name
+      value: ItemSlot2
+      objectReference: {fileID: 0}
     - target: {fileID: 3362914338894226710, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -954,11 +959,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7282294402451527790, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
-        type: 3}
-      propertyPath: m_Name
-      value: ItemSlot2
       objectReference: {fileID: 0}
     - target: {fileID: 133226349956740752, guid: 3661ed74b4f74a245aeadbfdae9aec9c,
         type: 3}
