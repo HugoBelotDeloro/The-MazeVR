@@ -34,8 +34,6 @@ public class Generator : MonoBehaviour
                 }
                 else if (i % 2 == 1 && j % 2 == 1)
                 {
-                    if (c==new Color(1, 0.498039216f, 0,1))
-                        create("Light",i,j,false);
                     if (c==new Color(1,0,0,1))
                         create("Player",i,j,false);
                     create("GroundTile", i, j,false);
@@ -77,10 +75,6 @@ public class Generator : MonoBehaviour
                                 Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
                             else
                                 Instantiate(G.prefab, v, Quaternion.identity, transform);
-                            break;
-                        case ("Light"):
-                            v=new Vector3(2*x+transform.position.x,(float)4.5 +transform.position.y,2*y+transform.position.z);
-                            Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                     }
                 }

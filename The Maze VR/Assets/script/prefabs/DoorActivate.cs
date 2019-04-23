@@ -12,7 +12,7 @@ public class DoorActivate : MonoBehaviour
 
     public GameObject trigger;
 
-    private bool sleep = false;
+    private bool sleep=false;
     
     private void Start()
     {
@@ -21,7 +21,7 @@ public class DoorActivate : MonoBehaviour
 
     void Update()
     {
-        player = GameObject.Find("PlayerCamera");
+        player = GameObject.Find("Player(Clone)");
         pc = player.GetComponent<PlayerCursor>();
         if (pc.LookingGameObject == trigger)
         {

@@ -3,22 +3,32 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public Image[] itemImages = new Image[MaxItems];
-    public Item[] items  = new Item[MaxItems];
-    public const int MaxItems = 3;
+    public ItemSlot[] Items  = new ItemSlot[MaxItems];
+    public GameObject[] ItemSlotObjects = new GameObject[MaxItems];
+    private const int MaxItems = 3;
+    public Item EmptyItem;
+    public Image EmptyImage;
+
+    private void Start()
+    {
+        for (int i = 0; i < MaxItems; i++)
+        {
+            ItemSlotObjects[i] = GameObject.Find("ItemSlot" + i);
+            Items[i] = ItemSlotObjects[i].GetComponent<ItemSlot>();
+        }
+    }
 
     public bool AddItem(Item item)
     {
         int i = 0;
-        while (i < MaxItems && items[i] != null)
+        while (i < MaxItems && Items[i].Item.Type != Equipment.ItemType.Null)
         {
             i++;
         }
-        if (i < MaxItems && items[i] == null)
+        if (i < MaxItems)
         {
-            items[i] = item;
-            itemImages[i].sprite = item.sprite;
-            itemImages[i].enabled = true;
+            Items[i].Item = item;
+            Items[i].ItemImage.sprite = item.Sprite;
             return true;
         }
         return false;
@@ -27,16 +37,14 @@ public class Inventory : MonoBehaviour
     public bool RemoveItem(Item item)
     {
         int i = 0;
-        while (i < MaxItems && items[i] != item)
+        while (i < MaxItems && Items[i].Item != item)
             i++;
         if (i != MaxItems)
         {
-            items[i] = null;
-            itemImages[i].sprite = null;
-            itemImages[i].enabled = false;
+            Items[i].Item = EmptyItem;
+            Items[i].ItemImage = EmptyImage;
             return true;
         }
         return false;
     }
-    
 }
