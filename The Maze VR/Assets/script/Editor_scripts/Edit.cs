@@ -30,16 +30,18 @@ public class Edit : MonoBehaviour
     void Start()
     {
         Begin begin = parent.GetComponent<Begin>();
-        map=new int[begin.H*2+1,begin.L*2+1];  
+        map = new int[begin.H*2+1,begin.L*2+1];
+        Debug.Log(map.GetLength(0));
+        Debug.Log(map.GetLength(1));
         GenerateLab();
         Place();
     }
 
     public void GenerateLab()
     {
-        for (int j = 0; j < map.GetLength(0); j++)
+        for (int j = 0; j < map.GetLength(1); j++)
         {
-            for (int i = 0; i < map.GetLength(1); i++)
+            for (int i = 0; i < map.GetLength(0); i++)
             {
                 int c = map[i,j];
                 if (i % 2 == 0 && j % 2 == 0)
