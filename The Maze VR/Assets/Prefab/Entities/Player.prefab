@@ -274,7 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75ea45e2bb4ef7c46aa0bd846fb88581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerView: {fileID: 1325187586470353979}
+  PlayerView: {fileID: 1325187586470353979}
 --- !u!54 &1325187585815849333
 Rigidbody:
   m_ObjectHideFlags: 0
