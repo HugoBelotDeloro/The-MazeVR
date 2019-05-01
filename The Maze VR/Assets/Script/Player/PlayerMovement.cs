@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public Camera PlayerView;
-    private const float MovementAmount = 0.5f;
+    private const float MovementAmount = 0.3f;
     private const float RotationAmount = 2f;
     private const float HeadPanSpeed = 1.3f;
     private const float MinHeadTilt = 0.4f;
