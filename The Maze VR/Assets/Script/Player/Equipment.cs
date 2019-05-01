@@ -17,6 +17,7 @@ public class Equipment : MonoBehaviour
     public ItemSlot Compass;
     public ItemSlot Clothes;
     public ItemSlot Light;
+    public Light Lamp;
     
     private Dictionary<ItemType, ItemSlot> _map;
     
@@ -31,6 +32,11 @@ public class Equipment : MonoBehaviour
         };
     }
 
+    private void UpdateItems()
+    {
+        Lamp.enabled = Light.Item.Type != ItemType.Null;
+    }
+    
     public Item EquipItem(Item item)
     {
         ItemSlot slot;
@@ -39,6 +45,7 @@ public class Equipment : MonoBehaviour
             Item buffer = slot.Item;
             slot.Item = item;
             slot.ItemImage.sprite = item.Sprite;
+            UpdateItems();
             return buffer;
         }
         return item;
