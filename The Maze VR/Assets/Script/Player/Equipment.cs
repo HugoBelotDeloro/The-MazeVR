@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Equipment : MonoBehaviour
 {
@@ -12,12 +14,11 @@ public class Equipment : MonoBehaviour
         Null
     }
 
-    public Inventory Inventory;
-    
-    public ItemSlot Compass;
-    public ItemSlot Clothes;
-    public ItemSlot Light;
-    public Light Lamp;
+    [SerializeField] private ItemSlot compassSlot;
+    [SerializeField] private ItemSlot clothesSlot;
+    [SerializeField] private ItemSlot lightSlot;
+    [SerializeField] private Light lamp;
+    [SerializeField] private GameObject compass;
     
     private Dictionary<ItemType, ItemSlot> _map;
     
@@ -26,15 +27,16 @@ public class Equipment : MonoBehaviour
     {
         _map = new Dictionary<ItemType, ItemSlot>
         {
-            {ItemType.Light, Light},
-            {ItemType.Compass, Compass},
-            {ItemType.Clothes, Clothes}
+            {ItemType.Light, lightSlot},
+            {ItemType.Compass, compassSlot},
+            {ItemType.Clothes, clothesSlot}
         };
     }
 
     private void UpdateItems()
     {
-        Lamp.enabled = Light.Item.Type != ItemType.Null;
+        lamp.enabled = lightSlot.Item.Type != ItemType.Null;
+        compass.SetActive(compassSlot.Item.Type != ItemType.Null);
     }
     
     public Item EquipItem(Item item)
