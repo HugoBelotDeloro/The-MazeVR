@@ -9,8 +9,10 @@ public class ItemInteractions : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            inventory.AddItem(item);
-            Destroy(gameObject);
+            if (inventory.AddItem(item))
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

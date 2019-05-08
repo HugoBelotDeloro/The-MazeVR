@@ -23,7 +23,8 @@ public class Inventory : MonoBehaviour
     {
         if (item.Type != Equipment.ItemType.Regular)
         {
-            return Equipment.EquipItem(item);
+            Item t = Equipment.EquipItem(item);
+            return t.Type == Equipment.ItemType.Null;
         }
         int i = 0;
         while (i < MaxItems && Items[i].Item.Type != Equipment.ItemType.Null)
