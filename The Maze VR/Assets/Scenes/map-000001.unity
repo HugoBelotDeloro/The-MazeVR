@@ -914,6 +914,31 @@ PrefabInstance:
       propertyPath: compass
       value: 
       objectReference: {fileID: 340666854}
+    - target: {fileID: 1325187585815849332, guid: b77d5f47bf8a5ab4496fe5ad3546cda2,
+        type: 3}
+      propertyPath: m_Height
+      value: 2.1039622
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325187585815849332, guid: b77d5f47bf8a5ab4496fe5ad3546cda2,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 1.0519811
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325187585815849332, guid: b77d5f47bf8a5ab4496fe5ad3546cda2,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.53804016
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325187585815849332, guid: b77d5f47bf8a5ab4496fe5ad3546cda2,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.077622235
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325187585815849332, guid: b77d5f47bf8a5ab4496fe5ad3546cda2,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -0.001449585
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b77d5f47bf8a5ab4496fe5ad3546cda2, type: 3}
 --- !u!1001 &1706095055
@@ -1044,7 +1069,7 @@ MeshCollider:
   serializedVersion: 3
   m_Convex: 0
   m_CookingOptions: 14
-  m_Mesh: {fileID: 5577429918001518612, guid: f7091c1d5a61b974ebdd0d1fe5ebce7f, type: 3}
+  m_Mesh: {fileID: 5577429918001518612, guid: 90edf383a344d0a408d712529c22fd9b, type: 3}
 --- !u!1001 &1933237552
 PrefabInstance:
   m_ObjectHideFlags: 0
