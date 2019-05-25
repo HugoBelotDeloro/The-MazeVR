@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
     private const int MaxItems = 3;
     public Item EmptyItem;
     public Image EmptyImage;
+    public Equipment Equipment;
 
     private void Start()
     {
@@ -20,6 +21,11 @@ public class Inventory : MonoBehaviour
 
     public bool AddItem(Item item)
     {
+        if (item.Type != Equipment.ItemType.Regular)
+        {
+            Item t = Equipment.EquipItem(item);
+            return t.Type == Equipment.ItemType.Null;
+        }
         int i = 0;
         while (i < MaxItems && Items[i].Item.Type != Equipment.ItemType.Null)
         {

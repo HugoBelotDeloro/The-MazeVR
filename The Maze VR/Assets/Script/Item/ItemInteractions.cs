@@ -2,15 +2,17 @@
 
 public class ItemInteractions : MonoBehaviour
 {
-    public Item Item;
-    public Inventory Inventory;
+    [SerializeField] private Item item;
+    [SerializeField] private Inventory inventory;
     
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Inventory.AddItem(Item);
-            Destroy(gameObject);
+            if (inventory.AddItem(item))
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
