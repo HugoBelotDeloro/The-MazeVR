@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Damage : MonoBehaviour
 {
@@ -10,7 +8,7 @@ public class Damage : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Player.GetComponent<PlayerHealth>().Damage(750);
+            Player.GetComponent<PlayerHealth>().Damage(1000);
             Destroy(gameObject);
         }
     }

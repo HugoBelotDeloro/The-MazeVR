@@ -25,7 +25,7 @@ public class DoorActivate : MonoBehaviour
         pc = player.GetComponent<PlayerCursor>();
         if (pc.LookingGameObject == trigger)
         {
-            if (Input.GetKey("e"))
+            if (Input.GetAxis("Action") > 0)
             {
                 
                 if (!sleep)

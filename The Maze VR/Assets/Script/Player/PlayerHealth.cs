@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Threading;
+using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -7,7 +9,8 @@ public class PlayerHealth : MonoBehaviour
     private int _framesSinceLastHit;
     private const int FramesToRegen = 100;
     private const int HealthPerFrame = 1;
-    public SpriteRenderer BloodOverlay;
+    [SerializeField]private SpriteRenderer BloodOverlay;
+    [SerializeField]private GameObject deathScreen;
     
     
     void Start()
@@ -20,7 +23,7 @@ public class PlayerHealth : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (_health < MaxHealth && _framesSinceLastHit >= FramesToRegen)
+        if (_health < MaxHealth && _framesSinceLastHit >= FramesToRegen && _health > 0)
         {
             _health += HealthPerFrame;
             if (_health >= MaxHealth)
@@ -28,9 +31,7 @@ public class PlayerHealth : MonoBehaviour
                 _health = MaxHealth;
                 BloodOverlay.enabled = false;
             }
-            Color blood = BloodOverlay.color;
-            blood.a = (float) (MaxHealth - _health) / MaxHealth;
-            BloodOverlay.color = blood;
+            UpdateOverlay();
         }
         else if (_framesSinceLastHit < FramesToRegen)
         {
@@ -38,10 +39,39 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    private void UpdateOverlay()
+    {
+        Color blood = BloodOverlay.color;
+        blood.a = (float) (MaxHealth - _health) / MaxHealth;
+        BloodOverlay.color = blood;
+    }
+
     public void Damage(int damage)
     {
         _health -= damage;
         _framesSinceLastHit = 0;
+        UpdateOverlay();
         BloodOverlay.enabled = true;
+        if (_health <= 0)
+        {
+            PrintDeathScreen();
+        }
+    }
+
+    private void PrintDeathScreen()
+    {
+        gameObject.GetComponentInParent<PlayerMovement>().enabled = false;
+        deathScreen.SetActive(true);
+        StartCoroutine(Wait());
+    }
+
+    IEnumerator Wait()
+    {
+        while (Input.GetAxis("Action") <= 0)
+        {
+            yield return new WaitForSecondsRealtime(0.05f);
+        }
+        yield return new WaitForSecondsRealtime(0.5f);
+        GameManager.Instance.ResetScene();
     }
 }
