@@ -501,7 +501,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: HEIGHT
+  m_Text: LENGTH
 --- !u!222 &726082208
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -724,7 +724,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: LENGTH
+  m_Text: HEIGHT
 --- !u!222 &858160091
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1511,7 +1511,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2012358196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1666,15 +1666,20 @@ MonoBehaviour:
     name: Pillar
   - prefab: {fileID: 128165216539020763, guid: ca5258d8fa1302e4688b0a5a8d7ad7c2, type: 3}
     name: Wall
-  - prefab: {fileID: 8518176033978570640, guid: b77d5f47bf8a5ab4496fe5ad3546cda2,
+  - prefab: {fileID: 2977746287473432919, guid: de27af44d3d93e94db57f2840555d151,
       type: 3}
     name: Player
-  - prefab: {fileID: 5087963523767540926, guid: 0a2a442ec6a87c2429d6c3fe2d4df59e,
+  - prefab: {fileID: 4025430733182403490, guid: 2c5cb19d24109f54b95d05fd9e302872,
       type: 3}
     name: Door
   - prefab: {fileID: 2064828034790277495, guid: bb96de8f411992a46899040518046582,
       type: 3}
     name: Light
+  currentobject: 2
+  posX: 0
+  posY: 0
+  prefabcolor: {r: 0, g: 0, b: 0, a: 0}
+  prefabcolorlist: []
 --- !u!1 &2138222431
 GameObject:
   m_ObjectHideFlags: 0

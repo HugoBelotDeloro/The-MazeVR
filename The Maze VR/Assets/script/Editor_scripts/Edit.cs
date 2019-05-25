@@ -10,13 +10,15 @@ public class Edit : MonoBehaviour
 
     public int[,] map;
 
+    private GameObject[,] mapgo;
+
     public ListPrefab[] P;
 
-    private int currentobject = 5;
+    public int currentobject = 2;
 
-    private int posX = 0;
+    public int posX = 0;
 
-    private int posY = 0;
+    public int posY = 0;
 
     private ConsoleKey c;
 
@@ -24,15 +26,27 @@ public class Edit : MonoBehaviour
 
     private GameObject currentgameobject;
 
+    private GameObject currentgameobjectprefab;
+
     private bool done;
+
+    private bool rotation;
+
+    private bool finished;
+
+    public Color prefabcolor;
+
+    public List<Color> prefabcolorlist;
     
     // Start is called before the first frame update
     void Start()
     {
         Begin begin = parent.GetComponent<Begin>();
         map = new int[begin.H*2+1,begin.L*2+1];
+        mapgo = new GameObject[begin.H*2+1,begin.L*2+1];
         Debug.Log(map.GetLength(0));
         Debug.Log(map.GetLength(1));
+        finished = false;
         GenerateLab();
         Place();
     }
@@ -122,23 +136,34 @@ public class Edit : MonoBehaviour
     void Place()
     {
         //variables
-        currentgameobject = P[currentobject].prefab;
+        if (currentobject!=P.Length)
+            currentgameobject = P[currentobject].prefab;
         Vector3 v;
         //wall et door
         if (currentobject == 2 || currentobject == 4)
         {
             //rectifie position
-            if (posX+posY % 2 != 1)
+            if (posX % 2 == 0 && posY % 2 == 0)
             {
-                if (posX == map.GetLength(1))
-                    posX -= 1;
-                else
+                if (posX == 0)
                     posX += 1;
+                else
+                    posX -= 1;
             }
+            if (posX % 2 == 1 && posY % 2 == 1)
+            {
+                posY += 1;
+            }
+            //creer objet
+            rotation = posX % 2 != 0;
+            v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+            if (rotation)
+                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+            else
+                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
             //place
             done = false;
             placing = true;
-
         }
         //player et light
         else if (currentobject == 3 || currentobject == 5)
@@ -146,24 +171,24 @@ public class Edit : MonoBehaviour
             //rectifie position
             if (posX % 2 == 0)
             {
-                if (posX == map.GetLength(1))
-                    posX -= 1;
-                else
+                if (posX == 0)
                     posX += 1;
+                else
+                    posX -= 1;
             }
             if (posY % 2 == 0)
             {
-                if (posY == map.GetLength(0))
-                    posY -= 1;
-                else
+                if (posY == 0)
                     posY += 1;
+                else
+                    posY -= 1;
             }
             //creer objet
             if (currentobject==3)
                 v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
             else
                 v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
-            Instantiate(currentgameobject, v, Quaternion.identity, transform);
+            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
             //place
             done = false;
             placing = true;
@@ -174,19 +199,32 @@ public class Edit : MonoBehaviour
             //rectifie position
             if (posX % 2 == 1)
             {
-                if (posX == map.GetLength(1)-1)
-                    posX -= 1;
-                else
-                    posX += 1;
+                posX += 1;
             }
             if (posY % 2 == 1)
             {
-                if (posY == map.GetLength(0)-1)
-                    posY -= 1;
-                else
-                    posY += 1;
+                posY += 1;
             }
+            //creer objet
+            v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
             //place
+            done = false;
+            placing = true;
+        }
+        else if (currentobject==P.Length)
+        {
+            if (mapgo[posX, posY] != null)
+            {
+                Debug.Log(mapgo[posX,posY].name);
+                prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
+                mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                {
+                    prefabcolorlist.Add(r.material.color);
+                    r.material.color=Color.red;
+                }
+            }
             done = false;
             placing = true;
         }
@@ -194,133 +232,663 @@ public class Edit : MonoBehaviour
 
     void Update()
     {
+        Vector3 v;
         if (placing)
         {
-            if (currentobject == 2 || currentobject == 4)
+            if (Input.GetKeyDown(KeyCode.KeypadEnter))
             {
-                
+                finished = true;
             }
-            else if (currentobject == 3 || currentobject == 5)
+            if (Input.GetKeyDown(KeyCode.KeypadPlus))
             {
-                if (Input.GetKeyDown(KeyCode.KeypadPlus))
+                if (currentobject == P.Length)
                 {
-                    if (currentobject == P.Length - 1)
+                    if (mapgo[posX, posY] != null)
                     {
-                        currentobject = 1;
+                        for (int i = 0; i < prefabcolorlist.Count; i++)
+                        {
+                            mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                        }
+                        mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
                     }
-                    else
-                    {
-                        currentobject += 1;
-                    }
-                    done = true;
-                    Destroy(currentgameobject.transform);
+                    currentobject = 1;
                 }
-                else if (Input.GetKeyDown(KeyCode.KeypadMinus))
+                else
                 {
-                    if (currentobject == 1)
-                    {
-                        currentobject = P.Length-1;
-                    }
-                    else
-                    {
-                        currentobject -= 1;
-                    }
-                    done = true;
-                    Destroy(currentgameobject.transform);
+                    currentobject += 1;
                 }
-                else if (Input.GetKeyDown(KeyCode.Keypad1))
+                done = true;
+                Destroy(currentgameobjectprefab);
+            }
+            else if (Input.GetKeyDown(KeyCode.KeypadMinus))
+            {
+                if (currentobject==P.Length)
+                {
+                    if (mapgo[posX, posY] != null)
+                    {
+                        for (int i = 0; i < prefabcolorlist.Count; i++)
+                        {
+                            mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                        }
+                        mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                    }
+                }
+                if (currentobject == 1)
+                {
+                    currentobject = P.Length;
+                }
+                else
+                {
+                    currentobject -= 1;
+                }
+                done = true;
+                Destroy(currentgameobjectprefab);
+            }
+            if (currentobject == P.Length)
+            {
+                if (Input.GetKeyDown(KeyCode.Keypad1))
                 {
                     Debug.Log("1");
-                    if (posX != 1 && posY != map.GetLength(0) - 1)
+                    if (posX > 0 && posY > 0)
                     {
-                        posX -= 2;
-                        posY += 2;
-                        currentgameobject.transform.position += transform.right * -2 + transform.forward * 2;
-                        
+                        if (mapgo[posX, posY] != null)
+                        {
+                            for (int i = 0; i < prefabcolorlist.Count; i++)
+                            {
+                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                            }
+                            mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                        }
+                        posX -= 1;
+                        posY -= 1;
+                        if (mapgo[posX, posY] != null)
+                        {
+                            prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
+                            mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                            prefabcolorlist.Clear();
+                            foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                            {
+                                prefabcolorlist.Add(r.material.color);
+                                r.material.color=Color.red;
+                            }
+                        }
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad2))
                 {
                     Debug.Log("2");
-                    if (posY != map.GetLength(0) - 1)
+                    if (posY > 0)
                     {
-                        posY += 2;
-                        currentgameobject.transform.position += transform.forward * 2;
+                        if (mapgo[posX, posY] != null)
+                        {
+                            for (int i = 0; i < prefabcolorlist.Count; i++)
+                            {
+                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                            }
+                            mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                        }
+                        posY -= 1;
+                        if (mapgo[posX, posY] != null)
+                        {
+                            prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
+                            mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                            prefabcolorlist.Clear();
+                            foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                            {
+                                prefabcolorlist.Add(r.material.color);
+                                r.material.color=Color.red;
+                            }
+                        }
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad3))
                 {
                     Debug.Log("3");
-                    if (posX != map.GetLength(1) - 1 && posY != map.GetLength(0) - 1)
+                    if (posX < map.GetLength(1) - 1 && posY > 0)
                     {
-                        posX += 2;
-                        posY += 2;
-                        currentgameobject.transform.position += transform.right * 2 + transform.forward * 2;
+                        if (mapgo[posX, posY] != null)
+                        {
+                            for (int i = 0; i < prefabcolorlist.Count; i++)
+                            {
+                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                            }
+                            mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                        }
+                        posX += 1;
+                        posY -= 1;
+                        if (mapgo[posX, posY] != null)
+                        {
+                            prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
+                            mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                            prefabcolorlist.Clear();
+                            foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                            {
+                                prefabcolorlist.Add(r.material.color);
+                                r.material.color=Color.red;
+                            }
+                        }
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad4))
                 {
                     Debug.Log("4");
-                    if (posX != 1)
+                    if (posX > 0)
                     {
-                        posX -= 2;
-                        currentgameobject.transform.position += transform.right * -2;
+                        if (mapgo[posX, posY] != null)
+                        {
+                            for (int i = 0; i < prefabcolorlist.Count; i++)
+                            {
+                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                            }
+                            mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                        }
+                        posX -= 1;
+                        if (mapgo[posX, posY] != null)
+                        {
+                            prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
+                            mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                            prefabcolorlist.Clear();
+                            foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                            {
+                                prefabcolorlist.Add(r.material.color);
+                                r.material.color=Color.red;
+                            }
+                        }
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad5))
                 {
                     Debug.Log("5");
+                    Destroy(mapgo[posX,posY]);
+                    mapgo[posX, posY] = null;
                     done = true;
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad6))
                 {
                     Debug.Log("6");
-                    if (posX != map.GetLength(1) - 1)
+                    if (posX < map.GetLength(1) - 1)
                     {
-                        posX += 2;
-                        currentgameobject.transform.position += transform.right * 2;
+                        if (mapgo[posX, posY] != null)
+                        {
+                            for (int i = 0; i < prefabcolorlist.Count; i++)
+                            {
+                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                            }
+                            mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                        }
+                        posX += 1;
+                        if (mapgo[posX, posY] != null)
+                        {
+                            prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
+                            mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                            prefabcolorlist.Clear();
+                            foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                            {
+                                prefabcolorlist.Add(r.material.color);
+                                r.material.color=Color.red;
+                            }
+                        }
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad7))
                 {
                     Debug.Log("7");
-                    if (posX != 1 && posY != 1)
+                    if (posX > 0 && posY < map.GetLength(0)-1)
                     {
-                        posX -= 2;
-                        posY -= 2;
-                        currentgameobject.transform.position += transform.right * -2 + transform.forward * -2;
+                        if (mapgo[posX, posY] != null)
+                        {
+                            for (int i = 0; i < prefabcolorlist.Count; i++)
+                            {
+                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                            }
+                            mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                        }
+                        posX -= 1;
+                        posY += 1;
+                        if (mapgo[posX, posY] != null)
+                        {
+                            prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
+                            mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                            prefabcolorlist.Clear();
+                            foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                            {
+                                prefabcolorlist.Add(r.material.color);
+                                r.material.color=Color.red;
+                            }
+                        }
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad8))
                 {
                     Debug.Log("8");
-                    if (posY != 1)
+                    if (posY < map.GetLength(0)-1)
                     {
-                        posY -= 2;
-                        currentgameobject.transform.position += transform.forward * -2;
+                        if (mapgo[posX, posY] != null)
+                        {
+                            for (int i = 0; i < prefabcolorlist.Count; i++)
+                            {
+                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                            }
+                            mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                        }
+                        posY += 1;
+                        if (mapgo[posX, posY] != null)
+                        {
+                            prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
+                            mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                            prefabcolorlist.Clear();
+                            foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                            {
+                                prefabcolorlist.Add(r.material.color);
+                                r.material.color=Color.red;
+                            }
+                        }
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad9))
                 {
                     Debug.Log("9");
-                    if (posX != map.GetLength(1) - 1 && posY != 1)
+                    if (posX < map.GetLength(1) - 1 && posY < map.GetLength(0)-1)
                     {
+                        if (mapgo[posX, posY] != null)
+                        {
+                            for (int i = 0; i < prefabcolorlist.Count; i++)
+                            {
+                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                            }
+                            mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                        }
+                        posX += 1;
+                        posY += 1;
+                        if (mapgo[posX, posY] != null)
+                        {
+                            prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
+                            mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                            prefabcolorlist.Clear();
+                            foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                            {
+                                prefabcolorlist.Add(r.material.color);
+                                r.material.color=Color.red;
+                            }
+                        }
+                    }
+                }
+            }
+            else if (currentobject == 2 || currentobject == 4)
+            {
+                if (Input.GetKeyDown(KeyCode.Keypad1))
+                {
+                    Debug.Log("1");
+                    if (posX > 0 && posY > 0)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX -= 1;
+                        posY -= 1;
+                        rotation = !rotation;
+                        v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+                        if (rotation)
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+                        else
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad2))
+                {
+                    Debug.Log("2");
+                    if (posY > 1)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posY -= 2;
+                        v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+                        if (rotation)
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+                        else
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad3))
+                {
+                    Debug.Log("3");
+                    if (posX < map.GetLength(1) - 1 && posY > 0)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX += 1;
+                        posY -= 1;
+                        rotation = !rotation;
+                        v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+                        if (rotation)
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+                        else
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad4))
+                {
+                    Debug.Log("4");
+                    if (posX > 1)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX -= 2;
+                        v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+                        if (rotation)
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+                        else
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad5))
+                {
+                    Debug.Log("5");
+                    map[posX, posY] = currentobject;
+                    mapgo[posX, posY] = currentgameobjectprefab;
+                    done = true;
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad6))
+                {
+                    Debug.Log("6");
+                    if (posX < map.GetLength(1) - 2)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX += 2;
+                        v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+                        if (rotation)
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+                        else
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad7))
+                {
+                    Debug.Log("7");
+                    if (posX > 0 && posY < map.GetLength(0)-1)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX -= 1;
+                        posY += 1;
+                        rotation = !rotation;
+                        v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+                        if (rotation)
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+                        else
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad8))
+                {
+                    Debug.Log("8");
+                    if (posY < map.GetLength(0)-2)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posY += 2;
+                        v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+                        if (rotation)
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+                        else
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad9))
+                {
+                    Debug.Log("9");
+                    if (posX < map.GetLength(1) - 1 && posY < map.GetLength(0)-1)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX += 1;
+                        posY += 1;
+                        rotation = !rotation;
+                        v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+                        if (rotation)
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+                        else
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+            }
+            else if (currentobject == 3 || currentobject == 5)
+            {
+                if (Input.GetKeyDown(KeyCode.Keypad1))
+                {
+                    Debug.Log("1");
+                    if (posX > 1 && posY > 1)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX -= 2;
+                        posY -= 2;
+                        if (currentobject==3)
+                            v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
+                        else
+                            v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
+                        currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad2))
+                {
+                    Debug.Log("2");
+                    if (posY > 1)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posY -= 2;
+                        if (currentobject==3)
+                            v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
+                        else
+                            v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
+                        currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad3))
+                {
+                    Debug.Log("3");
+                    if (posX < map.GetLength(1) - 2 && posY > 1)
+                    {
+                        Destroy(currentgameobjectprefab);
                         posX += 2;
                         posY -= 2;
-                        currentgameobject.transform.position += transform.right * 2 + transform.forward * -2;
+                        if (currentobject==3)
+                            v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
+                        else
+                            v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
+                        currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad4))
+                {
+                    Debug.Log("4");
+                    if (posX > 1)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX -= 2;
+                        if (currentobject==3)
+                            v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
+                        else
+                            v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
+                        currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad5))
+                {
+                    Debug.Log("5");
+                    map[posX, posY] = currentobject;
+                    mapgo[posX, posY] = currentgameobjectprefab;
+                    done = true;
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad6))
+                {
+                    Debug.Log("6");
+                    if (posX < map.GetLength(1) - 2)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX += 2;
+                        if (currentobject==3)
+                            v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
+                        else
+                            v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
+                        currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad7))
+                {
+                    Debug.Log("7");
+                    if (posX > 1 && posY < map.GetLength(0)-2)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX -= 2;
+                        posY += 2;
+                        if (currentobject==3)
+                            v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
+                        else
+                            v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
+                        currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad8))
+                {
+                    Debug.Log("8");
+                    if (posY < map.GetLength(0)-2)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posY += 2;
+                        if (currentobject==3)
+                            v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
+                        else
+                            v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
+                        currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad9))
+                {
+                    Debug.Log("9");
+                    if (posX < map.GetLength(1) - 2 && posY < map.GetLength(0)-2)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX += 2;
+                        posY += 2;
+                        if (currentobject==3)
+                            v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
+                        else
+                            v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
+                        currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                     }
                 }
             }
             else if (currentobject == 1)
             {
-                
+                if (Input.GetKeyDown(KeyCode.Keypad1))
+                {
+                    Debug.Log("1");
+                    if (posX > 1 && posY > 1)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX -= 2;
+                        posY -= 2;
+                        v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+                        currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad2))
+                {
+                    Debug.Log("2");
+                    if (posY > 1)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posY -= 2;
+                        v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+                        currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad3))
+                {
+                    Debug.Log("3");
+                    if (posX < map.GetLength(1) - 2 && posY > 1)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX += 2;
+                        posY -= 2;
+                        v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+                        currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad4))
+                {
+                    Debug.Log("4");
+                    if (posX > 1)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX -= 2;
+                        v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+                        currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad5))
+                {
+                    Debug.Log("5");
+                    map[posX, posY] = currentobject;
+                    mapgo[posX, posY] = currentgameobjectprefab;
+                    done = true;
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad6))
+                {
+                    Debug.Log("6");
+                    if (posX < map.GetLength(1) - 2)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX += 2;
+                        v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+                        currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad7))
+                {
+                    Debug.Log("7");
+                    if (posX > 1 && posY < map.GetLength(0)-2)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX -= 2;
+                        posY += 2;
+                        v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+                        currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad8))
+                {
+                    Debug.Log("8");
+                    if (posY < map.GetLength(0)-2)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posY += 2;
+                        v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+                        currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.Keypad9))
+                {
+                    Debug.Log("9");
+                    if (posX < map.GetLength(1) - 2 && posY < map.GetLength(0)-2)
+                    {
+                        Destroy(currentgameobjectprefab);
+                        posX += 2;
+                        posY += 2;
+                        v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
+                        currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                    }
+                }
             }
         }
-
         if (done)
         {
             placing = false;
             Place();
         }
+
+        if (finished)
+        {
+            finishing();
+        }
+    }
+
+    void finishing()
+    {
+        string code = "";
+        int x = map.GetLength(1);
+        int y = map.GetLength(0);
     }
 }
