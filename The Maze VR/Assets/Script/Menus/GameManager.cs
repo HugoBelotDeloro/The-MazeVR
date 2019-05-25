@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -63,12 +62,11 @@ public class GameManager : MonoBehaviour
         string[] activeScenes = ActiveScenes.ToArray();
         foreach (string scene in activeScenes)
         {
-            Debug.Log(scene);
             SceneManager.UnloadSceneAsync(scene);
         }
         foreach (string scene in activeScenes)
         {
-            SceneManager.LoadScene(scene);
+            SceneManager.LoadScene(scene, LoadSceneMode.Additive);
         }
     }
 }

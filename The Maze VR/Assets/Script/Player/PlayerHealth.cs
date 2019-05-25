@@ -50,28 +50,38 @@ public class PlayerHealth : MonoBehaviour
     {
         _health -= damage;
         _framesSinceLastHit = 0;
-        UpdateOverlay();
-        BloodOverlay.enabled = true;
-        if (_health <= 0)
-        {
-            PrintDeathScreen();
-        }
+         UpdateOverlay();
+         BloodOverlay.enabled = true;
+         if (_health <= 0)
+         {
+             PrintDeathScreen();
+         }
     }
-
-    private void PrintDeathScreen()
-    {
-        gameObject.GetComponentInParent<PlayerMovement>().enabled = false;
-        deathScreen.SetActive(true);
-        StartCoroutine(Wait());
-    }
-
-    IEnumerator Wait()
-    {
-        while (Input.GetAxis("Action") <= 0)
-        {
-            yield return new WaitForSecondsRealtime(0.05f);
-        }
-        yield return new WaitForSecondsRealtime(0.5f);
-        GameManager.Instance.ResetScene();
-    }
-}
+ 
+     private void PrintDeathScreen()
+     {
+         gameObject.GetComponentInParent<PlayerMovement>().enabled = false;
+         deathScreen.SetActive(true);
+         StartCoroutine(Wait());
+     }
+ 
+     IEnumerator Wait()
+     {
+         while (Input.GetAxis("Action") <= 0 && Input.GetAxis("Echap") <= 0)
+         {
+             yield return new WaitForSecondsRealtime(0.05f);
+         }
+ 
+         if (Input.GetAxis("Action") > 0)
+         {
+             GameManager.Instance.ResetScene();
+         }
+         else
+         {
+             GameManager.Instance.UnloadScene(GameManager.Instance.mainScene);
+             GameManager.Instance.LoadScene("MainMenu");
+         }
+         yield return new WaitForSecondsRealtime(0.5f);
+         
+     }
+ }
