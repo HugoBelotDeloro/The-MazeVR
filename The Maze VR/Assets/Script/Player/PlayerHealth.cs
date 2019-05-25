@@ -15,13 +15,12 @@ public class PlayerHealth : MonoBehaviour
         _health = MaxHealth;
         _framesSinceLastHit = FramesToRegen;
         BloodOverlay.enabled = true;
-        BloodOverlay.size = new Vector2(Screen.height, Screen.width);
         
     }
 
     void FixedUpdate()
     {
-        if (_health < MaxHealth && _framesSinceLastHit > FramesToRegen)
+        if (_health < MaxHealth && _framesSinceLastHit >= FramesToRegen)
         {
             _health += HealthPerFrame;
             if (_health >= MaxHealth)
@@ -33,7 +32,7 @@ public class PlayerHealth : MonoBehaviour
             blood.a = (float) (MaxHealth - _health) / MaxHealth;
             BloodOverlay.color = blood;
         }
-        else
+        else if (_framesSinceLastHit < FramesToRegen)
         {
             _framesSinceLastHit++;
         }
@@ -43,5 +42,6 @@ public class PlayerHealth : MonoBehaviour
     {
         _health -= damage;
         _framesSinceLastHit = 0;
+        BloodOverlay.enabled = true;
     }
 }
