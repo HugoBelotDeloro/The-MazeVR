@@ -157,10 +157,14 @@ public class Edit : MonoBehaviour
             //creer objet
             rotation = posX % 2 != 0;
             v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-            if (rotation)
-                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
-            else
-                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+            if (mapgo[posX, posY] == null)
+            {
+                if (rotation)
+                    currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0, 90, 0)),
+                        transform);
+                else
+                    currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+            }
             //place
             done = false;
             placing = true;
@@ -188,7 +192,8 @@ public class Edit : MonoBehaviour
                 v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
             else
                 v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
-            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+            if (mapgo[posX, posY] == null)
+                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
             //place
             done = false;
             placing = true;
@@ -207,7 +212,8 @@ public class Edit : MonoBehaviour
             }
             //creer objet
             v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+            if (mapgo[posX, posY] == null)
+                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
             //place
             done = false;
             placing = true;
@@ -293,9 +299,9 @@ public class Edit : MonoBehaviour
                     {
                         if (mapgo[posX, posY] != null)
                         {
-                            for (int i = 0; i < prefabcolorlist.Count; i++)
+                            for (int i = 1; i < prefabcolorlist.Count-1; i++)
                             {
-                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i-1];
                             }
                             mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
                         }
@@ -321,9 +327,9 @@ public class Edit : MonoBehaviour
                     {
                         if (mapgo[posX, posY] != null)
                         {
-                            for (int i = 0; i < prefabcolorlist.Count; i++)
+                            for (int i = 1; i < prefabcolorlist.Count-1; i++)
                             {
-                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i-1];
                             }
                             mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
                         }
@@ -348,9 +354,9 @@ public class Edit : MonoBehaviour
                     {
                         if (mapgo[posX, posY] != null)
                         {
-                            for (int i = 0; i < prefabcolorlist.Count; i++)
+                            for (int i = 1; i < prefabcolorlist.Count-1; i++)
                             {
-                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i-1];
                             }
                             mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
                         }
@@ -376,9 +382,9 @@ public class Edit : MonoBehaviour
                     {
                         if (mapgo[posX, posY] != null)
                         {
-                            for (int i = 0; i < prefabcolorlist.Count; i++)
+                            for (int i = 1; i < prefabcolorlist.Count-1; i++)
                             {
-                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i-1];
                             }
                             mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
                         }
@@ -410,9 +416,9 @@ public class Edit : MonoBehaviour
                     {
                         if (mapgo[posX, posY] != null)
                         {
-                            for (int i = 0; i < prefabcolorlist.Count; i++)
+                            for (int i = 1; i < prefabcolorlist.Count-1; i++)
                             {
-                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i-1];
                             }
                             mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
                         }
@@ -437,9 +443,9 @@ public class Edit : MonoBehaviour
                     {
                         if (mapgo[posX, posY] != null)
                         {
-                            for (int i = 0; i < prefabcolorlist.Count; i++)
+                            for (int i = 1; i < prefabcolorlist.Count-1; i++)
                             {
-                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i-1];
                             }
                             mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
                         }
@@ -465,9 +471,9 @@ public class Edit : MonoBehaviour
                     {
                         if (mapgo[posX, posY] != null)
                         {
-                            for (int i = 0; i < prefabcolorlist.Count; i++)
+                            for (int i = 1; i < prefabcolorlist.Count-1; i++)
                             {
-                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i-1];
                             }
                             mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
                         }
@@ -492,9 +498,9 @@ public class Edit : MonoBehaviour
                     {
                         if (mapgo[posX, posY] != null)
                         {
-                            for (int i = 0; i < prefabcolorlist.Count; i++)
+                            for (int i = 1; i < prefabcolorlist.Count-1; i++)
                             {
-                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                                mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i-1];
                             }
                             mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
                         }
@@ -526,10 +532,15 @@ public class Edit : MonoBehaviour
                         posY -= 1;
                         rotation = !rotation;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-                        if (rotation)
-                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+                        if (mapgo[posX, posY] == null)
+                        {
+                            if (rotation)
+                                currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
+                            else
+                                currentgameobjectprefab =Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        }
                         else
-                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                            currentgameobjectprefab = null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad2))
@@ -540,10 +551,15 @@ public class Edit : MonoBehaviour
                         Destroy(currentgameobjectprefab);
                         posY -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-                        if (rotation)
-                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+                        if (mapgo[posX, posY] == null)
+                        {
+                            if (rotation)
+                                currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
+                            else
+                                currentgameobjectprefab =Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        }
                         else
-                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                            currentgameobjectprefab = null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad3))
@@ -556,10 +572,15 @@ public class Edit : MonoBehaviour
                         posY -= 1;
                         rotation = !rotation;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-                        if (rotation)
-                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+                        if (mapgo[posX, posY] == null)
+                        {
+                            if (rotation)
+                                currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
+                            else
+                                currentgameobjectprefab =Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        }
                         else
-                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                            currentgameobjectprefab = null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad4))
@@ -570,17 +591,26 @@ public class Edit : MonoBehaviour
                         Destroy(currentgameobjectprefab);
                         posX -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-                        if (rotation)
-                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+                        if (mapgo[posX, posY] == null)
+                        {
+                            if (rotation)
+                                currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
+                            else
+                                currentgameobjectprefab =Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        }
                         else
-                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                            currentgameobjectprefab = null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad5))
                 {
                     Debug.Log("5");
-                    map[posX, posY] = currentobject;
-                    mapgo[posX, posY] = currentgameobjectprefab;
+                    if (currentgameobjectprefab != null)
+                    {
+                        map[posX, posY] = currentobject;
+                        mapgo[posX, posY] = currentgameobjectprefab;
+                        currentgameobjectprefab = null;
+                    }
                     done = true;
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad6))
@@ -591,10 +621,15 @@ public class Edit : MonoBehaviour
                         Destroy(currentgameobjectprefab);
                         posX += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-                        if (rotation)
-                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+                        if (mapgo[posX, posY] == null)
+                        {
+                            if (rotation)
+                                currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
+                            else
+                                currentgameobjectprefab =Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        }
                         else
-                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                            currentgameobjectprefab = null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad7))
@@ -607,10 +642,15 @@ public class Edit : MonoBehaviour
                         posY += 1;
                         rotation = !rotation;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-                        if (rotation)
-                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+                        if (mapgo[posX, posY] == null)
+                        {
+                            if (rotation)
+                                currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
+                            else
+                                currentgameobjectprefab =Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        }
                         else
-                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                            currentgameobjectprefab = null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad8))
@@ -621,10 +661,15 @@ public class Edit : MonoBehaviour
                         Destroy(currentgameobjectprefab);
                         posY += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-                        if (rotation)
-                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+                        if (mapgo[posX, posY] == null)
+                        {
+                            if (rotation)
+                                currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
+                            else
+                                currentgameobjectprefab =Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        }
                         else
-                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                            currentgameobjectprefab = null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad9))
@@ -637,10 +682,15 @@ public class Edit : MonoBehaviour
                         posY += 1;
                         rotation = !rotation;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-                        if (rotation)
-                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0,90,0)), transform);
+                        if (mapgo[posX, posY] == null)
+                        {
+                            if (rotation)
+                                currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
+                            else
+                                currentgameobjectprefab =Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        }
                         else
-                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                            currentgameobjectprefab = null;
                     }
                 }
             }
@@ -658,7 +708,10 @@ public class Edit : MonoBehaviour
                             v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
-                        currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        if (mapgo[posX, posY] == null)
+                            currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        else
+                            currentgameobjectprefab=null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad2))
@@ -672,7 +725,10 @@ public class Edit : MonoBehaviour
                             v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
-                        currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        if (mapgo[posX, posY] == null)
+                            currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        else
+                            currentgameobjectprefab=null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad3))
@@ -687,7 +743,10 @@ public class Edit : MonoBehaviour
                             v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
-                        currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        if (mapgo[posX, posY] == null)
+                            currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        else
+                            currentgameobjectprefab=null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad4))
@@ -701,14 +760,21 @@ public class Edit : MonoBehaviour
                             v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
-                        currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        if (mapgo[posX, posY] == null)
+                            currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        else
+                            currentgameobjectprefab=null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad5))
                 {
                     Debug.Log("5");
-                    map[posX, posY] = currentobject;
-                    mapgo[posX, posY] = currentgameobjectprefab;
+                    if (currentgameobjectprefab != null)
+                    {
+                        map[posX, posY] = currentobject;
+                        mapgo[posX, posY] = currentgameobjectprefab;
+                        currentgameobjectprefab = null;
+                    }
                     done = true;
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad6))
@@ -722,7 +788,10 @@ public class Edit : MonoBehaviour
                             v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
-                        currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        if (mapgo[posX, posY] == null)
+                            currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        else
+                            currentgameobjectprefab=null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad7))
@@ -737,7 +806,10 @@ public class Edit : MonoBehaviour
                             v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
-                        currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        if (mapgo[posX, posY] == null)
+                            currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        else
+                            currentgameobjectprefab=null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad8))
@@ -751,7 +823,10 @@ public class Edit : MonoBehaviour
                             v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
-                        currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        if (mapgo[posX, posY] == null)
+                            currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        else
+                            currentgameobjectprefab=null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad9))
@@ -766,7 +841,10 @@ public class Edit : MonoBehaviour
                             v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
-                        currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        if (mapgo[posX, posY] == null)
+                            currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        else
+                            currentgameobjectprefab=null;
                     }
                 }
             }
@@ -781,7 +859,10 @@ public class Edit : MonoBehaviour
                         posX -= 2;
                         posY -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-                        currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        if (mapgo[posX,posY]==null)
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        else
+                            currentgameobjectprefab = null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad2))
@@ -792,7 +873,10 @@ public class Edit : MonoBehaviour
                         Destroy(currentgameobjectprefab);
                         posY -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-                        currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        if (mapgo[posX,posY]==null)
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        else
+                            currentgameobjectprefab = null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad3))
@@ -804,7 +888,10 @@ public class Edit : MonoBehaviour
                         posX += 2;
                         posY -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-                        currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        if (mapgo[posX,posY]==null)
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        else
+                            currentgameobjectprefab = null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad4))
@@ -815,14 +902,21 @@ public class Edit : MonoBehaviour
                         Destroy(currentgameobjectprefab);
                         posX -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-                        currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        if (mapgo[posX,posY]==null)
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        else
+                            currentgameobjectprefab = null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad5))
                 {
                     Debug.Log("5");
-                    map[posX, posY] = currentobject;
-                    mapgo[posX, posY] = currentgameobjectprefab;
+                    if (currentgameobjectprefab != null)
+                    {
+                        map[posX, posY] = currentobject;
+                        mapgo[posX, posY] = currentgameobjectprefab;
+                        currentgameobjectprefab = null;
+                    }
                     done = true;
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad6))
@@ -833,7 +927,10 @@ public class Edit : MonoBehaviour
                         Destroy(currentgameobjectprefab);
                         posX += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-                        currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        if (mapgo[posX,posY]==null)
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        else
+                            currentgameobjectprefab = null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad7))
@@ -845,7 +942,10 @@ public class Edit : MonoBehaviour
                         posX -= 2;
                         posY += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-                        currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        if (mapgo[posX,posY]==null)
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        else
+                            currentgameobjectprefab = null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad8))
@@ -856,7 +956,10 @@ public class Edit : MonoBehaviour
                         Destroy(currentgameobjectprefab);
                         posY += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-                        currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        if (mapgo[posX,posY]==null)
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        else
+                            currentgameobjectprefab = null;
                     }
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad9))
@@ -868,7 +971,10 @@ public class Edit : MonoBehaviour
                         posX += 2;
                         posY += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
-                        currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        if (mapgo[posX,posY]==null)
+                            currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                        else
+                            currentgameobjectprefab = null;
                     }
                 }
             }
