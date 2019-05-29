@@ -23,7 +23,7 @@ public class AreaSceneLoader : MonoBehaviour
         }
     }
 
-    public void ExitEntrance()
+    public void ExitEnter()
     {
         GameManager.LoadScene(EntranceScene.name);
     }
