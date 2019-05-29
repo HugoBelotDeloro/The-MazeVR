@@ -23,7 +23,24 @@ public class Parser : MonoBehaviour
 
     public int[,] codeToMap(string code)
     {
-        int[,] map = new int[,];
+        int i = 0;
+        int hn = Convert.ToInt32(code[i]);
+        i++;
+        string hs = "";
+        for (int j = 0; j < hn; j++)
+        {
+            hs = hs + code[i];
+            i++;
+        }
+        int ln = Convert.ToInt32(code[i]);
+        i++;
+        string ls = "";
+        for (int j = 0; j < ln; j++)
+        {
+            ls = ls + code[i];
+            i++;
+        }
+        int[,] map = new int[Convert.ToInt32(hs),Convert.ToInt32(ls)];
         return map;
     }
     
