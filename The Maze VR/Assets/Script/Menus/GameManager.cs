@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private IEnumerator Unload(string scene)
+    IEnumerator Unload(string scene)
     {
         yield return null;
         if (ActiveScenes.Contains(scene))
@@ -68,11 +68,5 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(scene, LoadSceneMode.Additive);
         }
-    }
-
-    public void LoadMainMenu()
-    {
-        UnloadScene(mainScene);
-        LoadScene("MainMenu");
     }
 }
