@@ -9,6 +9,9 @@ public class PlayerMovement : MonoBehaviour
     private const float MinHeadTilt = 0.4f;
     private const float MaxHeadTilt = -0.5f;
     private Rigidbody _playerRigidbody;
+    private bool _paused;
+    private int _timer;
+    [SerializeField] private GameObject pauseMenu;
 
     private void Start()
     {
@@ -17,15 +20,34 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        float forwardMovement = Input.GetAxis("Forward") * MovementAmount;
-        float rotation = Input.GetAxis("Side") * RotationAmount;
-        Transform transform1 = transform;
-        transform1.position += MovementAmount * forwardMovement * transform1.forward;
-        transform.Rotate(rotation * RotationAmount * Vector3.up, Space.World);
-        Quaternion r = PlayerView.transform.localRotation;
-        float clamped = Mathf.Clamp(r.x + HeadPanSpeed * Input.GetAxis("Head"), MaxHeadTilt, MinHeadTilt);
-        r.Set(clamped, r.y, r.z, r.w);
-        PlayerView.transform.localRotation = r;
-        _playerRigidbody.angularVelocity = Vector3.zero;
+        if (_timer > 0)
+        {
+            _timer--;
+        }
+        if (Input.GetAxis("Echap") > 0.1 && _timer == 0)
+        {
+            _paused = !_paused;
+            _timer = 20;
+            pauseMenu.SetActive(_paused);
+        }
+        if (!_paused) 
+        {
+            float forwardMovement = Input.GetAxis("Forward") * MovementAmount;
+            float rotation = Input.GetAxis("Side") * RotationAmount;
+            Transform transform1 = transform;
+            transform1.position += MovementAmount * forwardMovement * transform1.forward;
+            transform.Rotate(rotation * RotationAmount * Vector3.up, Space.World);
+            Quaternion r = PlayerView.transform.localRotation;
+            float clamped = Mathf.Clamp(r.x + HeadPanSpeed * Input.GetAxis("Head"), MaxHeadTilt, MinHeadTilt);
+            r.Set(clamped, r.y, r.z, r.w);
+            PlayerView.transform.localRotation = r;
+            _playerRigidbody.angularVelocity = Vector3.zero;
+        }
+    }
+
+    public void Resume()
+    {
+        _paused = false;
+        pauseMenu.SetActive(false);
     }
 }

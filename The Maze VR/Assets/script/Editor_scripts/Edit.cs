@@ -45,12 +45,24 @@ public class Edit : MonoBehaviour
     private GameObject cursorprefab;
 
     public Text nameobject;
-    
+
+    private Parser p = new Parser();
+
+    public Text code;
+
+    public Canvas can;
     // Start is called before the first frame update
     void Start()
     {
         Begin begin = parent.GetComponent<Begin>();
         map = new int[begin.H*2+1,begin.L*2+1];
+        for (int i = 0; i < map.GetLength(0); i++)
+        {
+            for (int j = 0; j < map.GetLength(1); j++)
+            {
+                map[j, i] = -1;
+            }
+        }
         mapgo = new GameObject[begin.H*2+1,begin.L*2+1];
         Debug.Log(map.GetLength(0));
         Debug.Log(map.GetLength(1));
@@ -272,6 +284,7 @@ public class Edit : MonoBehaviour
             {
                 Destroy(currentgameobjectprefab);
                 Destroy(cursorprefab);
+                placing = false;
                 finished = true;
             }
             if (Input.GetKeyDown(KeyCode.KeypadPlus))
@@ -1212,5 +1225,7 @@ public class Edit : MonoBehaviour
 
     void finishing()
     {
+        can.GetComponent<Canvas>().enabled = true;
+        code.text = p.mapToCode(map);
     }
 }

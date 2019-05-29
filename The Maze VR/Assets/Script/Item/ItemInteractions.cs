@@ -11,7 +11,7 @@ public class ItemInteractions : MonoBehaviour
         {
             if (inventory.AddItem(item))
             {
-                Destroy(gameObject);
+                Destroy(this.gameObject);//En cas de tendances suicidaires, contactez un numéro d'aide
             }
         }
     }
