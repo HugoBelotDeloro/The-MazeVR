@@ -46,12 +46,25 @@ public class Edit : MonoBehaviour
 
     public Text nameobject;
     
+    private Parser p = new Parser();
+
+    public InputField code;
+
+    public Canvas can;
+    
     // Start is called before the first frame update
     void Start()
     {
         Begin begin = parent.GetComponent<Begin>();
         map = new int[begin.H*2+1,begin.L*2+1];
         mapgo = new GameObject[begin.H*2+1,begin.L*2+1];
+        for (int i = 0; i < map.GetLength(0); i++)
+        {
+            for (int j = 0; j < map.GetLength(1); j++)
+            {
+                map[j, i] = -1;
+            }
+        }
         Debug.Log(map.GetLength(0));
         Debug.Log(map.GetLength(1));
         finished = false;
@@ -167,7 +180,7 @@ public class Edit : MonoBehaviour
             rotation = posX % 2 != 0;
             v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
             cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-            if (mapgo[posX, posY] == null)
+            if (mapgo[posY, posX] == null)
             {
                 if (rotation)
                     currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0, 90, 0)),transform);
@@ -205,7 +218,7 @@ public class Edit : MonoBehaviour
             else
                 v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
             cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-            if (mapgo[posX, posY] == null)
+            if (mapgo[posY, posX] == null)
                 currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
             else
                 currentgameobjectprefab = null;
@@ -229,7 +242,7 @@ public class Edit : MonoBehaviour
             //creer objet
             v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
             cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-            if (mapgo[posX, posY] == null)
+            if (mapgo[posY, posX] == null)
                 currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
             else
                 currentgameobjectprefab = null;
@@ -240,12 +253,12 @@ public class Edit : MonoBehaviour
         }
         else if (currentobject==P.Length)
         {
-            if (mapgo[posX, posY] != null)
+            if (mapgo[posY, posX] != null)
             {
-                Debug.Log(mapgo[posX,posY].name);
-                prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
-                mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
-                foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                Debug.Log(mapgo[posY, posX].name);
+                prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
+                mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
+                foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
                 {
                     prefabcolorlist.Add(r.material.color);
                     r.material.color=Color.red;
@@ -273,18 +286,19 @@ public class Edit : MonoBehaviour
                 Destroy(currentgameobjectprefab);
                 Destroy(cursorprefab);
                 finished = true;
+                done = true;
             }
             if (Input.GetKeyDown(KeyCode.KeypadPlus))
             {
                 if (currentobject == P.Length)
                 {
-                    if (mapgo[posX, posY] != null)
+                    if (mapgo[posY, posX] != null)
                     {
                         for (int i = 0; i < prefabcolorlist.Count; i++)
                         {
-                            mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                            mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
                         }
-                        mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                        mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
                     }
                     currentobject = 1;
                 }
@@ -300,13 +314,13 @@ public class Edit : MonoBehaviour
             {
                 if (currentobject==P.Length)
                 {
-                    if (mapgo[posX, posY] != null)
+                    if (mapgo[posY, posX] != null)
                     {
                         for (int i = 0; i < prefabcolorlist.Count; i++)
                         {
-                            mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                            mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
                         }
-                        mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                        mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
                     }
                 }
                 if (currentobject == 1)
@@ -328,13 +342,13 @@ public class Edit : MonoBehaviour
                     Debug.Log("1");
                     if (posX > 0 && posY > 0)
                     {
-                        if (mapgo[posX, posY] != null)
+                        if (mapgo[posY, posX] != null)
                         {
                             if (prefabcolorlist.Count <= 2)
                             {
                                 for (int i = 1; i < prefabcolorlist.Count - 1; i++)
                                 {
-                                    mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color =
+                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
                                         prefabcolorlist[i - 1];
                                 }
                             }
@@ -342,20 +356,20 @@ public class Edit : MonoBehaviour
                             {
                                 for (int i = 0; i < prefabcolorlist.Count; i++)
                                 {
-                                    mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
                                 }
                             }
-                            mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                            mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
                         }
                         Destroy(cursorprefab);
                         posX -= 1;
                         posY -= 1;
-                        if (mapgo[posX, posY] != null)
+                        if (mapgo[posY, posX] != null)
                         {
-                            prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
-                            mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                            prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
+                            mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
                             prefabcolorlist.Clear();
-                            foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                            foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
                             {
                                 prefabcolorlist.Add(r.material.color);
                                 r.material.color=Color.red;
@@ -370,13 +384,13 @@ public class Edit : MonoBehaviour
                     Debug.Log("2");
                     if (posY > 0)
                     {
-                        if (mapgo[posX, posY] != null)
+                        if (mapgo[posY, posX] != null)
                         {
                             if (prefabcolorlist.Count <= 2)
                             {
                                 for (int i = 1; i < prefabcolorlist.Count - 1; i++)
                                 {
-                                    mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color =
+                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
                                         prefabcolorlist[i - 1];
                                 }
                             }
@@ -384,19 +398,19 @@ public class Edit : MonoBehaviour
                             {
                                 for (int i = 0; i < prefabcolorlist.Count; i++)
                                 {
-                                    mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
                                 }
                             }
-                            mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                            mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
                         }
                         Destroy(cursorprefab);
                         posY -= 1;
-                        if (mapgo[posX, posY] != null)
+                        if (mapgo[posY, posX] != null)
                         {
-                            prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
-                            mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                            prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
+                            mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
                             prefabcolorlist.Clear();
-                            foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                            foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
                             {
                                 prefabcolorlist.Add(r.material.color);
                                 r.material.color=Color.red;
@@ -411,13 +425,13 @@ public class Edit : MonoBehaviour
                     Debug.Log("3");
                     if (posX < map.GetLength(1) - 1 && posY > 0)
                     {
-                        if (mapgo[posX, posY] != null)
+                        if (mapgo[posY, posX] != null)
                         {
                             if (prefabcolorlist.Count <= 2)
                             {
                                 for (int i = 1; i < prefabcolorlist.Count - 1; i++)
                                 {
-                                    mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color =
+                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
                                         prefabcolorlist[i - 1];
                                 }
                             }
@@ -425,20 +439,20 @@ public class Edit : MonoBehaviour
                             {
                                 for (int i = 0; i < prefabcolorlist.Count; i++)
                                 {
-                                    mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
                                 }
                             }
-                            mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                            mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
                         }
                         Destroy(cursorprefab);
                         posX += 1;
                         posY -= 1;
-                        if (mapgo[posX, posY] != null)
+                        if (mapgo[posY, posX] != null)
                         {
-                            prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
-                            mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                            prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
+                            mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
                             prefabcolorlist.Clear();
-                            foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                            foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
                             {
                                 prefabcolorlist.Add(r.material.color);
                                 r.material.color=Color.red;
@@ -453,13 +467,13 @@ public class Edit : MonoBehaviour
                     Debug.Log("4");
                     if (posX > 0)
                     {
-                        if (mapgo[posX, posY] != null)
+                        if (mapgo[posY, posX] != null)
                         {
                             if (prefabcolorlist.Count <= 2)
                             {
                                 for (int i = 1; i < prefabcolorlist.Count - 1; i++)
                                 {
-                                    mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color =
+                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
                                         prefabcolorlist[i - 1];
                                 }
                             }
@@ -467,19 +481,19 @@ public class Edit : MonoBehaviour
                             {
                                 for (int i = 0; i < prefabcolorlist.Count; i++)
                                 {
-                                    mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
                                 }
                             }
-                            mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                            mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
                         }
                         Destroy(cursorprefab);
                         posX -= 1;
-                        if (mapgo[posX, posY] != null)
+                        if (mapgo[posY, posX] != null)
                         {
-                            prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
-                            mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                            prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
+                            mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
                             prefabcolorlist.Clear();
-                            foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                            foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
                             {
                                 prefabcolorlist.Add(r.material.color);
                                 r.material.color=Color.red;
@@ -492,9 +506,10 @@ public class Edit : MonoBehaviour
                 else if (Input.GetKeyDown(KeyCode.Keypad5))
                 {
                     Debug.Log("5");
-                    Destroy(mapgo[posX,posY]);
+                    Destroy(mapgo[posY, posX]);
                     Destroy(cursorprefab);
-                    mapgo[posX, posY] = null;
+                    mapgo[posY, posX] = null;
+                    map[posY, posX] = -1;
                     done = true;
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad6))
@@ -502,13 +517,13 @@ public class Edit : MonoBehaviour
                     Debug.Log("6");
                     if (posX < map.GetLength(1) - 1)
                     {
-                        if (mapgo[posX, posY] != null)
+                        if (mapgo[posY, posX] != null)
                         {
                             if (prefabcolorlist.Count <= 2)
                             {
                                 for (int i = 1; i < prefabcolorlist.Count - 1; i++)
                                 {
-                                    mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color =
+                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
                                         prefabcolorlist[i - 1];
                                 }
                             }
@@ -516,19 +531,19 @@ public class Edit : MonoBehaviour
                             {
                                 for (int i = 0; i < prefabcolorlist.Count; i++)
                                 {
-                                    mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
                                 }
                             }
-                            mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                            mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
                         }
                         Destroy(cursorprefab);
                         posX += 1;
-                        if (mapgo[posX, posY] != null)
+                        if (mapgo[posY, posX] != null)
                         {
-                            prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
-                            mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                            prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
+                            mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
                             prefabcolorlist.Clear();
-                            foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                            foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
                             {
                                 prefabcolorlist.Add(r.material.color);
                                 r.material.color=Color.red;
@@ -543,13 +558,13 @@ public class Edit : MonoBehaviour
                     Debug.Log("7");
                     if (posX > 0 && posY < map.GetLength(0)-1)
                     {
-                        if (mapgo[posX, posY] != null)
+                        if (mapgo[posY, posX] != null)
                         {
                             if (prefabcolorlist.Count <= 2)
                             {
                                 for (int i = 1; i < prefabcolorlist.Count - 1; i++)
                                 {
-                                    mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color =
+                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
                                         prefabcolorlist[i - 1];
                                 }
                             }
@@ -557,20 +572,20 @@ public class Edit : MonoBehaviour
                             {
                                 for (int i = 0; i < prefabcolorlist.Count; i++)
                                 {
-                                    mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
                                 }
                             }
-                            mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                            mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
                         }
                         Destroy(cursorprefab);
                         posX -= 1;
                         posY += 1;
-                        if (mapgo[posX, posY] != null)
+                        if (mapgo[posY, posX] != null)
                         {
-                            prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
-                            mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                            prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
+                            mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
                             prefabcolorlist.Clear();
-                            foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                            foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
                             {
                                 prefabcolorlist.Add(r.material.color);
                                 r.material.color=Color.red;
@@ -585,13 +600,13 @@ public class Edit : MonoBehaviour
                     Debug.Log("8");
                     if (posY < map.GetLength(0)-1)
                     {
-                        if (mapgo[posX, posY] != null)
+                        if (mapgo[posY, posX] != null)
                         {
                             if (prefabcolorlist.Count <= 2)
                             {
                                 for (int i = 1; i < prefabcolorlist.Count - 1; i++)
                                 {
-                                    mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color =
+                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
                                         prefabcolorlist[i - 1];
                                 }
                             }
@@ -599,19 +614,19 @@ public class Edit : MonoBehaviour
                             {
                                 for (int i = 0; i < prefabcolorlist.Count; i++)
                                 {
-                                    mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
                                 }
                             }
-                            mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                            mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
                         }
                         Destroy(cursorprefab);
                         posY += 1;
-                        if (mapgo[posX, posY] != null)
+                        if (mapgo[posY, posX] != null)
                         {
-                            prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
-                            mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                            prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
+                            mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
                             prefabcolorlist.Clear();
-                            foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                            foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
                             {
                                 prefabcolorlist.Add(r.material.color);
                                 r.material.color=Color.red;
@@ -626,13 +641,13 @@ public class Edit : MonoBehaviour
                     Debug.Log("9");
                     if (posX < map.GetLength(1) - 1 && posY < map.GetLength(0)-1)
                     {
-                        if (mapgo[posX, posY] != null)
+                        if (mapgo[posY, posX] != null)
                         {
                             if (prefabcolorlist.Count <= 2)
                             {
                                 for (int i = 1; i < prefabcolorlist.Count - 1; i++)
                                 {
-                                    mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color =
+                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
                                         prefabcolorlist[i - 1];
                                 }
                             }
@@ -640,20 +655,20 @@ public class Edit : MonoBehaviour
                             {
                                 for (int i = 0; i < prefabcolorlist.Count; i++)
                                 {
-                                    mapgo[posX, posY].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
+                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
                                 }
                             }
-                            mapgo[posX, posY].GetComponent<Renderer>().material.color = prefabcolor;
+                            mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
                         }
                         Destroy(cursorprefab);
                         posX += 1;
                         posY += 1;
-                        if (mapgo[posX, posY] != null)
+                        if (mapgo[posY, posX] != null)
                         {
-                            prefabcolor = mapgo[posX, posY].GetComponent<Renderer>().material.color;
-                            mapgo[posX, posY].GetComponent<Renderer>().material.color=Color.red;
+                            prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
+                            mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
                             prefabcolorlist.Clear();
-                            foreach (Renderer r in mapgo[posX,posY].GetComponentsInChildren<Renderer>())
+                            foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
                             {
                                 prefabcolorlist.Add(r.material.color);
                                 r.material.color=Color.red;
@@ -678,7 +693,7 @@ public class Edit : MonoBehaviour
                         rotation = !rotation;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX, posY] == null)
+                        if (mapgo[posY, posX] == null)
                         {
                             if (rotation)
                                 currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -700,7 +715,7 @@ public class Edit : MonoBehaviour
                         posY -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX, posY] == null)
+                        if (mapgo[posY, posX] == null)
                         {
                             if (rotation)
                                 currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -724,7 +739,7 @@ public class Edit : MonoBehaviour
                         rotation = !rotation;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX, posY] == null)
+                        if (mapgo[posY, posX] == null)
                         {
                             if (rotation)
                                 currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -746,7 +761,7 @@ public class Edit : MonoBehaviour
                         posX -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX, posY] == null)
+                        if (mapgo[posY, posX] == null)
                         {
                             if (rotation)
                                 currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -763,8 +778,8 @@ public class Edit : MonoBehaviour
                     Debug.Log("5");
                     if (currentgameobjectprefab != null)
                     {
-                        map[posX, posY] = currentobject;
-                        mapgo[posX, posY] = currentgameobjectprefab;
+                        map[posY, posX] = currentobject;
+                        mapgo[posY, posX] = currentgameobjectprefab;
                         currentgameobjectprefab = null;
                         Destroy(cursorprefab);
                     }
@@ -780,7 +795,7 @@ public class Edit : MonoBehaviour
                         posX += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX, posY] == null)
+                        if (mapgo[posY, posX] == null)
                         {
                             if (rotation)
                                 currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -804,7 +819,7 @@ public class Edit : MonoBehaviour
                         rotation = !rotation;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX, posY] == null)
+                        if (mapgo[posY, posX] == null)
                         {
                             if (rotation)
                                 currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -826,7 +841,7 @@ public class Edit : MonoBehaviour
                         posY += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX, posY] == null)
+                        if (mapgo[posY, posX] == null)
                         {
                             if (rotation)
                                 currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -850,7 +865,7 @@ public class Edit : MonoBehaviour
                         rotation = !rotation;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX, posY] == null)
+                        if (mapgo[posY, posX] == null)
                         {
                             if (rotation)
                                 currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -879,7 +894,7 @@ public class Edit : MonoBehaviour
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX, posY] == null)
+                        if (mapgo[posY, posX] == null)
                             currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
@@ -899,7 +914,7 @@ public class Edit : MonoBehaviour
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX, posY] == null)
+                        if (mapgo[posY, posX] == null)
                             currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
@@ -920,7 +935,7 @@ public class Edit : MonoBehaviour
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX, posY] == null)
+                        if (mapgo[posY, posX] == null)
                             currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
@@ -940,7 +955,7 @@ public class Edit : MonoBehaviour
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX, posY] == null)
+                        if (mapgo[posY, posX] == null)
                             currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
@@ -952,8 +967,8 @@ public class Edit : MonoBehaviour
                     Debug.Log("5");
                     if (currentgameobjectprefab != null)
                     {
-                        map[posX, posY] = currentobject;
-                        mapgo[posX, posY] = currentgameobjectprefab;
+                        map[posY, posX] = currentobject;
+                        mapgo[posY, posX] = currentgameobjectprefab;
                         currentgameobjectprefab = null;
                         Destroy(cursorprefab);
                     }
@@ -972,7 +987,7 @@ public class Edit : MonoBehaviour
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX, posY] == null)
+                        if (mapgo[posY, posX] == null)
                             currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
@@ -993,7 +1008,7 @@ public class Edit : MonoBehaviour
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX, posY] == null)
+                        if (mapgo[posY, posX] == null)
                             currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
@@ -1013,7 +1028,7 @@ public class Edit : MonoBehaviour
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX, posY] == null)
+                        if (mapgo[posY, posX] == null)
                             currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
@@ -1034,7 +1049,7 @@ public class Edit : MonoBehaviour
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX, posY] == null)
+                        if (mapgo[posY, posX] == null)
                             currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
@@ -1055,7 +1070,7 @@ public class Edit : MonoBehaviour
                         posY -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX,posY]==null)
+                        if (mapgo[posY, posX]==null)
                             currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab = null;
@@ -1072,7 +1087,7 @@ public class Edit : MonoBehaviour
                         posY -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX,posY]==null)
+                        if (mapgo[posY, posX]==null)
                             currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab = null;
@@ -1090,7 +1105,7 @@ public class Edit : MonoBehaviour
                         posY -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX,posY]==null)
+                        if (mapgo[posY, posX]==null)
                             currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab = null;
@@ -1107,7 +1122,7 @@ public class Edit : MonoBehaviour
                         posX -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX,posY]==null)
+                        if (mapgo[posY, posX]==null)
                             currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab = null;
@@ -1119,8 +1134,8 @@ public class Edit : MonoBehaviour
                     Debug.Log("5");
                     if (currentgameobjectprefab != null)
                     {
-                        map[posX, posY] = currentobject;
-                        mapgo[posX, posY] = currentgameobjectprefab;
+                        map[posY, posX] = currentobject;
+                        mapgo[posY, posX] = currentgameobjectprefab;
                         currentgameobjectprefab = null;
                         Destroy(cursorprefab);
                     }
@@ -1136,7 +1151,7 @@ public class Edit : MonoBehaviour
                         posX += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX,posY]==null)
+                        if (mapgo[posY, posX]==null)
                             currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab = null;
@@ -1154,7 +1169,7 @@ public class Edit : MonoBehaviour
                         posY += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX,posY]==null)
+                        if (mapgo[posY, posX]==null)
                             currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab = null;
@@ -1171,7 +1186,7 @@ public class Edit : MonoBehaviour
                         posY += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX,posY]==null)
+                        if (mapgo[posY, posX]==null)
                             currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab = null;
@@ -1189,7 +1204,7 @@ public class Edit : MonoBehaviour
                         posY += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posX,posY]==null)
+                        if (mapgo[posY, posX]==null)
                             currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab = null;
@@ -1207,10 +1222,14 @@ public class Edit : MonoBehaviour
         if (finished)
         {
             finishing();
+            finished = false;
         }
     }
 
-    void finishing()
+    public void finishing()
     {
+        can.GetComponent<Canvas>().enabled = true;
+        code.text = p.mapToCode(map);
+        Debug.Log(p.mapToCode(map));
     }
 }
