@@ -2112,6 +2112,26 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1557467011}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &341576596 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 410661016, guid: 5f392814e5dcb6a45b0380e07be63338,
+    type: 3}
+  m_PrefabInstance: {fileID: 1626458641}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &341576601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 341576596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf0dd55ee89ae34e9c7dc73aed63921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 648f6630a29f0f64380eb2807157b102, type: 2}
+  inventory: {fileID: 712083835}
 --- !u!1001 &344508272
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2386,7 +2406,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1687137008, guid: 087932bfd0e7db149b7e604943e47caf, type: 3}
       propertyPath: m_Name
-      value: Rock9
+      value: Reality
       objectReference: {fileID: 0}
     - target: {fileID: 1687137012, guid: 087932bfd0e7db149b7e604943e47caf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5337,6 +5357,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41a9e4f2924047e498f822fc54a2e08f, type: 3}
+--- !u!1 &853168140 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 785666640, guid: 40cdb1261502c5147946ac48cebac02b,
+    type: 3}
+  m_PrefabInstance: {fileID: 1893842242}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &853168145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 853168140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf0dd55ee89ae34e9c7dc73aed63921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 7f805d64a15170a44996325e9ac0717c, type: 2}
+  inventory: {fileID: 712083835}
 --- !u!1001 &861210364
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6131,7 +6171,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1288633026, guid: d052e3fbbc0929a408e720b491187572, type: 3}
       propertyPath: m_Name
-      value: Rock6
+      value: TimeStone
       objectReference: {fileID: 0}
     - target: {fileID: 1288633030, guid: d052e3fbbc0929a408e720b491187572, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6317,6 +6357,26 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: d328e5fca45a4bf468a5e9c0140ab49a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5eb667268ae2ed40a94e47752030ce5, type: 3}
+--- !u!1 &1043038108 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1288633026, guid: d052e3fbbc0929a408e720b491187572,
+    type: 3}
+  m_PrefabInstance: {fileID: 1025435070}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1043038113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1043038108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf0dd55ee89ae34e9c7dc73aed63921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 1f9ffd3583210b941a98e82f06958a1d, type: 2}
+  inventory: {fileID: 712083835}
 --- !u!1001 &1044926357
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7263,6 +7323,26 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 2e7f837803d98cf4495e12b0c1a9a4c8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5919c1f5d354f5d48a0b2cfbeeca8208, type: 3}
+--- !u!1 &1222457744 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1687137008, guid: 087932bfd0e7db149b7e604943e47caf,
+    type: 3}
+  m_PrefabInstance: {fileID: 404199107}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1222457749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222457744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf0dd55ee89ae34e9c7dc73aed63921, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: da5455c73c7a4ff4b8827e15af0eea0b, type: 2}
+  inventory: {fileID: 712083835}
 --- !u!1001 &1276187280
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9043,7 +9123,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 410661016, guid: 5f392814e5dcb6a45b0380e07be63338, type: 3}
       propertyPath: m_Name
-      value: Rock11
+      value: PowerStone
       objectReference: {fileID: 0}
     - target: {fileID: 410661020, guid: 5f392814e5dcb6a45b0380e07be63338, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10510,7 +10590,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 785666640, guid: 40cdb1261502c5147946ac48cebac02b, type: 3}
       propertyPath: m_Name
-      value: Rock7
+      value: SpaceStone
       objectReference: {fileID: 0}
     - target: {fileID: 785666644, guid: 40cdb1261502c5147946ac48cebac02b, type: 3}
       propertyPath: m_LocalPosition.x
