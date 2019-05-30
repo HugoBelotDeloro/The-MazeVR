@@ -16,8 +16,8 @@ public class GameManager : MonoBehaviour
         else
         {
             Instance = this;
-            LoadScene("MainMenu");
-            mainScene = "MainMenu";
+            //LoadScene("MainMenu");
+            //mainScene = "MainMenu";
         }
     }
 
@@ -45,6 +45,11 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(Unload(scene));
         }
+    }
+
+    public AsyncOperation UnloadSingleScene(string sceneName)
+    {
+        return SceneManager.UnloadSceneAsync(sceneName);
     }
 
     private IEnumerator Unload(string scene)
