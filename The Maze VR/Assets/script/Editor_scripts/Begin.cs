@@ -22,6 +22,12 @@ public class Begin : MonoBehaviour
     public int H;
 
     public int L;
+
+    public bool create;
+
+    public InputField I3;
+
+    public string code;
     
     // Start is called before the first frame update
     void Start()
@@ -42,8 +48,15 @@ public class Begin : MonoBehaviour
             yield return new WaitUntil((() => activated));
             try
             {
-                L = Convert.ToInt32(I1.text);
-                H = Convert.ToInt32(I2.text);
+                code = I3.text;
+                if (code != "")
+                    create = false;
+                else
+                {
+                    L = Convert.ToInt32(I1.text);
+                    H = Convert.ToInt32(I2.text);
+                    create = true;
+                }
                 parent.GetComponentInChildren<Move>().activated = true;
                 canvas.GetComponent<Canvas>().enabled = false;
                 parent.GetComponent<Edit>().enabled = true;

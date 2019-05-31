@@ -51,22 +51,37 @@ public class Edit : MonoBehaviour
     public InputField code;
 
     public Canvas can;
+
+    public bool creating;
+
+    public string Incode;
     
     // Start is called before the first frame update
     void Start()
     {
         Begin begin = parent.GetComponent<Begin>();
-        map = new int[begin.H*2+1,begin.L*2+1];
-        mapgo = new GameObject[begin.H*2+1,begin.L*2+1];
-        for (int i = 0; i < map.GetLength(0); i++)
+        creating = begin.create;
+        Incode = begin.code;
+        if (creating)
         {
-            for (int j = 0; j < map.GetLength(1); j++)
+            map = new int[begin.H * 2 + 1, begin.L * 2 + 1];
+            mapgo = new GameObject[begin.H * 2 + 1, begin.L * 2 + 1];
+            for (int i = 0; i < map.GetLength(0); i++)
             {
-                map[j, i] = -1;
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    map[j, i] = -1;
+                }
             }
+
+            Debug.Log(map.GetLength(0));
+            Debug.Log(map.GetLength(1));
         }
-        Debug.Log(map.GetLength(0));
-        Debug.Log(map.GetLength(1));
+        else
+        {
+            map = p.codeToMap(Incode);
+            mapgo = new GameObject[map.GetLength(0),map.GetLength(1)];
+        }
         finished = false;
         GenerateLab();
         Place();
@@ -110,7 +125,7 @@ public class Edit : MonoBehaviour
         }
     }
 
-    public void create(string name, int x,int y, bool rotate)
+    public void create(string name, int y,int x, bool rotate)
     {
         Vector3 v;
         foreach (ListPrefab G in P)
@@ -121,14 +136,14 @@ public class Edit : MonoBehaviour
                     {
                         case ("Pillar"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
-                            Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("Wall"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
-                            if (rotate)
-                                Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
+                            if (!rotate)
+                                mapgo[y,x] = Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
                             else
-                                Instantiate(G.prefab, v, Quaternion.identity, transform);
+                                mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("GroundTile"):
                             v = new Vector3(2*x+transform.position.x,0+transform.position.y,2*y+transform.position.z);
@@ -136,18 +151,18 @@ public class Edit : MonoBehaviour
                             break;
                         case ("Player"):
                             v=new Vector3(2*x+transform.position.x,(float)1.5 +transform.position.y,2*y+transform.position.z);
-                            Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("Door"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
-                            if (rotate)
-                                Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
+                            if (!rotate)
+                                mapgo[y,x] = Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
                             else
-                                Instantiate(G.prefab, v, Quaternion.identity, transform);
+                                mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("Light"):
                             v=new Vector3(2*x+transform.position.x,(float)4.5 +transform.position.y,2*y+transform.position.z);
-                            Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                     }
                 }

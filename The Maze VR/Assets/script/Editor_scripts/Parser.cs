@@ -31,7 +31,7 @@ public class Parser : MonoBehaviour
     {
         code = Base62To10(code);
         int i = 0;
-        int hn = Convert.ToInt32(code[i]);
+        int hn = (int)char.GetNumericValue(code[i]);
         i++;
         string hs = "";
         for (int j = 0; j < hn; j++)
@@ -39,7 +39,7 @@ public class Parser : MonoBehaviour
             hs = hs + code[i];
             i++;
         }
-        int ln = Convert.ToInt32(code[i]);
+        int ln = (int)char.GetNumericValue(code[i]);
         i++;
         string ls = "";
         for (int j = 0; j < ln; j++)
@@ -52,9 +52,10 @@ public class Parser : MonoBehaviour
         {
             for (int k = 0; k < Convert.ToInt32(ls); k++)
             {
-                if (code[i] != 0)
+                if (code[i] != '0')
                 {
-                    int c = Convert.ToInt32(code[i]);
+                    int c = (int)char.GetNumericValue(code[i]);
+                    i++;
                     string d = "";
                     for (int l = 0; l < c; l++)
                     {
@@ -67,13 +68,14 @@ public class Parser : MonoBehaviour
                 else
                 {
                     map[k, j] = -1;
+                    i++;
                 }
             }
         }
         return map;
     }
     
-    public static List<char> bases = new List<char> {('0'),('1'),('2'),('3'),('4'),('5'),('6'),('7'),('8'),('9'),('A'),('B'),('C'),('D'),('E'),('F'),('G'),('H'),('I'),('J'),('K'),('L'),('M'),('N'),('O'),('P'),('Q'),('R'),('S'),('T'),('U'),('V'),('W'),('X'),('Y'),('Z'),('a'),('b'),('c'),('d'),('e'),('f'),('g'),('h'),('i'),('j'),('k'),('l'),('m'),('n'),('o'),('p'),('q'),('r'),('s'),('t'),('u'),('v'),('w'),('x'),('y'),('z')};
+    public static List<char> bases = new List<char> {('0'),('1'),('2'),('3'),('4'),('5'),('6'),('7'),('8'),('9'),('A'),('B'),('C'),('D'),('E'),('F'),('G'),('H'),('I'),('J'),('K'),('L'),('M'),('N'),('O'),('P'),('Q'),('R'),('S'),('T'),('U'),('V'),('W'),('X'),('Y'),('Z'),('a'),('b'),('c'),('d'),('e'),('f'),('g'),('h'),('i'),('j'),('k'),('l'),('m'),('n'),('o'),('p'),('q'),('r'),('s'),('t'),('u'),('v'),('w'),('x'),('y'),('z'),('.'),(';'),(','),('?'),(':'),('/'),('!'),('('),(')'),('{'),('}'),('['),(']'),('-'),('_')};
         
         public static string Base10To62(string s)
         {
@@ -148,10 +150,37 @@ public class Parser : MonoBehaviour
                     i--;
                 }
                 string r = Convert.ToString(o);
-                int b =w - r.Length;
-                for (int j = 0; j < b; j++)
+                if (o == 0)
                 {
-                    r = '0' + r;
+                    r = "";
+                    for (int j = 0; j < w; j++)
+                    {
+                        r = r + '0';
+                    }
+                }
+                else
+                {
+                    int g = 0;
+                    bool v = true;
+                    foreach (char c in m)
+                    {
+                        if (v)
+                        {
+                            if (c == '0')
+                            {
+                                g++;
+                            }
+                            else
+                            {
+                                v = false;
+                            }
+                        }
+                    }
+                    int b = g;
+                    for (int j = 0; j < b; j++)
+                    {
+                        r = '0' + r;
+                    }
                 }
                 re = re + r;
             }
