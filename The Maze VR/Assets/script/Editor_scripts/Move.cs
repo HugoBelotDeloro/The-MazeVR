@@ -30,10 +30,16 @@ public class Move : MonoBehaviour
             float Y = Convert.ToSingle(Input.GetAxis("Mouse ScrollWheel"));
             transform.position += transform.up * speedcamera * Z + transform.right * speedcamera * X;
             camera.orthographicSize -= Y * speedzoom;
-            if (camera.orthographicSize < 1)
-                camera.orthographicSize = 1;
+            if (camera.orthographicSize < 5)
+                camera.orthographicSize = 5;
+            if (camera.orthographicSize > 75)
+                camera.orthographicSize = 75;
             speedcamera = camera.orthographicSize * 0.025f;
             speedzoom = camera.orthographicSize;
+            if (Input.GetAxis("Reset") > 0)
+            {
+                camera.transform.position = new Vector3(0, 162.4f, 0);
+            }
         }
     }
 }

@@ -14,8 +14,8 @@ public class Parser : MonoBehaviour
         {
             for (int j = 0; j < l; j++)
             {
-                if (map[j,i]!=-1)
-                    code = code + ((int)Math.Log10(map[j, i]) + 1).ToString() + (map[j, i]).ToString();
+                if (map[i,j]!=-1)
+                    code = code + ((int)Math.Log10(map[i,j]) + 1).ToString() + (map[i,j]).ToString();
                 else
                 {
                     code = code += '0';
@@ -23,13 +23,13 @@ public class Parser : MonoBehaviour
             }
         }
         Debug.Log(code);
-        code = Base10To62(code);
+        code = Base10To(code);
         return code;
     }
 
     public int[,] codeToMap(string code)
     {
-        code = Base62To10(code);
+        code = BaseTo10(code);
         int i = 0;
         int hn = (int)char.GetNumericValue(code[i]);
         i++;
@@ -63,11 +63,11 @@ public class Parser : MonoBehaviour
                         i++;
                     }
 
-                    map[k, j] = Convert.ToInt32(d);
+                    map[j,k] = Convert.ToInt32(d);
                 }
                 else
                 {
-                    map[k, j] = -1;
+                    map[j,k] = -1;
                     i++;
                 }
             }
@@ -77,7 +77,7 @@ public class Parser : MonoBehaviour
     
     public static List<char> bases = new List<char> {('0'),('1'),('2'),('3'),('4'),('5'),('6'),('7'),('8'),('9'),('A'),('B'),('C'),('D'),('E'),('F'),('G'),('H'),('I'),('J'),('K'),('L'),('M'),('N'),('O'),('P'),('Q'),('R'),('S'),('T'),('U'),('V'),('W'),('X'),('Y'),('Z'),('a'),('b'),('c'),('d'),('e'),('f'),('g'),('h'),('i'),('j'),('k'),('l'),('m'),('n'),('o'),('p'),('q'),('r'),('s'),('t'),('u'),('v'),('w'),('x'),('y'),('z'),('.'),(';'),(','),('?'),(':'),('/'),('!'),('('),(')'),('{'),('}'),('['),(']'),('-'),('_')};
         
-        public static string Base10To62(string s)
+        public static string Base10To(string s)
         {
             int k = 0;
             string re = "";
@@ -117,7 +117,7 @@ public class Parser : MonoBehaviour
             return re;
         }
         
-        public static string Base62To10(string s)
+        public static string BaseTo10(string s)
         {
             int k = 0;
             string re = "";
