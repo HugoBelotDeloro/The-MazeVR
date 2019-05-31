@@ -618,7 +618,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: -190}
+  m_AnchoredPosition: {x: -54, y: -190}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &726082207
@@ -941,7 +941,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -54, y: -190}
+  m_AnchoredPosition: {x: 150, y: -190}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &858160090
@@ -2622,7 +2622,7 @@ MonoBehaviour:
   - prefab: {fileID: 8322881093534463883, guid: 362334ed521972c49be33742eeed53b6,
       type: 3}
     name: IlluWall
-  - prefab: {fileID: 2760132178277183157, guid: 7c11541fbb5673a4d9d488fe27e5280a,
+  - prefab: {fileID: 6445441082958298285, guid: aea1902a15276a042a9ff103052b666e,
       type: 3}
     name: IlluDoor
   currentobject: 1
