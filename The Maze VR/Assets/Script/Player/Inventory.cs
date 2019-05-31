@@ -3,19 +3,19 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public ItemSlot[] Items  = new ItemSlot[MaxItems];
-    public GameObject[] ItemSlotObjects = new GameObject[MaxItems];
-    private const int MaxItems = 3;
-    public Item EmptyItem;
-    public Image EmptyImage;
-    public Equipment Equipment;
+    private ItemSlot[] _items;
+    [SerializeField] private int maxItems;
+    [SerializeField] private Item emptyItem;
+    [SerializeField] private Image emptyImage;
+    [SerializeField] private Equipment equipment;
+    [SerializeField] private ItemSlot emptyItemSlot;
 
     private void Start()
     {
-        for (int i = 0; i < MaxItems; i++)
+        _items = new ItemSlot[maxItems];
+        for (int i = 0; i < maxItems; i++)
         {
-            ItemSlotObjects[i] = GameObject.Find("ItemSlot" + i);
-            Items[i] = ItemSlotObjects[i].GetComponent<ItemSlot>();
+            _items[i] = Instantiate(emptyItemSlot, transform);
         }
     }
 
@@ -23,18 +23,18 @@ public class Inventory : MonoBehaviour
     {
         if (item.Type != Equipment.ItemType.Regular)
         {
-            Item t = Equipment.EquipItem(item);
+            Item t = equipment.EquipItem(item);
             return t.Type == Equipment.ItemType.Null;
         }
         int i = 0;
-        while (i < MaxItems && Items[i].Item.Type != Equipment.ItemType.Null)
+        while (i < maxItems && _items[i].item.Type != Equipment.ItemType.Null)
         {
             i++;
         }
-        if (i < MaxItems)
+        if (i < maxItems)
         {
-            Items[i].Item = item;
-            Items[i].ItemImage.sprite = item.Sprite;
+            _items[i].item = item;
+            _items[i].itemImage.sprite = item.Sprite;
             return true;
         }
         return false;
@@ -43,12 +43,12 @@ public class Inventory : MonoBehaviour
     public bool RemoveItem(Item item)
     {
         int i = 0;
-        while (i < MaxItems && Items[i].Item != item)
+        while (i < maxItems && _items[i].item != item)
             i++;
-        if (i != MaxItems)
+        if (i != maxItems)
         {
-            Items[i].Item = EmptyItem;
-            Items[i].ItemImage = EmptyImage;
+            _items[i].item = emptyItem;
+            _items[i].itemImage = emptyImage;
             return true;
         }
         return false;
