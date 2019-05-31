@@ -16,7 +16,7 @@ public class Edit : MonoBehaviour
 
     public ListPrefab[] P;
 
-    public int currentobject = 2;
+    public int currentobject = 1;
 
     public int posX = 0;
 
@@ -51,23 +51,40 @@ public class Edit : MonoBehaviour
     public InputField code;
 
     public Canvas can;
+
+    public bool creating;
+
+    public string Incode;
     
     // Start is called before the first frame update
     void Start()
     {
         Begin begin = parent.GetComponent<Begin>();
-        map = new int[begin.H*2+1,begin.L*2+1];
-        mapgo = new GameObject[begin.H*2+1,begin.L*2+1];
-        for (int i = 0; i < map.GetLength(0); i++)
+        creating = begin.create;
+        Incode = begin.code;
+        if (creating)
         {
-            for (int j = 0; j < map.GetLength(1); j++)
+            map = new int[begin.H * 2 + 1, begin.L * 2 + 1];
+            mapgo = new GameObject[begin.H * 2 + 1, begin.L * 2 + 1];
+            for (int i = 0; i < map.GetLength(0); i++)
             {
-                map[j, i] = -1;
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    map[i, j] = -1;
+                }
             }
+
+            Debug.Log(map.GetLength(0));
+            Debug.Log(map.GetLength(1));
         }
-        Debug.Log(map.GetLength(0));
-        Debug.Log(map.GetLength(1));
+        else
+        {
+            map = p.codeToMap(Incode);
+            mapgo = new GameObject[map.GetLength(0),map.GetLength(1)];
+        }
         finished = false;
+        posX = 0;
+        posY = map.GetLength(0) - 1;
         GenerateLab();
         Place();
     }
@@ -90,6 +107,12 @@ public class Edit : MonoBehaviour
                         create("Wall", i, j,true);
                     else if (c == 4)
                         create("Door", i, j,true);
+                    else if (c == 6)
+                        create("FalseWall", i, j,true);
+                    else if (c == 7)
+                        create("IlluWall", i, j,true);
+                    else if (c == 8)
+                        create("IlluDoor", i, j,true);
                 }
                 else if (i % 2 == 0 && j % 2 == 1)
                 {
@@ -97,6 +120,12 @@ public class Edit : MonoBehaviour
                         create("Wall", i, j,false);
                     else if (c == 4)
                         create("Door", i, j,false);
+                    else if (c == 6)
+                        create("FalseWall", i, j,false);
+                    else if (c == 7)
+                        create("IlluWall", i, j,false);
+                    else if (c == 8)
+                        create("IlluDoor", i, j,false);
                 }
                 else if (i % 2 == 1 && j % 2 == 1)
                 {
@@ -110,7 +139,7 @@ public class Edit : MonoBehaviour
         }
     }
 
-    public void create(string name, int x,int y, bool rotate)
+    public void create(string name, int y,int x, bool rotate)
     {
         Vector3 v;
         foreach (ListPrefab G in P)
@@ -121,14 +150,14 @@ public class Edit : MonoBehaviour
                     {
                         case ("Pillar"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
-                            Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("Wall"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
-                            if (rotate)
-                                Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
+                            if (!rotate)
+                                mapgo[y,x] = Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
                             else
-                                Instantiate(G.prefab, v, Quaternion.identity, transform);
+                                mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("GroundTile"):
                             v = new Vector3(2*x+transform.position.x,0+transform.position.y,2*y+transform.position.z);
@@ -136,18 +165,39 @@ public class Edit : MonoBehaviour
                             break;
                         case ("Player"):
                             v=new Vector3(2*x+transform.position.x,(float)1.5 +transform.position.y,2*y+transform.position.z);
-                            Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("Door"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
-                            if (rotate)
-                                Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
+                            if (!rotate)
+                                mapgo[y,x] = Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
                             else
-                                Instantiate(G.prefab, v, Quaternion.identity, transform);
+                                mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("Light"):
                             v=new Vector3(2*x+transform.position.x,(float)4.5 +transform.position.y,2*y+transform.position.z);
-                            Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            break;
+                        case ("FalseWall"):
+                            v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
+                            if (!rotate)
+                                mapgo[y,x] = Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
+                            else
+                                mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            break;
+                        case ("IlluWall"):
+                            v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
+                            if (!rotate)
+                                mapgo[y,x] = Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
+                            else
+                                mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            break;
+                        case ("IlluDoor"):
+                            v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
+                            if (!rotate)
+                                mapgo[y,x] = Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
+                            else
+                                mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                     }
                 }
@@ -162,7 +212,7 @@ public class Edit : MonoBehaviour
         Vector3 v;
         Vector3 cv;
         //wall et door
-        if (currentobject == 2 || currentobject == 4)
+        if (currentobject == 2 || currentobject == 4 || currentobject == 6 || currentobject == 7 || currentobject == 8)
         {
             //rectifie position
             if (posX % 2 == 0 && posY % 2 == 0)
@@ -679,7 +729,7 @@ public class Edit : MonoBehaviour
                     }
                 }
             }
-            else if (currentobject == 2 || currentobject == 4)
+            else if (currentobject == 2 || currentobject == 4 || currentobject == 6 || currentobject == 7 || currentobject == 8)
             {
                 if (Input.GetKeyDown(KeyCode.Keypad1))
                 {
@@ -781,8 +831,8 @@ public class Edit : MonoBehaviour
                         map[posY, posX] = currentobject;
                         mapgo[posY, posX] = currentgameobjectprefab;
                         currentgameobjectprefab = null;
-                        Destroy(cursorprefab);
                     }
+                    Destroy(cursorprefab);
                     done = true;
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad6))
@@ -970,8 +1020,8 @@ public class Edit : MonoBehaviour
                         map[posY, posX] = currentobject;
                         mapgo[posY, posX] = currentgameobjectprefab;
                         currentgameobjectprefab = null;
-                        Destroy(cursorprefab);
                     }
+                    Destroy(cursorprefab);
                     done = true;
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad6))
@@ -1137,8 +1187,8 @@ public class Edit : MonoBehaviour
                         map[posY, posX] = currentobject;
                         mapgo[posY, posX] = currentgameobjectprefab;
                         currentgameobjectprefab = null;
-                        Destroy(cursorprefab);
                     }
+                    Destroy(cursorprefab);
                     done = true;
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad6))

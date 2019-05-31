@@ -35,8 +35,8 @@ public class Equipment : MonoBehaviour
 
     private void UpdateItems()
     {
-        lamp.enabled = lightSlot.Item.Type != ItemType.Null;
-        compass.SetActive(compassSlot.Item.Type != ItemType.Null);
+        lamp.enabled = lightSlot.item.Type != ItemType.Null;
+        compass.SetActive(compassSlot.item.Type != ItemType.Null);
     }
     
     public Item EquipItem(Item item)
@@ -44,9 +44,9 @@ public class Equipment : MonoBehaviour
         ItemSlot slot;
         if (_map.TryGetValue(item.Type, out slot))
         {
-            Item buffer = slot.Item;
-            slot.Item = item;
-            slot.ItemImage.sprite = item.Sprite;
+            Item buffer = slot.item;
+            slot.item = item;
+            slot.itemImage.sprite = item.Sprite;
             UpdateItems();
             return buffer;
         }
