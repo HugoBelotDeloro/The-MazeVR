@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using System.Threading;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour
     private int _framesSinceLastHit;
     private const int FramesToRegen = 100;
     private const int HealthPerFrame = 1;
-    [SerializeField]private SpriteRenderer BloodOverlay;
+    [SerializeField]private Image BloodOverlay;
     [SerializeField]private GameObject deathScreen;
 
     public int Health { get => _health;}
