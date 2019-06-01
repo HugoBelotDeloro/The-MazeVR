@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block content%}
+
+<!-- Page info section -->
+<section class="page-info-section set-bg" data-setbg="{% static 'img/page-top-bg/3.jpg' %}">
+  <div class="pi-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-5 col-lg-6 text-white">
+          <h2>
+            {% if user.is_authenticated %}
+              {{ user.username }}
+
+            {% else %}
+            You must <a class=site-btn href="{% url 'login' %}">Login</a>  to see your stats !
+            {% endif %}
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if user.is_authenticated %}
+<!-- Page info section -->
+<div class="container">
+  <div class="stat">
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div class="milestone-counter">
+                  <i class="fa fa-trophy fa-3x"></i>
+                  <span class="stat-count highlight">{{ user.win.wins }}</span>
+                  <div class="milestone-details">Games Won (Total)</div>
+              </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div class="milestone-counter">
+                  <i class="fa fa-trophy fa-3x"></i>
+                  <span class="stat-count highlight">{{ user.win.VRwins }}</span>
+                  <div class="milestone-details">Games Won  (VR mode)</div>
+              </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div class="milestone-counter">
+                  <i class="fa fa-trophy fa-3x"></i>
+                  <span class="stat-count highlight">{{ user.win.CTRLwins }}</span>
+                  <div class="milestone-details">Games Won (Control mode)</div>
+              </div>
+          </div>
+  </div><!-- stat -->
+</div>
+{% endif %}
+{% endblock %}
