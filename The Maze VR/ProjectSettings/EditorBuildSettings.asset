@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MazeGenerator.unity
     guid: ca4aa44631294864f91aa791ae14a026
+  - enabled: 1
+    path: Assets/Scenes/connect.unity
+    guid: 9d949655781ddc744b6fe6c9d13d8245
+  - enabled: 1
+    path: Assets/Scenes/lobby.unity
+    guid: af3a3bbb892f7b04ab5376879de51cbc
   m_configObjects: {}
