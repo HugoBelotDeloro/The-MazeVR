@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
-public class Edit : MonoBehaviour
+public class placetrap : MonoBehaviour
 {
     public GameObject parent;
 
