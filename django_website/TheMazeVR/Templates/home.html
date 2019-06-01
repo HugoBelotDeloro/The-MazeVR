@@ -1,0 +1,33 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- <img src="{% static "wallpaper.jpg" %}" alt="wallpaper"> -->
+
+	<!-- Hero section -->
+	<section class="hero-section">
+		<div class="hero-slider owl-carousel">
+			<div class="hs-item set-bg" data-setbg="{% static 'img/slider-1.jpg' %}">
+				<div class="hs-text">
+					<div class="container">
+						<h2>Get <span>The Maze</span> now !</h2>
+						<p>You're almost there. <br> lorem maximus mauris scelerisque, at rutrum nulla dictum. Ut ac ligula sapien. <br>Suspendisse cursus faucibus finibus.</p>
+						<a href="{% url 'download' %}" class="site-btn">Download</a>
+					</div>
+				</div>
+			</div>
+			<div class="hs-item set-bg" data-setbg="{% static 'img/slider-2.jpg' %}">
+				<div class="hs-text">
+					<div class="container">
+						<h2>A scary <span> VR </span>experience</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada <br> lorem maximus mauris scelerisque, at rutrum nulla dictum. Ut ac ligula sapien. <br>Suspendisse cursus faucibus finibus.</p>
+						<a href="{% url 'project' %}" class="site-btn">Learn More</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Hero section end -->
+
+
+{% endblock %}
