@@ -3,7 +3,7 @@
 public class PlayerMovement : MonoBehaviour
 {
     public Camera PlayerView;
-    private const float MovementAmount = 0.3f;
+    private const float MovementAmount = 0.1f;
     private const float RotationAmount = 2f;
     private const float HeadPanSpeed = 1.3f;
     private const float MinHeadTilt = 0.4f;
@@ -12,6 +12,17 @@ public class PlayerMovement : MonoBehaviour
     private bool _paused;
     private int _timer;
     [SerializeField] private GameObject pauseMenu;
+    private float speed = 1;
+
+    public float GetSpeed()
+    {
+        return speed;
+    }
+
+    public void SetSpeed(float s)
+    {
+        speed = s;
+    }
 
     private void Start()
     {
@@ -32,10 +43,10 @@ public class PlayerMovement : MonoBehaviour
         }
         if (!_paused) 
         {
-            float forwardMovement = Input.GetAxis("Forward") * MovementAmount;
+            float forwardMovement = Input.GetAxis("Forward") * MovementAmount * speed;
             float rotation = Input.GetAxis("Side") * RotationAmount;
             Transform transform1 = transform;
-            transform1.position += MovementAmount * forwardMovement * transform1.forward;
+            transform1.position += forwardMovement * transform1.forward;
             transform.Rotate(rotation * RotationAmount * Vector3.up, Space.World);
             Quaternion r = PlayerView.transform.localRotation;
             float clamped = Mathf.Clamp(r.x + HeadPanSpeed * Input.GetAxis("Head"), MaxHeadTilt, MinHeadTilt);

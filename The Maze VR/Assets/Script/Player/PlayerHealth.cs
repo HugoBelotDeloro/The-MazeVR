@@ -11,8 +11,9 @@ public class PlayerHealth : MonoBehaviour
     private const int HealthPerFrame = 1;
     [SerializeField]private SpriteRenderer BloodOverlay;
     [SerializeField]private GameObject deathScreen;
-    
-    
+
+    public int Health { get => _health;}
+
     void Start()
     {
         _health = MaxHealth;
