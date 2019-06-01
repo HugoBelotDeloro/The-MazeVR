@@ -12,6 +12,7 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
+        equipment.gameObject.SetActive(true);
         _items = new ItemSlot[maxItems];
         for (int i = 0; i < maxItems; i++)
         {

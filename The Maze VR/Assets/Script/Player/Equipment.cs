@@ -62,4 +62,12 @@ public class Equipment : MonoBehaviour
         }
     }*/
     
+    public bool HasItem(ItemType type)
+    {
+        if (_map.TryGetValue(type, out ItemSlot slot))
+        {
+            return slot.item.Type == type;
+        }
+        return false;
+    }
 }
