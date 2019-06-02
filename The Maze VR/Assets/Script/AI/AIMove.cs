@@ -7,6 +7,7 @@ public class AIMove : MonoBehaviour
 {
     private NavMeshAgent agent;
     public GameObject target;
+    public float life; //number of second the AI is allowed to live
 
     // Start is called before the first frame update
     void Start()
@@ -19,5 +20,11 @@ public class AIMove : MonoBehaviour
     void Update()
     {
         agent.destination = target.transform.position;
+        life -= Time.deltaTime;
+        if (life <= 0)
+        {
+            Destroy(gameObject);
+            Debug.Log("AI died");
+        }
     }
 }
