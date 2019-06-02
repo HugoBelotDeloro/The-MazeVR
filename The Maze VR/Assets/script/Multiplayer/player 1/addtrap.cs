@@ -30,7 +30,7 @@ public class addtrap : MonoBehaviour
 
     public void send(string s)
     {
-        
+        GameObject.Find("client").GetComponent<client>().GameCmd(s);
     }
     
     public void Receive(string s)

@@ -98,7 +98,7 @@ public class client : MonoBehaviour
 
                 break;
             case "ig":
-                GameAction(evt);
+                GameAction(message.Replace("ig:",""));
                 break;
             case "error":
                 //Debug.Log(evt[1]);
@@ -117,15 +117,15 @@ public class client : MonoBehaviour
     }
 
 
-    void GameAction(string[] cmd)
+    void GameAction(string cmd)
     {
-        //Call game events
-        //ig:cmd:paramter1:parameter2...
-        switch (cmd[2]) //example
+        if (S == "VR")
         {
-            case "salut":
-                GameCmd("Sa va?");
-                break;
+            GameObject.Find("Game player 1").GetComponent<addtrap>().Receive(cmd);
+        }
+        else
+        {
+            GameObject.Find("Game player 2").GetComponent<addtrap>().Receive(cmd);
         }
     }
 
@@ -152,7 +152,7 @@ public class client : MonoBehaviour
         message("CTRLplist:");
     }
 
-    void GameCmd(string cmd)
+    public void GameCmd(string cmd)
     {
         message("ig:" + gameID + ":" + cmd);
     }

@@ -274,7 +274,7 @@ public class placetrap : MonoBehaviour
     
     public void send(string s)
     {
-        
+        GameObject.Find("client").GetComponent<client>().GameCmd(s);
     }
 
     public void receive(string s)//TODO
