@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Persistent.unity
     guid: ebc956d9c6eb5254ab2abef9a4ef2406
@@ -15,8 +12,8 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 68efc97713c49054b9466b5f31c861a3
   - enabled: 1
-    path: Assets/Scenes/map-000003.unity
-    guid: 1416a9642353bc3429301e926846cfee
+    path: Assets/Scenes/map-000001.unity
+    guid: c3999fe06d8d7aa4abe20eb82b0c0be3
   - enabled: 1
     path: Assets/Scenes/MazeGenerator.unity
     guid: ca4aa44631294864f91aa791ae14a026
