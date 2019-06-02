@@ -129,7 +129,7 @@ public class client : MonoBehaviour
         }
     }
 
-    void connectTo(string pseudo)
+    public void connectTo(string pseudo)
     {
         if (pseudo==null)
         {
