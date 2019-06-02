@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 6979827769623983846}
   - component: {fileID: 792254770815478032}
   - component: {fileID: 3487057588350872458}
-  - component: {fileID: 4595561227289215063}
   - component: {fileID: 152723504635382820}
   m_Layer: 0
   m_Name: AI
@@ -71,6 +70,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -147,22 +147,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a67705df1fff4c4caaf6902e1d99f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4595561227289215063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 152723504635382811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08dc52e3697b24f4a869e649bcb4b07d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  GoStraightDistance: 30
-  Error: 0.7
-  ResetDestTimer: 5
 --- !u!114 &152723504635382820
 MonoBehaviour:
   m_ObjectHideFlags: 0
