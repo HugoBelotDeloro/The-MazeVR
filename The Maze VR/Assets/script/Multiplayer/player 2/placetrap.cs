@@ -274,7 +274,7 @@ public class placetrap : MonoBehaviour
     
     public void send(string s)
     {
-        GameObject.Find("client").GetComponent<client>().GameCmd(s);
+        GameObject.Find("Client").GetComponent<client>().GameCmd(s);
     }
 
     public void receive(string s)//TODO
@@ -289,11 +289,11 @@ public class placetrap : MonoBehaviour
                 {
                     case ("1"):
                         win.text = "DEFEAT";
-                        GameObject.Find("client").GetComponent<client>().Win();
+                        GameObject.Find("Client").GetComponent<client>().Win();
                         break;
                     case ("2"):
                         win.text = "VICTORY";
-                        GameObject.Find("client").GetComponent<client>().GameOver();
+                        GameObject.Find("Client").GetComponent<client>().GameOver();
                         break;
                 }
                 finished = true;
@@ -343,7 +343,7 @@ public class placetrap : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Keypad5))
                 {
-                    send("pi:Light");
+                    send("pi:"+pieges.Length);
                 }
             }
             else if (currentobject == 3) //TODO

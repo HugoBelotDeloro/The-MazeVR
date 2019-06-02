@@ -6,6 +6,8 @@ public class animations : MonoBehaviour
 {
     private Animator anim;
     public GameObject Player;
+    public AudioSource audiosrc;
+    public AudioClip attacksound;
     private float attacktimer;
     private float rmattacktimer;
     public float attackdelay;
@@ -27,6 +29,7 @@ public class animations : MonoBehaviour
         {
             anim.SetTrigger("Attack");
             attacktimer = attackdelay;
+            audiosrc.PlayOneShot(attacksound);
         }
         else if (rmattacktimer <= 0 && Vector3.Distance(Player.transform.position, transform.position) < 30)
         {
