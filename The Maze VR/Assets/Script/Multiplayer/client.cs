@@ -157,13 +157,13 @@ public class client : MonoBehaviour
         message("ig:" + gameID + ":" + cmd);
     }
 
-    public void GameOver()
+    void GameOver()
     {
         message("go:" + gameID);
         Debug.Log(me + ": game has ended");
     }
 
-    public void Win()
+    void Win()
     {
         message("win:" + gameID);
         Debug.Log(me + ": won the game");
