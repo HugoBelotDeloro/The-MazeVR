@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoadSingleplayer : MonoBehaviour
 {
@@ -6,8 +7,7 @@ public class LoadSingleplayer : MonoBehaviour
 
     public static void LoadSingleplayerScene(string scene)
     {
-        gameManager.UnloadScene("MainMenu");
-        gameManager.LoadScene(scene);
+        SceneManager.LoadScene(scene, LoadSceneMode.Single);
     }
 
     public void LoadWrapper(string scene)
