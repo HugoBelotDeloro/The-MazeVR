@@ -44,31 +44,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   P:
-  - prefab: {fileID: 4446337270003121854, guid: 7a4a44a2263cda8428b8cf107b65ad15,
+  - prefab: {fileID: 5685319055560401779, guid: a5e64a319df40ea449837a831747cf43,
       type: 3}
     name: GroundTile
-  - prefab: {fileID: 2520485870441115822, guid: fecb588f7da1e23449e95c3b0786efa1,
-      type: 3}
+  - prefab: {fileID: 242779210666313783, guid: ca63d2839de8dbd4fa456d7fedeb4570, type: 3}
     name: Pillar
-  - prefab: {fileID: 7559992649758219974, guid: 2b7c910356482084daceed9142561760,
-      type: 3}
+  - prefab: {fileID: 128165216539020763, guid: ca5258d8fa1302e4688b0a5a8d7ad7c2, type: 3}
     name: Wall
   - prefab: {fileID: 1325187585815849329, guid: b77d5f47bf8a5ab4496fe5ad3546cda2,
       type: 3}
     name: Player
-  - prefab: {fileID: 5087963523767540926, guid: 0a2a442ec6a87c2429d6c3fe2d4df59e,
+  - prefab: {fileID: 2671194962470248197, guid: d7828a3a11bdff04c857aa97e4f2f864,
       type: 3}
     name: Door
-  - prefab: {fileID: 2064828034790277495, guid: bb96de8f411992a46899040518046582,
+  - prefab: {fileID: 3684435117427099047, guid: a57b6fc0e2ec4d342b44e8ad13e2036c,
       type: 3}
     name: Light
-  - prefab: {fileID: 3166807347327789423, guid: b834056ee9828734884431c27187747f,
+  - prefab: {fileID: 5425786798305972634, guid: cf77d700d168ff74eb981be23f36e7bf,
       type: 3}
     name: FalseWall
-  - prefab: {fileID: 6514609693863806614, guid: aba84839b3cbdc74aae7c9d48fc337a7,
+  - prefab: {fileID: 3886480594068334402, guid: a283f52d2a5146f4caf19eb2ed86f90c,
       type: 3}
     name: IlluWall
-  - prefab: {fileID: 7436822683236188579, guid: d1bbcebb1d5ee3b47badbd958e476305,
+  - prefab: {fileID: 1288633026, guid: d052e3fbbc0929a408e720b491187572, type: 3}
+    name: Goal
+  - prefab: {fileID: 2351081837776998035, guid: bc92bbae5dc8d09428d556519ac0ee23,
       type: 3}
-    name: IlluDoor
+    name: DoorLock
+  - prefab: {fileID: 2208023331374737228, guid: 59154d957213b4841b1183904c23eb4d,
+      type: 3}
+    name: Key
   code: 
