@@ -289,9 +289,11 @@ public class placetrap : MonoBehaviour
                 {
                     case ("1"):
                         win.text = "DEFEAT";
+                        GameObject.Find("client").GetComponent<client>().GameOver(); ;
                         break;
                     case ("2"):
                         win.text = "VICTORY";
+                        GameObject.Find("client").GetComponent<client>().Win(); ;
                         break;
                 }
                 finished = true;
