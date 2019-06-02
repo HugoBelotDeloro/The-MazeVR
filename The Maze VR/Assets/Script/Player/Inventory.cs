@@ -9,6 +9,8 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Image emptyImage;
     [SerializeField] private Equipment equipment;
     [SerializeField] private ItemSlot emptyItemSlot;
+    [SerializeField] private ItemSlot keySlot;
+    [SerializeField] private Text keyAmount;
 
     private void Start()
     {
@@ -22,6 +24,13 @@ public class Inventory : MonoBehaviour
 
     public bool AddItem(Item item)
     {
+        if (item.Type == Equipment.ItemType.Key)
+        {
+            PutItem(item, keySlot);
+            keySlot.stack++;
+            keyAmount.text = keySlot.stack.ToString();
+            return true;
+        }
         if (item.Type != Equipment.ItemType.Regular)
         {
             Item t = equipment.EquipItem(item);
@@ -34,11 +43,30 @@ public class Inventory : MonoBehaviour
         }
         if (i < maxItems)
         {
-            _items[i].item = item;
-            _items[i].itemImage.sprite = item.Sprite;
+            PutItem(item, _items[i]);
             return true;
         }
         return false;
+    }
+
+    public bool UseKey()
+    {
+        if (keySlot.stack > 0)
+        {
+            if (--keySlot.stack == 0)
+            {
+                PutItem(emptyItem, keySlot);
+            }
+            keyAmount.text = keySlot.stack.ToString();
+            return true;
+        }
+        return false;
+    }
+
+    private void PutItem(Item item, ItemSlot slot)
+    {
+        slot.item = item;
+        slot.itemImage.sprite = item.Sprite;
     }
     
     public bool RemoveItem(Item item)

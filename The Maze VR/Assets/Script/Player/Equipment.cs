@@ -11,7 +11,8 @@ public class Equipment : MonoBehaviour
         Compass,
         Clothes,
         Light,
-        Null
+        Null,
+        Key
     }
 
     [SerializeField] private ItemSlot compassSlot;
