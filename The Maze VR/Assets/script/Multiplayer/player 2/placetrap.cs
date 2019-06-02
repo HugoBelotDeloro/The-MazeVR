@@ -341,7 +341,7 @@ public class placetrap : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Keypad5))
                 {
-                    send("pi:Light");
+                    send("pi:"+pieges.Length);
                 }
             }
             else if (currentobject == 3) //TODO
