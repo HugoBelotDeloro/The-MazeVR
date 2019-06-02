@@ -27,7 +27,6 @@ public class DoorActivate : MonoBehaviour
         {
             if (Input.GetAxis("Action") > 0)
             {
-                
                 if (!sleep)
                 {
                     if (!open)

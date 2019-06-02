@@ -10,17 +10,17 @@ public class placetrap : MonoBehaviour
 
     public int[,] map;
 
-    private GameObject[,] mapgo;
+    public ListPrefab[] structs;
 
-    public ListPrefab[] P;
+    public ListPrefab[] pieges;
 
-    public int currentobject = 1;
+    private List<ListPrefab> piegesplaces;
+
+    public int currentobject = 0;
 
     public int posX = 0;
 
     public int posY = 0;
-
-    private ConsoleKey c;
 
     private bool placing = false;
 
@@ -34,10 +34,6 @@ public class placetrap : MonoBehaviour
 
     private bool finished;
 
-    public Color prefabcolor;
-
-    public List<Color> prefabcolorlist;
-
     public GameObject cursor;
 
     private GameObject cursorprefab;
@@ -46,40 +42,24 @@ public class placetrap : MonoBehaviour
     
     private Parser p = new Parser();
 
-    public InputField code;
-
     public Canvas can;
 
-    public bool creating;
-
     public string Incode;
+
+    private int energy;
+
+    private int trapname;
+
+    public Text win;
     
     // Start is called before the first frame update
     void Start()
     {
-        Begin begin = parent.GetComponent<Begin>();
-        creating = begin.create;
+        begingame begin = parent.GetComponent<begingame>();
+        trapname = 0;
+        piegesplaces = new List<ListPrefab>();
         Incode = begin.code;
-        if (creating)
-        {
-            map = new int[begin.H * 2 + 1, begin.L * 2 + 1];
-            mapgo = new GameObject[begin.H * 2 + 1, begin.L * 2 + 1];
-            for (int i = 0; i < map.GetLength(0); i++)
-            {
-                for (int j = 0; j < map.GetLength(1); j++)
-                {
-                    map[i, j] = -1;
-                }
-            }
-
-            Debug.Log(map.GetLength(0));
-            Debug.Log(map.GetLength(1));
-        }
-        else
-        {
-            map = p.codeToMap(Incode);
-            mapgo = new GameObject[map.GetLength(0),map.GetLength(1)];
-        }
+        map = p.codeToMap(Incode);
         finished = false;
         posX = 0;
         posY = map.GetLength(0) - 1;
@@ -136,7 +116,7 @@ public class placetrap : MonoBehaviour
     public void create(string name, int y,int x, bool rotate)
     {
         Vector3 v;
-        foreach (ListPrefab G in P)
+        foreach (ListPrefab G in structs)
             {
                 if (G.name == name)
                 {
@@ -144,14 +124,14 @@ public class placetrap : MonoBehaviour
                     {
                         case ("Pillar"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
-                            mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("Wall"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
                             if (!rotate)
-                                mapgo[y,x] = Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
+                                Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
                             else
-                                mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
+                                Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("GroundTile"):
                             v = new Vector3(2*x+transform.position.x,0+transform.position.y,2*y+transform.position.z);
@@ -159,32 +139,32 @@ public class placetrap : MonoBehaviour
                             break;
                         case ("Player"):
                             v=new Vector3(2*x+transform.position.x,(float)1.5 +transform.position.y,2*y+transform.position.z);
-                            mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("Door"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
                             if (!rotate)
-                                mapgo[y,x] = Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
+                                Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
                             else
-                                mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
+                                Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("Light"):
                             v=new Vector3(2*x+transform.position.x,(float)4.5 +transform.position.y,2*y+transform.position.z);
-                            mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("FalseWall"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
                             if (!rotate)
-                                mapgo[y,x] = Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
+                                Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
                             else
-                                mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
+                                Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("IlluWall"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
                             if (!rotate)
-                                mapgo[y,x] = Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
+                                Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
                             else
-                                mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
+                                Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                     }
                 }
@@ -194,12 +174,12 @@ public class placetrap : MonoBehaviour
     void Place()
     {
         //variables
-        if (currentobject!=P.Length)
-            currentgameobject = P[currentobject].prefab;
+        if (currentobject!=pieges.Length)
+            currentgameobject = pieges[currentobject].prefab;
         Vector3 v;
         Vector3 cv;
         //wall et door
-        if (currentobject == 2 || currentobject == 4 || currentobject == 6 || currentobject == 7)
+        if (currentobject == 3)//TODO
         {
             //rectifie position
             if (posX % 2 == 0 && posY % 2 == 0)
@@ -217,7 +197,7 @@ public class placetrap : MonoBehaviour
             rotation = posX % 2 != 0;
             v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
             cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-            if (mapgo[posY, posX] == null)
+            if (map[posY, posX] == -1)
             {
                 if (rotation)
                     currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.Euler(new Vector3(0, 90, 0)),transform);
@@ -232,7 +212,7 @@ public class placetrap : MonoBehaviour
             placing = true;
         }
         //player et light
-        else if (currentobject == 3 || currentobject == 5)
+        else if (currentobject == 0 || currentobject == 1 || currentobject == 2) //TODO
         {
             //rectifie position
             if (posX % 2 == 0)
@@ -250,12 +230,9 @@ public class placetrap : MonoBehaviour
                     posY -= 1;
             }
             //creer objet
-            if (currentobject==3)
-                v=new Vector3(2*posX+transform.position.x,(float)1.5 +transform.position.y,2*posY+transform.position.z);
-            else
-                v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
+            v=new Vector3(2*posX+transform.position.x,(float)0.5 +transform.position.y,2*posY+transform.position.z);
             cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-            if (mapgo[posY, posX] == null)
+            if (map[posY, posX] == -1)
                 currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
             else
                 currentgameobjectprefab = null;
@@ -265,7 +242,7 @@ public class placetrap : MonoBehaviour
             placing = true;
         }
         //pillar
-        else if (currentobject == 1)
+        else if (false) //TODO
         {
             //rectifie position
             if (posX % 2 == 1)
@@ -279,7 +256,7 @@ public class placetrap : MonoBehaviour
             //creer objet
             v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
             cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-            if (mapgo[posY, posX] == null)
+            if (map[posY, posX] == -1)
                 currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
             else
                 currentgameobjectprefab = null;
@@ -288,68 +265,55 @@ public class placetrap : MonoBehaviour
             done = false;
             placing = true;
         }
-        else if (currentobject==P.Length)
+        else if (currentobject == pieges.Length)
         {
-            if (mapgo[posY, posX] != null)
-            {
-                Debug.Log(mapgo[posY, posX].name);
-                prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
-                mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
-                prefabcolorlist.Clear();
-                foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
-                {
-                    prefabcolorlist.Add(r.material.color);
-                    r.material.color=Color.red;
-                }
-            }
             done = false;
             placing = true;
-            cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-            cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
+        }
+    }
+    
+    public void send(string s)
+    {
+        GameObject.Find("client").GetComponent<client>().GameCmd(s);
+    }
+
+    public void receive(string s)//TODO
+    {
+        string[] command = s.Split(':');
+        switch (command[0])
+        {
+            case ("pos"):
+                break;
+            case ("end"):
+                switch (command[1])
+                {
+                    case ("1"):
+                        win.text = "DEFEAT";
+                        break;
+                    case ("2"):
+                        win.text = "VICTORY";
+                        break;
+                }
+                finished = true;
+                break;
         }
     }
 
     void Update()
     {
-        if (currentobject!=P.Length)
-            nameobject.text = P[currentobject].name;
+        if (currentobject == pieges.Length)
+            nameobject.text = "current trap : No lights";
         else
-            nameobject.text = "Destroy";
+            nameobject.text = "current trap : "+pieges[currentobject].name;
         Vector3 v;
         Vector3 cv;
         if (placing)
         {
-            if (Input.GetKeyDown(KeyCode.KeypadEnter))
-            {
-                Destroy(currentgameobjectprefab);
-                Destroy(cursorprefab);
-                finished = true;
-                done = true;
-            }
             if (Input.GetKeyDown(KeyCode.KeypadPlus))
             {
-                if (currentobject == P.Length)
+                if (currentobject == pieges.Length)
                 {
-                    if (mapgo[posY, posX] != null)
-                    {
-                        if (prefabcolorlist.Count <= 2)
-                        {
-                            for (int i = 1; i < prefabcolorlist.Count - 1; i++)
-                            {
-                                mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
-                                    prefabcolorlist[i - 1];
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < prefabcolorlist.Count; i++)
-                            {
-                                mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
-                            }
-                        }
-                        mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
-                    }
-                    currentobject = 1;
+                    currentobject = 0;
                 }
                 else
                 {
@@ -361,31 +325,9 @@ public class placetrap : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.KeypadMinus))
             {
-                if (currentobject==P.Length)
+                if (currentobject == 0)
                 {
-                    if (mapgo[posY, posX] != null)
-                    {
-                        if (prefabcolorlist.Count <= 2)
-                        {
-                            for (int i = 1; i < prefabcolorlist.Count - 1; i++)
-                            {
-                                mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
-                                    prefabcolorlist[i - 1];
-                            }
-                        }
-                        else
-                        {
-                            for (int i = 0; i < prefabcolorlist.Count; i++)
-                            {
-                                mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
-                            }
-                        }
-                        mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
-                    }
-                }
-                if (currentobject == 1)
-                {
-                    currentobject = P.Length;
+                    currentobject = pieges.Length;
                 }
                 else
                 {
@@ -395,351 +337,14 @@ public class placetrap : MonoBehaviour
                 Destroy(currentgameobjectprefab);
                 Destroy(cursorprefab);
             }
-            if (currentobject == P.Length)
+            else if (currentobject == pieges.Length)
             {
-                if (Input.GetKeyDown(KeyCode.Keypad1))
+                if (Input.GetKeyDown(KeyCode.Keypad5))
                 {
-                    Debug.Log("1");
-                    if (posX > 0 && posY > 0)
-                    {
-                        if (mapgo[posY, posX] != null)
-                        {
-                            if (prefabcolorlist.Count <= 2)
-                            {
-                                for (int i = 1; i < prefabcolorlist.Count - 1; i++)
-                                {
-                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
-                                        prefabcolorlist[i - 1];
-                                }
-                            }
-                            else
-                            {
-                                for (int i = 0; i < prefabcolorlist.Count; i++)
-                                {
-                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
-                                }
-                            }
-                            mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
-                        }
-                        Destroy(cursorprefab);
-                        posX -= 1;
-                        posY -= 1;
-                        if (mapgo[posY, posX] != null)
-                        {
-                            prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
-                            mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
-                            prefabcolorlist.Clear();
-                            foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
-                            {
-                                prefabcolorlist.Add(r.material.color);
-                                r.material.color=Color.red;
-                            }
-                        }
-                        cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
-                    }
-                }
-                else if (Input.GetKeyDown(KeyCode.Keypad2))
-                {
-                    Debug.Log("2");
-                    if (posY > 0)
-                    {
-                        if (mapgo[posY, posX] != null)
-                        {
-                            if (prefabcolorlist.Count <= 2)
-                            {
-                                for (int i = 1; i < prefabcolorlist.Count - 1; i++)
-                                {
-                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
-                                        prefabcolorlist[i - 1];
-                                }
-                            }
-                            else
-                            {
-                                for (int i = 0; i < prefabcolorlist.Count; i++)
-                                {
-                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
-                                }
-                            }
-                            mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
-                        }
-                        Destroy(cursorprefab);
-                        posY -= 1;
-                        if (mapgo[posY, posX] != null)
-                        {
-                            prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
-                            mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
-                            prefabcolorlist.Clear();
-                            foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
-                            {
-                                prefabcolorlist.Add(r.material.color);
-                                r.material.color=Color.red;
-                            }
-                        }
-                        cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
-                    }
-                }
-                else if (Input.GetKeyDown(KeyCode.Keypad3))
-                {
-                    Debug.Log("3");
-                    if (posX < map.GetLength(1) - 1 && posY > 0)
-                    {
-                        if (mapgo[posY, posX] != null)
-                        {
-                            if (prefabcolorlist.Count <= 2)
-                            {
-                                for (int i = 1; i < prefabcolorlist.Count - 1; i++)
-                                {
-                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
-                                        prefabcolorlist[i - 1];
-                                }
-                            }
-                            else
-                            {
-                                for (int i = 0; i < prefabcolorlist.Count; i++)
-                                {
-                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
-                                }
-                            }
-                            mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
-                        }
-                        Destroy(cursorprefab);
-                        posX += 1;
-                        posY -= 1;
-                        if (mapgo[posY, posX] != null)
-                        {
-                            prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
-                            mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
-                            prefabcolorlist.Clear();
-                            foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
-                            {
-                                prefabcolorlist.Add(r.material.color);
-                                r.material.color=Color.red;
-                            }
-                        }
-                        cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
-                    }
-                }
-                else if (Input.GetKeyDown(KeyCode.Keypad4))
-                {
-                    Debug.Log("4");
-                    if (posX > 0)
-                    {
-                        if (mapgo[posY, posX] != null)
-                        {
-                            if (prefabcolorlist.Count <= 2)
-                            {
-                                for (int i = 1; i < prefabcolorlist.Count - 1; i++)
-                                {
-                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
-                                        prefabcolorlist[i - 1];
-                                }
-                            }
-                            else
-                            {
-                                for (int i = 0; i < prefabcolorlist.Count; i++)
-                                {
-                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
-                                }
-                            }
-                            mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
-                        }
-                        Destroy(cursorprefab);
-                        posX -= 1;
-                        if (mapgo[posY, posX] != null)
-                        {
-                            prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
-                            mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
-                            prefabcolorlist.Clear();
-                            foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
-                            {
-                                prefabcolorlist.Add(r.material.color);
-                                r.material.color=Color.red;
-                            }
-                        }
-                        cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
-                    }
-                }
-                else if (Input.GetKeyDown(KeyCode.Keypad5))
-                {
-                    Debug.Log("5");
-                    Destroy(mapgo[posY, posX]);
-                    Destroy(cursorprefab);
-                    mapgo[posY, posX] = null;
-                    map[posY, posX] = -1;
-                    done = true;
-                }
-                else if (Input.GetKeyDown(KeyCode.Keypad6))
-                {
-                    Debug.Log("6");
-                    if (posX < map.GetLength(1) - 1)
-                    {
-                        if (mapgo[posY, posX] != null)
-                        {
-                            if (prefabcolorlist.Count <= 2)
-                            {
-                                for (int i = 1; i < prefabcolorlist.Count - 1; i++)
-                                {
-                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
-                                        prefabcolorlist[i - 1];
-                                }
-                            }
-                            else
-                            {
-                                for (int i = 0; i < prefabcolorlist.Count; i++)
-                                {
-                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
-                                }
-                            }
-                            mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
-                        }
-                        Destroy(cursorprefab);
-                        posX += 1;
-                        if (mapgo[posY, posX] != null)
-                        {
-                            prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
-                            mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
-                            prefabcolorlist.Clear();
-                            foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
-                            {
-                                prefabcolorlist.Add(r.material.color);
-                                r.material.color=Color.red;
-                            }
-                        }
-                        cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
-                    }
-                }
-                else if (Input.GetKeyDown(KeyCode.Keypad7))
-                {
-                    Debug.Log("7");
-                    if (posX > 0 && posY < map.GetLength(0)-1)
-                    {
-                        if (mapgo[posY, posX] != null)
-                        {
-                            if (prefabcolorlist.Count <= 2)
-                            {
-                                for (int i = 1; i < prefabcolorlist.Count - 1; i++)
-                                {
-                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
-                                        prefabcolorlist[i - 1];
-                                }
-                            }
-                            else
-                            {
-                                for (int i = 0; i < prefabcolorlist.Count; i++)
-                                {
-                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
-                                }
-                            }
-                            mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
-                        }
-                        Destroy(cursorprefab);
-                        posX -= 1;
-                        posY += 1;
-                        if (mapgo[posY, posX] != null)
-                        {
-                            prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
-                            mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
-                            prefabcolorlist.Clear();
-                            foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
-                            {
-                                prefabcolorlist.Add(r.material.color);
-                                r.material.color=Color.red;
-                            }
-                        }
-                        cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
-                    }
-                }
-                else if (Input.GetKeyDown(KeyCode.Keypad8))
-                {
-                    Debug.Log("8");
-                    if (posY < map.GetLength(0)-1)
-                    {
-                        if (mapgo[posY, posX] != null)
-                        {
-                            if (prefabcolorlist.Count <= 2)
-                            {
-                                for (int i = 1; i < prefabcolorlist.Count - 1; i++)
-                                {
-                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
-                                        prefabcolorlist[i - 1];
-                                }
-                            }
-                            else
-                            {
-                                for (int i = 0; i < prefabcolorlist.Count; i++)
-                                {
-                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
-                                }
-                            }
-                            mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
-                        }
-                        Destroy(cursorprefab);
-                        posY += 1;
-                        if (mapgo[posY, posX] != null)
-                        {
-                            prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
-                            mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
-                            prefabcolorlist.Clear();
-                            foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
-                            {
-                                prefabcolorlist.Add(r.material.color);
-                                r.material.color=Color.red;
-                            }
-                        }
-                        cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
-                    }
-                }
-                else if (Input.GetKeyDown(KeyCode.Keypad9))
-                {
-                    Debug.Log("9");
-                    if (posX < map.GetLength(1) - 1 && posY < map.GetLength(0)-1)
-                    {
-                        if (mapgo[posY, posX] != null)
-                        {
-                            if (prefabcolorlist.Count <= 2)
-                            {
-                                for (int i = 1; i < prefabcolorlist.Count - 1; i++)
-                                {
-                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color =
-                                        prefabcolorlist[i - 1];
-                                }
-                            }
-                            else
-                            {
-                                for (int i = 0; i < prefabcolorlist.Count; i++)
-                                {
-                                    mapgo[posY, posX].GetComponentsInChildren<Renderer>()[i].material.color = prefabcolorlist[i];
-                                }
-                            }
-                            mapgo[posY, posX].GetComponent<Renderer>().material.color = prefabcolor;
-                        }
-                        Destroy(cursorprefab);
-                        posX += 1;
-                        posY += 1;
-                        if (mapgo[posY, posX] != null)
-                        {
-                            prefabcolor = mapgo[posY, posX].GetComponent<Renderer>().material.color;
-                            mapgo[posY, posX].GetComponent<Renderer>().material.color=Color.red;
-                            prefabcolorlist.Clear();
-                            foreach (Renderer r in mapgo[posY, posX].GetComponentsInChildren<Renderer>())
-                            {
-                                prefabcolorlist.Add(r.material.color);
-                                r.material.color=Color.red;
-                            }
-                        }
-                        cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
-                    }
+                    send("pi:Light");
                 }
             }
-            else if (currentobject == 2 || currentobject == 4 || currentobject == 6 || currentobject == 7)
+            else if (currentobject == 3) //TODO
             {
                 if (Input.GetKeyDown(KeyCode.Keypad1))
                 {
@@ -753,7 +358,7 @@ public class placetrap : MonoBehaviour
                         rotation = !rotation;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX] == null)
+                        if (map[posY, posX] == -1)
                         {
                             if (rotation)
                                 currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -775,7 +380,7 @@ public class placetrap : MonoBehaviour
                         posY -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX] == null)
+                        if (map[posY, posX] == -1)
                         {
                             if (rotation)
                                 currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -799,7 +404,7 @@ public class placetrap : MonoBehaviour
                         rotation = !rotation;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX] == null)
+                        if (map[posY, posX] == -1)
                         {
                             if (rotation)
                                 currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -821,7 +426,7 @@ public class placetrap : MonoBehaviour
                         posX -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX] == null)
+                        if (map[posY, posX] == -1)
                         {
                             if (rotation)
                                 currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -833,14 +438,16 @@ public class placetrap : MonoBehaviour
                         cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
                     }
                 }
-                else if (Input.GetKeyDown(KeyCode.Keypad5))
+                else if (Input.GetKeyDown(KeyCode.Keypad5))//TODO
                 {
                     Debug.Log("5");
                     if (currentgameobjectprefab != null)
                     {
+                        send("pi:"+currentobject+":"+posY+":"+posX+":"+trapname);
+                        piegesplaces.Add(new ListPrefab(currentgameobjectprefab,trapname.ToString()));
                         map[posY, posX] = currentobject;
-                        mapgo[posY, posX] = currentgameobjectprefab;
                         currentgameobjectprefab = null;
+                        trapname++;
                     }
                     Destroy(cursorprefab);
                     done = true;
@@ -855,7 +462,7 @@ public class placetrap : MonoBehaviour
                         posX += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX] == null)
+                        if (map[posY, posX] == -1)
                         {
                             if (rotation)
                                 currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -879,7 +486,7 @@ public class placetrap : MonoBehaviour
                         rotation = !rotation;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX] == null)
+                        if (map[posY, posX] == -1)
                         {
                             if (rotation)
                                 currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -901,7 +508,7 @@ public class placetrap : MonoBehaviour
                         posY += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX] == null)
+                        if (map[posY, posX] == -1)
                         {
                             if (rotation)
                                 currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -925,7 +532,7 @@ public class placetrap : MonoBehaviour
                         rotation = !rotation;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX] == null)
+                        if (map[posY, posX] == -1)
                         {
                             if (rotation)
                                 currentgameobjectprefab = Instantiate(currentgameobject, v,Quaternion.Euler(new Vector3(0, 90, 0)), transform);
@@ -938,7 +545,7 @@ public class placetrap : MonoBehaviour
                     }
                 }
             }
-            else if (currentobject == 3 || currentobject == 5)
+            else if (currentobject == 0 || currentobject == 1 || currentobject == 2)//TODO
             {
                 if (Input.GetKeyDown(KeyCode.Keypad1))
                 {
@@ -954,7 +561,7 @@ public class placetrap : MonoBehaviour
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX] == null)
+                        if (map[posY, posX] == -1)
                             currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
@@ -974,7 +581,7 @@ public class placetrap : MonoBehaviour
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX] == null)
+                        if (map[posY, posX] == -1)
                             currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
@@ -995,7 +602,7 @@ public class placetrap : MonoBehaviour
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX] == null)
+                        if (map[posY, posX] == -1)
                             currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
@@ -1015,21 +622,23 @@ public class placetrap : MonoBehaviour
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX] == null)
+                        if (map[posY, posX] == -1)
                             currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
                         cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
                     }
                 }
-                else if (Input.GetKeyDown(KeyCode.Keypad5))
+                else if (Input.GetKeyDown(KeyCode.Keypad5))//TODO
                 {
                     Debug.Log("5");
                     if (currentgameobjectprefab != null)
                     {
+                        send("pi:"+currentobject+":"+posY+":"+posX+":"+trapname);
+                        piegesplaces.Add(new ListPrefab(currentgameobjectprefab,trapname.ToString()));
                         map[posY, posX] = currentobject;
-                        mapgo[posY, posX] = currentgameobjectprefab;
                         currentgameobjectprefab = null;
+                        trapname++;
                     }
                     Destroy(cursorprefab);
                     done = true;
@@ -1047,7 +656,7 @@ public class placetrap : MonoBehaviour
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX] == null)
+                        if (map[posY, posX] == -1)
                             currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
@@ -1068,7 +677,7 @@ public class placetrap : MonoBehaviour
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX] == null)
+                        if (map[posY, posX] == -1)
                             currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
@@ -1088,7 +697,7 @@ public class placetrap : MonoBehaviour
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX] == null)
+                        if (map[posY, posX] == -1)
                             currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
@@ -1109,7 +718,7 @@ public class placetrap : MonoBehaviour
                         else
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX] == null)
+                        if (map[posY, posX] == -1)
                             currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
@@ -1117,7 +726,7 @@ public class placetrap : MonoBehaviour
                     }
                 }
             }
-            else if (currentobject == 1)
+            else if (false)//TODO
             {
                 if (Input.GetKeyDown(KeyCode.Keypad1))
                 {
@@ -1130,7 +739,7 @@ public class placetrap : MonoBehaviour
                         posY -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX]==null)
+                        if (map[posY, posX] == -1)
                             currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab = null;
@@ -1147,7 +756,7 @@ public class placetrap : MonoBehaviour
                         posY -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX]==null)
+                        if (map[posY, posX] == -1)
                             currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab = null;
@@ -1165,7 +774,7 @@ public class placetrap : MonoBehaviour
                         posY -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX]==null)
+                        if (map[posY, posX] == -1)
                             currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab = null;
@@ -1182,22 +791,19 @@ public class placetrap : MonoBehaviour
                         posX -= 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX]==null)
+                        if (map[posY, posX] == -1)
                             currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab = null;
                         cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
                     }
                 }
-                else if (Input.GetKeyDown(KeyCode.Keypad5))
+                else if (Input.GetKeyDown(KeyCode.Keypad5))//TODO
                 {
-                    Debug.Log("5");
-                    if (currentgameobjectprefab != null)
-                    {
-                        map[posY, posX] = currentobject;
-                        mapgo[posY, posX] = currentgameobjectprefab;
-                        currentgameobjectprefab = null;
-                    }
+                    send("pi:"+currentobject+":"+posY+":"+posX+":"+trapname);
+                    piegesplaces.Add(new ListPrefab(currentgameobjectprefab,trapname.ToString()));
+                    map[posY, posX] = currentobject;
+                    currentgameobjectprefab = null;
                     Destroy(cursorprefab);
                     done = true;
                 }
@@ -1211,7 +817,7 @@ public class placetrap : MonoBehaviour
                         posX += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX]==null)
+                        if (map[posY, posX] == -1)
                             currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab = null;
@@ -1229,7 +835,7 @@ public class placetrap : MonoBehaviour
                         posY += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX]==null)
+                        if (map[posY, posX] == -1)
                             currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab = null;
@@ -1246,7 +852,7 @@ public class placetrap : MonoBehaviour
                         posY += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX]==null)
+                        if (map[posY, posX] == -1)
                             currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab = null;
@@ -1264,7 +870,7 @@ public class placetrap : MonoBehaviour
                         posY += 2;
                         v = new Vector3(2 * posX+transform.position.x, (float) 2.5+transform.position.y, 2 * posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
-                        if (mapgo[posY, posX]==null)
+                        if (map[posY, posX] == -1)
                             currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab = null;
@@ -1289,7 +895,5 @@ public class placetrap : MonoBehaviour
     public void finishing()
     {
         can.GetComponent<Canvas>().enabled = true;
-        code.text = p.mapToCode(map);
-        Debug.Log(p.mapToCode(map));
     }
 }

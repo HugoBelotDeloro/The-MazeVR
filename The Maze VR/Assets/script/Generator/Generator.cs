@@ -32,8 +32,8 @@ public class Generator : MonoBehaviour
                         create("FalseWall", i, j,true);
                     else if (c == 7)
                         create("IlluWall", i, j,true);
-                    else if (c == 8)
-                        create("IlluDoor", i, j,true);
+                    else if (c == 9)
+                        create("DoorLock", i, j,true);
                 }
                 else if (i % 2 == 0 && j % 2 == 1)
                 {
@@ -45,8 +45,8 @@ public class Generator : MonoBehaviour
                         create("FalseWall", i, j,false);
                     else if (c == 7)
                         create("IlluWall", i, j,false);
-                    else if (c == 8)
-                        create("IlluDoor", i, j,false);
+                    else if (c == 9)
+                        create("DoorLock", i, j,false);
                 }
                 else if (i % 2 == 1 && j % 2 == 1)
                 {
@@ -54,6 +54,10 @@ public class Generator : MonoBehaviour
                         create("Light",i,j,false);
                     if (c== 3)
                         create("Player",i,j,false);
+                    if (c== 8)
+                        create("Goal",i,j,false);
+                    if (c== 10)
+                        create("Key",i,j,false);
                     create("GroundTile", i, j,false);
                 }
             }
@@ -113,12 +117,20 @@ public class Generator : MonoBehaviour
                             else
                                 Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
-                        case ("IlluDoor"):
+                        case ("DoorLock"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
                             if (!rotate)
                                 Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
                             else
                                 Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            break;
+                        case ("Goal"):
+                            v=new Vector3(2*x+transform.position.x,(float)2 +transform.position.y,2*y+transform.position.z);
+                            Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            break;
+                        case ("Key"):
+                            v=new Vector3(2*x+transform.position.x,(float)2 +transform.position.y,2*y+transform.position.z);
+                            Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                     }
                 }
