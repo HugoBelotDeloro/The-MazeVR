@@ -7,7 +7,7 @@ using UnityEngine;
 public class Wtfizer : MonoBehaviour
 {
     public float threeshold;
-    private GameObject player;
+    public GameObject player;
     public float maxchorus;
     public float maxdisto;
     private AudioChorusFilter chorus;
@@ -15,15 +15,15 @@ public class Wtfizer : MonoBehaviour
 
     void Awake()
     {
-        chorus = GameObject.Find("Player").GetComponent<AudioChorusFilter>();
-        disto = GameObject.Find("Player").GetComponent<AudioDistortionFilter>();
+        chorus = player.GetComponent<AudioChorusFilter>();
+        disto = player.GetComponent<AudioDistortionFilter>();
     }
     void Update()
     {
-        if (Vector3.Distance(GameObject.Find("Player").transform.position, transform.position)< threeshold)
+        if (Vector3.Distance(player.transform.position, transform.position)< threeshold)
         {
-            chorus.dryMix = maxchorus - Vector3.Distance(GameObject.Find("Player").transform.position, transform.position)/threeshold*maxchorus;
-            disto.distortionLevel = maxdisto - Vector3.Distance(GameObject.Find("Player").transform.position, transform.position)/threeshold*maxdisto;
+            chorus.dryMix = maxchorus - Vector3.Distance(player.transform.position, transform.position)/threeshold*maxchorus;
+            disto.distortionLevel = maxdisto - Vector3.Distance(player.transform.position, transform.position)/threeshold*maxdisto;
         }
     }
 }

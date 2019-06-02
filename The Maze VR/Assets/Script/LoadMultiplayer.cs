@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LoadMultiplayer : MonoBehaviour
 {
@@ -7,9 +6,12 @@ public class LoadMultiplayer : MonoBehaviour
 
     public static void LoadMultiplayerScene(string scene)
     {
-        SceneManager.LoadScene(scene, LoadSceneMode.Single);
+        foreach (string activeScene in gameManager.ActiveScenes)
+        {
+            gameManager.UnloadScene(activeScene);
+        }
+        gameManager.LoadScene(scene);
     }
-
 
     public void LoadWrapper(string scene)
     {
