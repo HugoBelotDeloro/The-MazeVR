@@ -155,6 +155,7 @@ public class client : MonoBehaviour
         else
         {
             message("connectto:" + S + ":" + pseudo); //attempt to connect with CTRLplayer
+            sayready(false);
         }
     }
 
