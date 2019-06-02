@@ -13626,13 +13626,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0a1418aa34bea4e867bfac46699ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AI: {fileID: 4461553461578659004, guid: 758acec706e21f145b988b03e229b758, type: 3}
+  AI: {fileID: 1726173867412308817, guid: 944f7efba251f1f44bf8a7f58d543558, type: 3}
   Player: {fileID: 500199457}
-  starttime: 120
+  starttime: 200
   startspeed: 2
-  startlife: 15
+  startlife: 40
   incr_timer: 0.99
-  incr_speed: 1.2
+  incr_speed: 1.1
   incr_life: 0.99
 --- !u!4 &697088606
 Transform:

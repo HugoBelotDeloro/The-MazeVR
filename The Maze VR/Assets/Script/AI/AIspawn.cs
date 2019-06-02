@@ -56,6 +56,7 @@ public class AIspawn : MonoBehaviour
         ai.GetComponent<AIMove>().target = Player;
         ai.GetComponent<NavMeshAgent>().speed = startspeed;
         ai.GetComponent<AIMove>().life = startlife;
+        ai.GetComponent<animations>().Player = Player;
         startspeed *= incr_speed;
         startlife *= incr_life;
     }
