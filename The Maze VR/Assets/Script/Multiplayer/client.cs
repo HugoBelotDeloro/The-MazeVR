@@ -45,7 +45,7 @@ public class client : MonoBehaviour
 
         // Connect to the server
         //_client.Connect("90.65.163.70", 433);
-        _client.Connect("127.0.0.1", 433);
+        _client.Connect("90.65.163.70", 433);
     }
 
     public void login(string password, string username)
