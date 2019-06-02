@@ -57,7 +57,7 @@ MonoBehaviour:
   - prefab: {fileID: 2671194962470248197, guid: d7828a3a11bdff04c857aa97e4f2f864,
       type: 3}
     name: Door
-  - prefab: {fileID: 3684435117427099047, guid: a57b6fc0e2ec4d342b44e8ad13e2036c,
+  - prefab: {fileID: 8143644500648581435, guid: ada9174920e5ddf47a19d1c1d642c9c7,
       type: 3}
     name: Light
   - prefab: {fileID: 5425786798305972634, guid: cf77d700d168ff74eb981be23f36e7bf,
@@ -66,7 +66,8 @@ MonoBehaviour:
   - prefab: {fileID: 3886480594068334402, guid: a283f52d2a5146f4caf19eb2ed86f90c,
       type: 3}
     name: IlluWall
-  - prefab: {fileID: 1288633026, guid: d052e3fbbc0929a408e720b491187572, type: 3}
+  - prefab: {fileID: 2615825776654441613, guid: edc9f2525888b7a43aa9825cb5589ead,
+      type: 3}
     name: Goal
   - prefab: {fileID: 2351081837776998035, guid: bc92bbae5dc8d09428d556519ac0ee23,
       type: 3}

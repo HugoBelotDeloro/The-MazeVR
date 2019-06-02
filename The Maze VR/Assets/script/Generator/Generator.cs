@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Generator : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Generator : MonoBehaviour
     private Parser p = new Parser();
 
     private int[,] map;
+
+    public List<GameObject> lamps;
 
     public void GenerateLab()
     {
@@ -100,8 +103,8 @@ public class Generator : MonoBehaviour
                                 Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("Light"):
-                            v=new Vector3(2*x+transform.position.x,(float)4.5 +transform.position.y,2*y+transform.position.z);
-                            Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            v=new Vector3(2*x+transform.position.x,(float)3.95 +transform.position.y,2*y+transform.position.z);
+                            Instantiate(G.prefab, v, Quaternion.Euler(-90,0,0), transform);
                             break;
                         case ("FalseWall"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
