@@ -193,7 +193,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 1.8e-44, z: 7.106e-42, w: 1.04e-43}
+  m_BoundingSphereOverride: {x: 1.857883e+34, y: 7.7766644e+31, z: 4.0002788e+9, w: 4.543584e+30}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -352,5 +352,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5486197906077452634, guid: 0dd376f331bc5834d98ed1fef0e0aa82,
+        type: 3}
+      propertyPath: code
+      value: 4nxU[4QesZ4QesZ4QesZ4QesZ4QesZ4Qesd60000Fw4QL[C502mUX51ZDT54QeeC4O9Ci4Og/g4U)2b502Xgt6000220502mUi502mUi502oJW4QesZ502Xh_4ORt44ORt24O9Ch4UpMv4QL[R60000Fj502oJW4QeeC4O9Ci4Og!-4MBFB4kIz-500PNG502mUi600021?4QeeC4ORt24ORt24O9BB502Xh_4ORgB4QL]t500KIZ4h.Y:4kG]Y4O9BB502VtC4Ode94O9BB4QN-C502mk14h.Y?502mkF4QesZ502VtC4O9Ci4MBTX502Vt14Of1s50359-500Pcn502mk14kG]W4O9Ci4Og!-4MBFB4kG]L4OfHA502mUW4QN-C7000001i4MBTX502VtC4O9BB502VtC4OV6x60000Jn502mml4i5dK500KK14Og!-4MBFA4O9BB502Xh_4O9Ch60000Fk4l9Ky502mpG4i5dL4MBTX4QeeC4ORs!4MBFA4O9Ch4QL]t4QL[D4i5dK4QN_X4ORs!4MBTX4QesZ4QeeC4O9Ch60002g!4QN-E60002(A4i5dL4Og(I4Og/g502Vt14MBTX502VtC4j_{,7000001]4i5bs502o}z4Og!-4Og!-4Og!-4Og!-4Og!-31!k
+      objectReference: {fileID: 0}
+    - target: {fileID: 5486197906077452634, guid: 0dd376f331bc5834d98ed1fef0e0aa82,
+        type: 3}
+      propertyPath: P.Array.data[4].prefab
+      value: 
+      objectReference: {fileID: 2671194962470248197, guid: d7828a3a11bdff04c857aa97e4f2f864,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dd376f331bc5834d98ed1fef0e0aa82, type: 3}

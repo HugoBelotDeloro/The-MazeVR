@@ -55,6 +55,12 @@ public class Edit : MonoBehaviour
     public bool creating;
 
     public string Incode;
+
+    private bool player;
+
+    private bool Goal;
+
+    private int door_key;
     
     // Start is called before the first frame update
     void Start()
@@ -62,6 +68,8 @@ public class Edit : MonoBehaviour
         Begin begin = parent.GetComponent<Begin>();
         creating = begin.create;
         Incode = begin.code;
+        player = false;
+        Goal = false;
         if (creating)
         {
             map = new int[begin.H * 2 + 1, begin.L * 2 + 1];
@@ -111,6 +119,8 @@ public class Edit : MonoBehaviour
                         create("FalseWall", i, j,true);
                     else if (c == 7)
                         create("IlluWall", i, j,true);
+                    else if (c == 9)
+                        create("DoorLock", i, j,true);
                 }
                 else if (i % 2 == 0 && j % 2 == 1)
                 {
@@ -122,13 +132,19 @@ public class Edit : MonoBehaviour
                         create("FalseWall", i, j,false);
                     else if (c == 7)
                         create("IlluWall", i, j,false);
+                    else if (c == 9)
+                        create("DoorLock", i, j,false);
                 }
                 else if (i % 2 == 1 && j % 2 == 1)
                 {
                     if (c== 5)
                         create("Light",i,j,false);
-                    if (c== 3)
+                    else if (c== 3)
                         create("Player",i,j,false);
+                    else if (c==8)
+                        create("Goal",i,j,false);
+                    else if (c == 10)
+                        create("Key",i,j,false);
                     create("GroundTile", i, j,false);
                 }
             }
@@ -162,6 +178,7 @@ public class Edit : MonoBehaviour
                         case ("Player"):
                             v=new Vector3(2*x+transform.position.x,(float)1.5 +transform.position.y,2*y+transform.position.z);
                             mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            player = true;
                             break;
                         case ("Door"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
@@ -188,6 +205,24 @@ public class Edit : MonoBehaviour
                             else
                                 mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
+                        case ("Goal"):
+                            v=new Vector3(2*x+transform.position.x,(float)4.5 +transform.position.y,2*y+transform.position.z);
+                            mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.Euler(0,45,0), transform);
+                            Goal = true;
+                            break;
+                        case ("DoorLock"):
+                            v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
+                            if (!rotate)
+                                mapgo[y,x] = Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
+                            else
+                                mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            door_key++;
+                            break;
+                        case ("Key"):
+                            v=new Vector3(2*x+transform.position.x,(float)4.5 +transform.position.y,2*y+transform.position.z);
+                            mapgo[y,x] = Instantiate(G.prefab, v, Quaternion.Euler(0,45,0), transform);
+                            door_key--;
+                            break;
                     }
                 }
             }
@@ -201,7 +236,7 @@ public class Edit : MonoBehaviour
         Vector3 v;
         Vector3 cv;
         //wall et door
-        if (currentobject == 2 || currentobject == 4 || currentobject == 6 || currentobject == 7)
+        if (currentobject == 2 || currentobject == 4 || currentobject == 6 || currentobject == 7 || currentobject == 9)
         {
             //rectifie position
             if (posX % 2 == 0 && posY % 2 == 0)
@@ -234,7 +269,7 @@ public class Edit : MonoBehaviour
             placing = true;
         }
         //player et light
-        else if (currentobject == 3 || currentobject == 5)
+        else if (currentobject == 3 || currentobject == 5 || currentobject == 8 || currentobject == 10)
         {
             //rectifie position
             if (posX % 2 == 0)
@@ -258,7 +293,10 @@ public class Edit : MonoBehaviour
                 v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
             cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
             if (mapgo[posY, posX] == null)
-                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                if (currentobject==8 || currentobject == 10)
+                    currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(0,45,0), transform);
+                else
+                    currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
             else
                 currentgameobjectprefab = null;
             cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
@@ -314,19 +352,22 @@ public class Edit : MonoBehaviour
     void Update()
     {
         if (currentobject!=P.Length)
-            nameobject.text = P[currentobject].name;
+            nameobject.text = "Current object : "+P[currentobject].name;
         else
-            nameobject.text = "Destroy";
+            nameobject.text = "Current object : Destroy";
         Vector3 v;
         Vector3 cv;
         if (placing)
         {
             if (Input.GetKeyDown(KeyCode.KeypadEnter))
             {
-                Destroy(currentgameobjectprefab);
-                Destroy(cursorprefab);
-                finished = true;
-                done = true;
+                if (player && Goal && door_key==0)
+                {
+                    Destroy(currentgameobjectprefab);
+                    Destroy(cursorprefab);
+                    finished = true;
+                    done = true;
+                }
             }
             if (Input.GetKeyDown(KeyCode.KeypadPlus))
             {
@@ -568,6 +609,14 @@ public class Edit : MonoBehaviour
                 else if (Input.GetKeyDown(KeyCode.Keypad5))
                 {
                     Debug.Log("5");
+                    if (map[posY, posX] == 3)
+                        player = false;
+                    if (map[posY, posX] == 8)
+                        Goal = false;
+                    if (map[posY, posX] == 9)
+                        door_key--;
+                    if (map[posY, posX] == 10)
+                        door_key++;
                     Destroy(mapgo[posY, posX]);
                     Destroy(cursorprefab);
                     mapgo[posY, posX] = null;
@@ -741,7 +790,7 @@ public class Edit : MonoBehaviour
                     }
                 }
             }
-            else if (currentobject == 2 || currentobject == 4 || currentobject == 6 || currentobject == 7)
+            else if (currentobject == 2 || currentobject == 4 || currentobject == 6 || currentobject == 7 || currentobject == 9)
             {
                 if (Input.GetKeyDown(KeyCode.Keypad1))
                 {
@@ -840,6 +889,8 @@ public class Edit : MonoBehaviour
                     Debug.Log("5");
                     if (currentgameobjectprefab != null)
                     {
+                        if (map[posY, posX] == 9)
+                            door_key++;
                         map[posY, posX] = currentobject;
                         mapgo[posY, posX] = currentgameobjectprefab;
                         currentgameobjectprefab = null;
@@ -940,7 +991,7 @@ public class Edit : MonoBehaviour
                     }
                 }
             }
-            else if (currentobject == 3 || currentobject == 5)
+            else if (currentobject == 3 || currentobject == 5 || currentobject == 8 || currentobject == 10)
             {
                 if (Input.GetKeyDown(KeyCode.Keypad1))
                 {
@@ -957,7 +1008,10 @@ public class Edit : MonoBehaviour
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
                         if (mapgo[posY, posX] == null)
-                            currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                            if (currentobject==8)
+                                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(0,45,0), transform);
+                            else
+                                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
                         cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
@@ -977,7 +1031,10 @@ public class Edit : MonoBehaviour
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
                         if (mapgo[posY, posX] == null)
-                            currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                            if (currentobject==8)
+                                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(0,45,0), transform);
+                            else
+                                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
                         cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
@@ -998,7 +1055,10 @@ public class Edit : MonoBehaviour
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
                         if (mapgo[posY, posX] == null)
-                            currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                            if (currentobject==8)
+                                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(0,45,0), transform);
+                            else
+                                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
                         cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
@@ -1018,7 +1078,10 @@ public class Edit : MonoBehaviour
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
                         if (mapgo[posY, posX] == null)
-                            currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                            if (currentobject==8)
+                                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(0,45,0), transform);
+                            else
+                                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
                         cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
@@ -1027,14 +1090,23 @@ public class Edit : MonoBehaviour
                 else if (Input.GetKeyDown(KeyCode.Keypad5))
                 {
                     Debug.Log("5");
-                    if (currentgameobjectprefab != null)
+                    if ((currentobject != 3 || !player) && (currentobject != 8 || !Goal))
                     {
-                        map[posY, posX] = currentobject;
-                        mapgo[posY, posX] = currentgameobjectprefab;
-                        currentgameobjectprefab = null;
+                        if (currentgameobjectprefab != null)
+                        {
+                            if (map[posY, posX] == 10)
+                                door_key--;
+                            if (currentobject == 3)
+                                player = true;
+                            if (currentobject == 8)
+                                Goal = true;
+                            map[posY, posX] = currentobject;
+                            mapgo[posY, posX] = currentgameobjectprefab;
+                            currentgameobjectprefab = null;
+                        }
+                        Destroy(cursorprefab);
+                        done = true;
                     }
-                    Destroy(cursorprefab);
-                    done = true;
                 }
                 else if (Input.GetKeyDown(KeyCode.Keypad6))
                 {
@@ -1050,7 +1122,10 @@ public class Edit : MonoBehaviour
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
                         if (mapgo[posY, posX] == null)
-                            currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                            if (currentobject==8)
+                                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(0,45,0), transform);
+                            else
+                                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
                         cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
@@ -1071,7 +1146,10 @@ public class Edit : MonoBehaviour
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
                         if (mapgo[posY, posX] == null)
-                            currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                            if (currentobject==8)
+                                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(0,45,0), transform);
+                            else
+                                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
                         cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
@@ -1091,7 +1169,10 @@ public class Edit : MonoBehaviour
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
                         if (mapgo[posY, posX] == null)
-                            currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                            if (currentobject==8)
+                                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(0,45,0), transform);
+                            else
+                                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
                         cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
@@ -1112,7 +1193,10 @@ public class Edit : MonoBehaviour
                             v=new Vector3(2*posX+transform.position.x,(float)4.5 +transform.position.y,2*posY+transform.position.z);
                         cv = new Vector3((float) (2*posX+transform.position.x-0.5), 10, (float) (2*posY+transform.position.z-0.5));
                         if (mapgo[posY, posX] == null)
-                            currentgameobjectprefab = Instantiate(currentgameobject, v, Quaternion.identity, transform);
+                            if (currentobject==8)
+                                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.Euler(0,45,0), transform);
+                            else
+                                currentgameobjectprefab=Instantiate(currentgameobject, v, Quaternion.identity, transform);
                         else
                             currentgameobjectprefab=null;
                         cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);

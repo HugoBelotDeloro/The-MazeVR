@@ -5,7 +5,7 @@ public class PlayerCursor : MonoBehaviour
     public GameObject LookingGameObject;
     void Update()
     {
-        Vector3 PlayerPosition = transform.position;
+        Vector3 PlayerPosition = transform.position + 2 * Vector3.up;
         
         Ray InteractionRay = new Ray(PlayerPosition,transform.forward);
         
@@ -18,11 +18,10 @@ public class PlayerCursor : MonoBehaviour
         Debug.DrawLine(PlayerPosition,InteractionRayEndPoint);
         
         bool HitFound = Physics.Raycast(InteractionRay, out InteractionRayHit, InteractionRayLength);
+        
         if (HitFound)
         {
             GameObject HitGameObject = InteractionRayHit.transform.gameObject;
-            
-            string HitFeedBack = HitGameObject.name;
 
             LookingGameObject = HitGameObject;
         }

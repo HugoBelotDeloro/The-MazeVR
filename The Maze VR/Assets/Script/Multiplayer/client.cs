@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class client : MonoBehaviour
 {
@@ -45,7 +46,7 @@ public class client : MonoBehaviour
 
         // Connect to the server
         //_client.Connect("90.65.163.70", 433);
-        _client.Connect("127.0.0.1", 433);
+        _client.Connect("90.65.163.70", 433);
     }
 
     public void login(string password, string username)
@@ -95,10 +96,18 @@ public class client : MonoBehaviour
                 gameID = int.Parse(evt[1]);
                 //START THE GAME HERE
                 // GameCmd("salut"); //test
+                if (S == "VR")
+                {
+                    SceneManager.LoadScene("multi J1", LoadSceneMode.Single);
+                }
+                else
+                {
+                    SceneManager.LoadScene("multi J2", LoadSceneMode.Single);
+                }
 
                 break;
             case "ig":
-                GameAction(evt);
+                GameAction(message.Replace("ig:",""));
                 break;
             case "error":
                 //Debug.Log(evt[1]);
@@ -110,26 +119,34 @@ public class client : MonoBehaviour
             case "cta":
                 Debug.Log(evt[1] + " wants to play");
                 //To do: accept or decline
-                sayready(false);
+                var pu = GameObject.Find("popup");
+                if (pu != null)
+                {
+                    pu.GetComponentInChildren<Text>().text = evt[1] + " wants to play !";
+                }
+                GameObject.Find("Canvas").SetActive(false);
+                pu.SetActive(true);
+                pu.GetComponentInChildren<accept>().player = evt[1];
+                pu.GetComponentInChildren<Refuse>().player = evt[1];
                 break;
             //to do : leave game
         }
     }
 
 
-    void GameAction(string[] cmd)
+    void GameAction(string cmd)
     {
-        //Call game events
-        //ig:cmd:paramter1:parameter2...
-        switch (cmd[2]) //example
+        if (S == "VR")
         {
-            case "salut":
-                GameCmd("Sa va?");
-                break;
+            GameObject.Find("Game player 1").GetComponent<addtrap>().Receive(cmd);
+        }
+        else
+        {
+            GameObject.Find("Game player 2").GetComponent<addtrap>().Receive(cmd);
         }
     }
 
-    void connectTo(string pseudo)
+    public void connectTo(string pseudo)
     {
         if (pseudo==null)
         {
@@ -138,6 +155,7 @@ public class client : MonoBehaviour
         else
         {
             message("connectto:" + S + ":" + pseudo); //attempt to connect with CTRLplayer
+            sayready(false);
         }
     }
 
@@ -152,18 +170,18 @@ public class client : MonoBehaviour
         message("CTRLplist:");
     }
 
-    void GameCmd(string cmd)
+    public void GameCmd(string cmd)
     {
         message("ig:" + gameID + ":" + cmd);
     }
 
-    void GameOver()
+    public void GameOver()
     {
         message("go:" + gameID);
         Debug.Log(me + ": game has ended");
     }
 
-    void Win()
+    public void Win()
     {
         message("win:" + gameID);
         Debug.Log(me + ": won the game");

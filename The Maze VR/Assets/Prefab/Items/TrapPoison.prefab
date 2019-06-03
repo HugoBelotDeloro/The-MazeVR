@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2003853391425979495}
   - component: {fileID: -5178661895559278292}
   - component: {fileID: -1504981713932161579}
+  - component: {fileID: 9023639626900012540}
   m_Layer: 0
   m_Name: TrapPoison
   m_TagString: Untagged
@@ -57,7 +58,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57a97b05511a9d847872c3ec0e9139d4, type: 2}
+  - {fileID: 2100000, guid: 0d3c2ee05a36843428aaeeb997e86af7, type: 2}
+  - {fileID: 2100000, guid: 0d3c2ee05a36843428aaeeb997e86af7, type: 2}
+  - {fileID: 2100000, guid: 0d3c2ee05a36843428aaeeb997e86af7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,3 +81,18 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &9023639626900012540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4658237617780847587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8f63418c846ae543bcf10993e3cd899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effect: 2
+  duration: 125
+  ID: 0
