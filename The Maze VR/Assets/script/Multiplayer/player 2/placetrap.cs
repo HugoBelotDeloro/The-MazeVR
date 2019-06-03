@@ -52,6 +52,8 @@ public class placetrap : MonoBehaviour
 
     private int compteur;
 
+    private Parser p;
+
     public Text energydisplay;
 
     public Text trapcost;
@@ -62,7 +64,7 @@ public class placetrap : MonoBehaviour
     void Start()
     {
         begingame begin = parent.GetComponentInChildren<begingame>();
-        Parser p = gameObject.AddComponent<Parser>();
+        p = gameObject.AddComponent<Parser>();
         trapname = 0;
         currentobject = 0;
         piegesplaces = new List<ListPrefab>();

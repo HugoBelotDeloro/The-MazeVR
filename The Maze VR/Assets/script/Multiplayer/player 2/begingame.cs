@@ -15,22 +15,28 @@ public class begingame : MonoBehaviour
     public string code;
 
     public Camera c;
-    
+
+    private Parser p;
+
+    private void Start()
+    {
+        p = gameObject.AddComponent<Parser>();
+    }
+
     // Start is called before the first frame update
     public void clicking()
     {
-        Parser p = gameObject.AddComponent<Parser>();
-        try
-        {
+        //try
+        //{
             code = I3.text;
-            p.codeToMap(code);
+            //p.codeToMap(code);
             c.GetComponent<Move>().activated = true;
             canvas.GetComponent<Canvas>().enabled = false;
             parent.GetComponent<placetrap>().enabled = true;
-        }
+        /*}
         catch (Exception)
         {
             I3.text = "";
-        }
+        }*/
     }
 }
