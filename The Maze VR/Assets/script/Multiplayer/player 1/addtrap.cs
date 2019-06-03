@@ -120,9 +120,9 @@ public class addtrap : MonoBehaviour
             if (!equiped)
             {
                 player = GameObject.Find("Player(Clone)");
-                player.GetComponent<Inventory>().AddItem(clothes);
-                player.GetComponent<Inventory>().AddItem(compass);
-                player.GetComponent<Inventory>().AddItem(light);
+                player.GetComponentInChildren<Inventory>().AddItem(clothes);
+                player.GetComponentInChildren<Inventory>().AddItem(compass);
+                player.GetComponentInChildren<Inventory>().AddItem(light);
                 lamps = parent.GetComponent<Generator>().lamps;
                 equiped = true;
             }
