@@ -16,7 +16,7 @@ public class placetrap : MonoBehaviour
 
     public ListPrefab[] pieges;
 
-    private List<ListPrefab> piegesplaces;
+    private List<(ListPrefab,int,int)> piegesplaces;
 
     public int currentobject;
 
@@ -69,7 +69,7 @@ public class placetrap : MonoBehaviour
         p = gameObject.AddComponent<Parser>();
         trapname = 0;
         currentobject = 0;
-        piegesplaces = new List<ListPrefab>();
+        piegesplaces = new List<(ListPrefab, int, int)>();
         Incode = begin.code;
         send("cd:"+Incode);
         map = p.codeToMap(Incode);
@@ -342,10 +342,11 @@ public class placetrap : MonoBehaviour
             case ("act"):
                 for (int i = 0; i < piegesplaces.Count; i++)
                 {
-                    if (piegesplaces[i].name == command[2])
+                    if (piegesplaces[i].Item1.name == command[2])
                     {
-                        GameObject g = piegesplaces[i].prefab;
+                        GameObject g = piegesplaces[i].Item1.prefab;
                         piegesplaces.Remove(piegesplaces[i]);
+                        map[piegesplaces[i].Item3, piegesplaces[i].Item2] = -1;
                         Destroy(g);
                     }
                 }
@@ -528,7 +529,7 @@ public class placetrap : MonoBehaviour
                                 send("pi:" + currentobject + ":" + posY + ":" + posX + ":" + trapname+":r");
                             else
                                 send("pi:" + currentobject + ":" + posY + ":" + posX + ":" + trapname+":n");
-                            piegesplaces.Add(new ListPrefab(currentgameobjectprefab, trapname.ToString()));
+                            piegesplaces.Add((new ListPrefab(currentgameobjectprefab, trapname.ToString()),posX,posY));
                             map[posY, posX] = currentobject;
                             currentgameobjectprefab = null;
                             trapname++;
@@ -728,7 +729,7 @@ public class placetrap : MonoBehaviour
                         {
                             energy -= 7.5f;
                             send("pi:" + currentobject + ":" + posY + ":" + posX + ":" + trapname);
-                            piegesplaces.Add(new ListPrefab(currentgameobjectprefab, trapname.ToString()));
+                            piegesplaces.Add((new ListPrefab(currentgameobjectprefab, trapname.ToString()),posX,posY));
                             map[posY, posX] = currentobject;
                             currentgameobjectprefab = null;
                             trapname++;
@@ -899,7 +900,7 @@ public class placetrap : MonoBehaviour
                 else if (Input.GetKeyDown(KeyCode.Keypad5))//TODO
                 {
                     send("pi:"+currentobject+":"+posY+":"+posX+":"+trapname);
-                    piegesplaces.Add(new ListPrefab(currentgameobjectprefab,trapname.ToString()));
+                    piegesplaces.Add((new ListPrefab(currentgameobjectprefab,trapname.ToString()),posX,posY));
                     map[posY, posX] = currentobject;
                     currentgameobjectprefab = null;
                     Destroy(cursorprefab);

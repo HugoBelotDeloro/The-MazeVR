@@ -164,11 +164,15 @@ public class addtrap : MonoBehaviour
             }
             for (int i = 0; i < listpieges.Count; i++)
             {
-                int l = listpieges[i].Item2;
-                l -= 1;
-                if (l == 0)
+                (ListPrefab, int) piaij = listpieges[i];
+                piaij.Item2 -= 1;
+                listpieges[i] = piaij;
+                Debug.Log(piaij.Item2);
+                if (piaij.Item2 <= 0)
                 {
                     send("act:"+listpieges[i].Item1.name);
+                    Destroy(listpieges[i].Item1.prefab);
+                    listpieges.Remove(listpieges[i]);
                 }
             }
         }
