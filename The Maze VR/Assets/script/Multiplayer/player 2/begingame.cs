@@ -8,13 +8,7 @@ public class begingame : MonoBehaviour
 {
     public GameObject parent;
 
-    public Button valid;
-
-    public bool activated = false;
-
     public Canvas canvas;
-
-    public bool create;
 
     public InputField I3;
 
@@ -25,40 +19,19 @@ public class begingame : MonoBehaviour
     public Camera c;
     
     // Start is called before the first frame update
-    void Start()
+    public void clicking()
     {
-        StartCoroutine(Begining());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        valid.onClick.AddListener(OnClickThing);
-    }
-
-    IEnumerator Begining()
-    {
-        while (!activated)
+        try
         {
-            yield return new WaitUntil((() => activated));
-            try
-            {
-                code = I3.text;
-                p.codeToMap(code);
-                c.GetComponent<Move>().activated = true;
-                canvas.GetComponent<Canvas>().enabled = false;
-                parent.GetComponent<placetrap>().enabled = true;
-            }
-            catch (Exception)
-            {
-                I3.text = "";
-                OnClickThing();
-            }
+            code = I3.text;
+            p.codeToMap(code);
+            c.GetComponent<Move>().activated = true;
+            canvas.GetComponent<Canvas>().enabled = false;
+            parent.GetComponent<placetrap>().enabled = true;
         }
-    }
-    
-    void OnClickThing()
-    {
-        activated = !activated;
+        catch (Exception)
+        {
+            I3.text = "";
+        }
     }
 }
