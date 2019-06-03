@@ -10,7 +10,7 @@ public class spawner : MonoBehaviour
     public GameObject niceAI; //niceAI prefab (add it in unity)
     public void spawn(float x, float z) //y is alwyas 0
     {
-        var position = new Vector3(x, 0, z);
+        var position = new Vector3(x, 1.5f, z);
         var ai = Instantiate(niceAI, position, Quaternion.identity) as GameObject;
         ai.GetComponent<AIMove>().target = Player;
         ai.GetComponent<NavMeshAgent>().speed = 7; //speed
