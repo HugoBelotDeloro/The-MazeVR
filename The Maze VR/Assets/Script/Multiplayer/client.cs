@@ -133,7 +133,10 @@ public class client : MonoBehaviour
         }
     }
 
-
+    public void ask(string pseudo)
+    {
+        message("ask:"+S+":"+pseudo);
+    }
     void GameAction(string cmd)
     {
         if (S == "VR")
