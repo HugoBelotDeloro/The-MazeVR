@@ -8,6 +8,8 @@ public class placetrap : MonoBehaviour
 {
     public GameObject parent;
 
+    public Button b;
+
     public int[,] map;
 
     public ListPrefab[] structs;
@@ -63,7 +65,7 @@ public class placetrap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        begingame begin = parent.GetComponentInChildren<begingame>();
+        begingame begin = b.GetComponent<begingame>();
         p = gameObject.AddComponent<Parser>();
         trapname = 0;
         currentobject = 0;

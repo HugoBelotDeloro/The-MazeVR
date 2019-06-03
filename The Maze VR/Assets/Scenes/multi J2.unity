@@ -733,7 +733,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 588cdcc28db17454a89fb22ff2d60f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 9120667415086909553}
+  parent: {fileID: 1993747701980529996}
+  b: {fileID: 298961622101244148}
   structs:
   - prefab: {fileID: 5227186979417502374, guid: 3d66a83b340133743ab3c44fa4eff36e,
       type: 3}
