@@ -44,14 +44,16 @@ public class PlayerMovement : MonoBehaviour
         if (!_paused) 
         {
             float forwardMovement = Input.GetAxis("Forward") * MovementAmount * speed;
-            float rotation = Input.GetAxis("Side") * RotationAmount;
-            Transform transform1 = transform;
-            transform1.position += forwardMovement * transform1.forward;
-            transform.Rotate(rotation * RotationAmount * Vector3.up, Space.World);
-            Quaternion r = PlayerView.transform.localRotation;
+            transform.position += forwardMovement * PlayerView.transform.forward;
+            //float rotation = Input.GetAxis("Side") * RotationAmount;
+            //transform.Rotate(rotation * RotationAmount * Vector3.up, Space.World);
+            
+            
+            
+            /*Quaternion r = PlayerView.transform.localRotation;
             float clamped = Mathf.Clamp(r.x + HeadPanSpeed * Input.GetAxis("Head"), MaxHeadTilt, MinHeadTilt);
             r.Set(clamped, r.y, r.z, r.w);
-            PlayerView.transform.localRotation = r;
+            PlayerView.transform.localRotation = r;*/
             _playerRigidbody.angularVelocity = Vector3.zero;
         }
     }

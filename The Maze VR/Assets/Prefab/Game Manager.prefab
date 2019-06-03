@@ -43,3 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38cbf809a7bfc7e4ead1b79207774b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainScene: 
+  ActiveScenes: []
+  manager: {fileID: 6433430612421892827}

@@ -16,8 +16,8 @@ public class GameManager : MonoBehaviour
         else
         {
             Instance = this;
-            //LoadScene("MainMenu");
-            //mainScene = "MainMenu";
+            LoadScene("MainMenu");
+            mainScene = "MainMenu";
         }
     }
 
