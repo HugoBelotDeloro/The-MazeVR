@@ -57,7 +57,7 @@ public class addtrap : MonoBehaviour
 
     public void send(string s)
     {
-        GameObject.Find("client").GetComponent<client>().GameCmd(s);
+        GameObject.Find("Client").GetComponent<client>().GameCmd(s);
         compteur = (false, 0);
     }
     

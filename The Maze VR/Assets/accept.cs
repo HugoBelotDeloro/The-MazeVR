@@ -7,6 +7,6 @@ public class accept : MonoBehaviour
     public string player;
     public void yes()
     {
-        GameObject.Find("client").GetComponent<client>().connectTo(player);
+        GameObject.Find("Client").GetComponent<client>().connectTo(player);
     }
 }

@@ -308,7 +308,7 @@ public class placetrap : MonoBehaviour
     
     public void send(string s)
     {
-        GameObject.Find("client").GetComponent<client>().GameCmd(s);
+        GameObject.Find("Client").GetComponent<client>().GameCmd(s);
     }
 
     public void receive(string s)
@@ -325,11 +325,11 @@ public class placetrap : MonoBehaviour
                 {
                     case ("1"):
                         win.text = "DEFEAT";
-                        GameObject.Find("client").GetComponent<client>().Win();
+                        GameObject.Find("Client").GetComponent<client>().Win();
                         break;
                     case ("2"):
                         win.text = "VICTORY";
-                        GameObject.Find("client").GetComponent<client>().GameOver();
+                        GameObject.Find("Client").GetComponent<client>().GameOver();
                         break;
                 }
                 finished = true;
