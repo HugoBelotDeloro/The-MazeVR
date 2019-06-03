@@ -423,10 +423,10 @@ MonoBehaviour:
   - prefab: {fileID: 4638776354812049608, guid: 99fd1bfa97a93654ba34e681dbad211a,
       type: 3}
     name: EMP
-  - prefab: {fileID: 6664182817615765841, guid: e81786c2bce1b154583ea66af76da290,
+  - prefab: {fileID: 2271471872739177165, guid: b762a38fbe06cf14996755601af60b6f,
       type: 3}
     name: Damage
-  - prefab: {fileID: 2271471872739177165, guid: b762a38fbe06cf14996755601af60b6f,
+  - prefab: {fileID: 6664182817615765841, guid: e81786c2bce1b154583ea66af76da290,
       type: 3}
     name: Slow
   - prefab: {fileID: 5425786798305972634, guid: cf77d700d168ff74eb981be23f36e7bf,
