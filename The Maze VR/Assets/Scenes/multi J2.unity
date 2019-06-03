@@ -791,6 +791,8 @@ MonoBehaviour:
   win: {fileID: 1820041042}
   energydisplay: {fileID: 1586729910}
   trapcost: {fileID: 1501345732}
+  IA: {fileID: 446008828144559919, guid: a7b86d279fe6f67409a317b05c4d8c08, type: 3}
+  IAghost: {fileID: 3030617598091258348, guid: cd0e9c6d7bd4a84408dbfd24e432b7c0, type: 3}
 --- !u!114 &1993747701980530096
 MonoBehaviour:
   m_ObjectHideFlags: 0

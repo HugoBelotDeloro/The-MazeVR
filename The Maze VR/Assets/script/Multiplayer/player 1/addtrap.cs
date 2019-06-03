@@ -129,7 +129,7 @@ public class addtrap : MonoBehaviour
                 player.GetComponentInChildren<Inventory>().AddItem(clothes);
                 player.GetComponentInChildren<Inventory>().AddItem(compass);
                 player.GetComponentInChildren<Inventory>().AddItem(light);
-                GameObject iasp = Instantiate(IAspawner);
+                GameObject iasp = Instantiate(IAspawner, Vector3.zero,Quaternion.identity,transform);
                 iasp.GetComponent<AIspawn>().Player = player;
                 lamps = parent.GetComponent<Generator>().lamps;
                 equiped = true;
