@@ -41,7 +41,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5706743749820153811}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -212,11 +212,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   output: {fileID: 5706743749820153811}
-  inputScene: 
-  outputScene: 
+  labyCode: 
+  labyCreator: {fileID: 1993755973809884388, guid: 90c72679ba792c44a9cbdf2671f6a3cb,
+    type: 3}
   lampIn: {fileID: 5977837313736328476}
   lampOut: {fileID: 4240296220537745308}
   color: {r: 0, g: 0, b: 0, a: 0}
+  key: {fileID: 0}
 --- !u!108 &5977837313736328476
 Light:
   m_ObjectHideFlags: 0

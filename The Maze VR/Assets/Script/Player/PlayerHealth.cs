@@ -61,7 +61,9 @@ public class PlayerHealth : MonoBehaviour
  
      private void PrintDeathScreen()
      {
-         gameObject.GetComponentInParent<PlayerMovement>().enabled = false;
+         Rigidbody rb = GetComponent<Rigidbody>();
+         rb.constraints = RigidbodyConstraints.FreezeAll;
+         gameObject.GetComponent<PlayerMovement>().enabled = false;
          deathScreen.SetActive(true);
          StartCoroutine(Wait());
      }
