@@ -13,14 +13,13 @@ public class begingame : MonoBehaviour
     public InputField I3;
 
     public string code;
-    
-    private Parser p = new Parser();
 
     public Camera c;
     
     // Start is called before the first frame update
     public void clicking()
     {
+        Parser p = gameObject.AddComponent<Parser>();
         try
         {
             code = I3.text;

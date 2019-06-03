@@ -39,8 +39,6 @@ public class placetrap : MonoBehaviour
     private GameObject cursorprefab;
 
     public Text nameobject;
-    
-    private Parser p = new Parser();
 
     public Canvas can;
 
@@ -64,6 +62,7 @@ public class placetrap : MonoBehaviour
     void Start()
     {
         begingame begin = parent.GetComponentInChildren<begingame>();
+        Parser p = gameObject.AddComponent<Parser>();
         trapname = 0;
         currentobject = 0;
         piegesplaces = new List<ListPrefab>();

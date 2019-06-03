@@ -31,8 +31,6 @@ public class addtrap : MonoBehaviour
     
     [SerializeField] private Item light;
 
-    [SerializeField] private Item stone;
-
     private bool equiped;
 
     public bool win;
