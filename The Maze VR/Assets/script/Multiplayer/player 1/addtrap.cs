@@ -9,8 +9,6 @@ public class addtrap : MonoBehaviour
 {
     public ListPrefab[] P;
 
-    public ListPrefab[] pieges;
-
     private bool created;
 
     private bool playing;
@@ -79,13 +77,26 @@ public class addtrap : MonoBehaviour
                     {
                         if (i == Convert.ToInt32(command[1]))
                         {
-                            v = new Vector3(2 * Convert.ToInt32(command[2])+transform.position.x, 0.5f+transform.position.y, 2 * Convert.ToInt32(command[3])+transform.position.z);
-                            g = Instantiate(P[i].prefab, v, Quaternion.identity, transform);
-                            g.GetComponent<Trap>().ID = Convert.ToInt32(command[4]);
-                            listpieges.Add((new ListPrefab(g,command[4]),750));
+                            if (i == 3)
+                            {
+                                v = new Vector3(2 * Convert.ToInt32(command[2]) + transform.position.x,2.5f + transform.position.y,2 * Convert.ToInt32(command[3]) + transform.position.z);
+                                if (command[5]=="r")
+                                    g = Instantiate(P[i].prefab, v, Quaternion.identity, transform);
+                                else
+                                    g = Instantiate(P[i].prefab, v, Quaternion.Euler(0, 90, 0), transform);
+                                g.GetComponent<Trap>().ID = Convert.ToInt32(command[4]);
+                                listpieges.Add((new ListPrefab(g, command[4]), 750));
+                            }
+                            else
+                            {
+                                v = new Vector3(2 * Convert.ToInt32(command[2]) + transform.position.x,0.5f + transform.position.y,2 * Convert.ToInt32(command[3]) + transform.position.z);
+                                g = Instantiate(P[i].prefab, v, Quaternion.Euler(-90, 0, 0), transform);
+                                g.GetComponent<Trap>().ID = Convert.ToInt32(command[4]);
+                                listpieges.Add((new ListPrefab(g, command[4]), 750));
+                            }
                         }
                     }
-                    if (Convert.ToInt32(command[1]) == pieges.Length)
+                    if (Convert.ToInt32(command[1]) == P.Length)
                     {
                         if (!compteur.Item1)
                         {

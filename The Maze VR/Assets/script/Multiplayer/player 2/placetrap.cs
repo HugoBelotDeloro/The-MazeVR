@@ -519,7 +519,10 @@ public class placetrap : MonoBehaviour
                         if (energy >= 5)
                         {
                             energy -= 5;
-                            send("pi:" + currentobject + ":" + posY + ":" + posX + ":" + trapname);
+                            if (rotation)
+                                send("pi:" + currentobject + ":" + posY + ":" + posX + ":" + trapname+":r");
+                            else
+                                send("pi:" + currentobject + ":" + posY + ":" + posX + ":" + trapname+":n");
                             piegesplaces.Add(new ListPrefab(currentgameobjectprefab, trapname.ToString()));
                             map[posY, posX] = currentobject;
                             currentgameobjectprefab = null;
