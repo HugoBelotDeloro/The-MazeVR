@@ -322,7 +322,7 @@ public class placetrap : MonoBehaviour
         switch (command[1])
         {
             case ("pos"):
-                Vector3 playerpos = new Vector3(Convert.ToSingle(command[3]),(float)1.5,Convert.ToSingle(command[2]));
+                Vector3 playerpos = new Vector3(Convert.ToSingle(command[2]),(float)1.5,Convert.ToSingle(command[3]));
                 player.transform.position = playerpos;
                 break;
             case ("end"):
