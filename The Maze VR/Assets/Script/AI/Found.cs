@@ -10,7 +10,7 @@ public class Found : MonoBehaviour
         if (hit.transform.gameObject.name == "Player")
         {
             Debug.Log("The monster has found the player");
-            //add game over here
+            Destroy(gameObject);
         }
     }
 }
