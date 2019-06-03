@@ -316,7 +316,7 @@ public class placetrap : MonoBehaviour
         GameObject.Find("Client").GetComponent<client>().GameCmd(s);
     }
 
-    public void receive(string s)
+    public void Receive(string s)
     {
         string[] command = s.Split(':');
         switch (command[1])
