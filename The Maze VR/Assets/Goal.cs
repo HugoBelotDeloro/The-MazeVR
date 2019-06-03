@@ -8,7 +8,7 @@ public class Goal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameObject g = GameObject.Find("Game Player 1");
+            GameObject g = GameObject.Find("Game player 1");
             g.GetComponent<addtrap>().win = true;
         }
     }

@@ -61,6 +61,14 @@ public class placetrap : MonoBehaviour
     public Text trapcost;
 
     private GameObject player;
+
+    public GameObject IA;
+
+    private GameObject IApos;
+
+    public GameObject IAghost;
+
+    private GameObject IAghostpos;
     
     // Start is called before the first frame update
     void Start()
@@ -349,6 +357,26 @@ public class placetrap : MonoBehaviour
                         piegesplaces.Remove(piegesplaces[i]);
                     }
                 }
+                break;
+            case ("IA"):
+                if (command[2] == "1")
+                {
+                    if (IApos != null)
+                    {
+                        Vector3 iapos = new Vector3(Convert.ToSingle(command[3]),(float)1.5f,Convert.ToSingle(command[4]));
+                        IApos.transform.position = iapos;
+                    }
+                    else
+                    {
+                        Vector3 iapos = new Vector3(Convert.ToSingle(command[3]),(float)1.5f,Convert.ToSingle(command[4]));
+                        IApos = Instantiate(IA, iapos, Quaternion.identity, transform);
+                    }
+                }
+                else
+                {
+                    Destroy(IApos);
+                }
+
                 break;
         }
     }

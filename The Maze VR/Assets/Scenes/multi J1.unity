@@ -433,6 +433,8 @@ MonoBehaviour:
       type: 3}
     name: FalseWall
   parent: {fileID: 2115068685}
+  IAspawner: {fileID: 5004616986012594175, guid: 71f1041a7f301fe47b3b4edb048a5677,
+    type: 3}
   remove: 
   compass: {fileID: 11400000, guid: e0ab07ebdbf18da47b20f90a2db6d4ba, type: 2}
   clothes: {fileID: 11400000, guid: 2735d7188515711429a894c767c66c3f, type: 2}

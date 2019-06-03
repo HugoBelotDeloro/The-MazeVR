@@ -46,11 +46,11 @@ public class AIspawn : MonoBehaviour
         Vector3 position;
         if (Random.Range(0, 10) > 5)
         {
-            position = new Vector3(Player.transform.position.x + Random.Range(minrange, startrange), 0, Player.transform.position.z + Random.Range(minrange, startrange));
+            position = new Vector3(Player.transform.position.x + Random.Range(minrange, startrange), (float)1.5 +transform.position.y, Player.transform.position.z + Random.Range(minrange, startrange));
         }
         else
         {
-            position = new Vector3(Player.transform.position.x + Random.Range(-minrange, -startrange), 0, Player.transform.position.z + Random.Range(-minrange, -startrange));
+            position = new Vector3(Player.transform.position.x + Random.Range(-minrange, -startrange), (float)1.5 +transform.position.y, Player.transform.position.z + Random.Range(-minrange, -startrange));
         }
         var ai = Instantiate(AI, position, Quaternion.identity) as GameObject;
         ai.GetComponent<AIMove>().target = Player;

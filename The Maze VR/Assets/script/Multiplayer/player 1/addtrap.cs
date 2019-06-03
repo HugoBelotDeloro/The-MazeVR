@@ -17,6 +17,8 @@ public class addtrap : MonoBehaviour
 
     private GameObject player;
 
+    [SerializeField] private GameObject IAspawner;
+
     private int health;
 
     private List<(ListPrefab,int)> listpieges;
@@ -40,6 +42,8 @@ public class addtrap : MonoBehaviour
     public Text winmessage;
     
     public List<GameObject> lamps;
+
+    public GameObject Ia;
 
     public bool compteur;
     
@@ -125,11 +129,22 @@ public class addtrap : MonoBehaviour
                 player.GetComponentInChildren<Inventory>().AddItem(clothes);
                 player.GetComponentInChildren<Inventory>().AddItem(compass);
                 player.GetComponentInChildren<Inventory>().AddItem(light);
+                GameObject iasp = Instantiate(IAspawner);
+                iasp.GetComponent<AIspawn>().Player = player;
                 lamps = parent.GetComponent<Generator>().lamps;
                 equiped = true;
             }
             health = player.GetComponent<PlayerHealth>().Health;
             send("pos:" + player.transform.position.x + ":" + player.transform.position.z);
+            if (GameObject.Find("IA(clone)"))
+            {
+                Ia = GameObject.Find("IA(clone");
+                send("IA:1:"+Ia.transform.position.x+":"+Ia.transform.position.z);
+            }
+            else
+            {
+                send("IA:0");
+            }
             if (health<=0)
             {
                 winmessage.text = "DEFEAT";
