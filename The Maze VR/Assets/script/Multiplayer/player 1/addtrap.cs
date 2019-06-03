@@ -52,6 +52,7 @@ public class addtrap : MonoBehaviour
         equiped = false;
         win = false;
         playing = true;
+        compteur = (false, 0);
     }
 
     public void send(string s)
