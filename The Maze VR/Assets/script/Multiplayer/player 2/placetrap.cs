@@ -344,9 +344,9 @@ public class placetrap : MonoBehaviour
                 {
                     if (piegesplaces[i].Item1.name == command[2])
                     {
-                        piegesplaces.Remove(piegesplaces[i]);
                         map[piegesplaces[i].Item3, piegesplaces[i].Item2] = -1;
                         Destroy(piegesplaces[i].Item1.prefab);
+                        piegesplaces.Remove(piegesplaces[i]);
                     }
                 }
                 break;
