@@ -88,14 +88,12 @@ public class addtrap : MonoBehaviour
                                     g = Instantiate(P[i].prefab, v, Quaternion.identity, transform);
                                 else
                                     g = Instantiate(P[i].prefab, v, Quaternion.Euler(0, 90, 0), transform);
-                                g.GetComponent<Trap>().ID = Convert.ToInt32(command[5]);
                                 listpieges.Add((new ListPrefab(g, command[5]), 750));
                             }
                             else
                             {
                                 v = new Vector3(2 * Convert.ToInt32(command[4]) + transform.position.x,0.5f + transform.position.y,2 * Convert.ToInt32(command[3]) + transform.position.z);
                                 g = Instantiate(P[i].prefab, v, Quaternion.Euler(-90, 0, 0), transform);
-                                g.GetComponent<Trap>().ID = Convert.ToInt32(command[5]);
                                 listpieges.Add((new ListPrefab(g, command[5]), 750));
                             }
                         }
@@ -157,11 +155,6 @@ public class addtrap : MonoBehaviour
                     compteur = false;
                 }
             }
-            while (remove.Count>0)
-            {
-                send("act:"+remove[0]);
-                remove.Remove(0);
-            }
             for (int i = 0; i < listpieges.Count; i++)
             {
                 (ListPrefab, int) piaij = listpieges[i];
@@ -170,8 +163,12 @@ public class addtrap : MonoBehaviour
                 Debug.Log(piaij.Item2);
                 if (piaij.Item2 <= 0)
                 {
-                    send("act:"+listpieges[i].Item1.name);
+                    listpieges[i].Item1.prefab.GetComponent<Trap>().act = true;
+                }
+                if (listpieges[i].Item1.prefab.GetComponent<Trap>().act)
+                {
                     Destroy(listpieges[i].Item1.prefab);
+                    send("act:"+listpieges[i].Item1.name);
                     listpieges.Remove(listpieges[i]);
                 }
             }
