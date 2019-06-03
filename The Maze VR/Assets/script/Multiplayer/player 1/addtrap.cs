@@ -46,25 +46,28 @@ public class addtrap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        remove = new List<int>();
+        listpieges = new List<(ListPrefab, int)>();
         created = false;
         equiped = false;
         win = false;
+        playing = true;
+        compteur = (false, 0);
     }
 
     public void send(string s)
     {
         GameObject.Find("Client").GetComponent<client>().GameCmd(s);
-        compteur = (false, 0);
     }
     
     public void Receive(string s)
     {
         Vector3 v;
         string[] command = s.Split(':');
-        switch (command[0])
+        switch (command[1])
         {
             case ("cd"):
-                parent.GetComponent<Generator>().code = command[1];
+                parent.GetComponent<Generator>().code = command[2];
                 parent.GetComponent<Generator>().enabled = true;
                 created = true;
                 break;
@@ -73,28 +76,28 @@ public class addtrap : MonoBehaviour
                 {
                     for (int i = 0; i < P.Length; i++)
                     {
-                        if (i == Convert.ToInt32(command[1]))
+                        if (i == Convert.ToInt32(command[2]))
                         {
                             if (i == 3)
                             {
-                                v = new Vector3(2 * Convert.ToInt32(command[2]) + transform.position.x,2.5f + transform.position.y,2 * Convert.ToInt32(command[3]) + transform.position.z);
-                                if (command[5]=="r")
+                                v = new Vector3(2 * Convert.ToInt32(command[3]) + transform.position.x,2.5f + transform.position.y,2 * Convert.ToInt32(command[4]) + transform.position.z);
+                                if (command[6]=="r")
                                     g = Instantiate(P[i].prefab, v, Quaternion.identity, transform);
                                 else
                                     g = Instantiate(P[i].prefab, v, Quaternion.Euler(0, 90, 0), transform);
-                                g.GetComponent<Trap>().ID = Convert.ToInt32(command[4]);
-                                listpieges.Add((new ListPrefab(g, command[4]), 750));
+                                g.GetComponent<Trap>().ID = Convert.ToInt32(command[5]);
+                                listpieges.Add((new ListPrefab(g, command[5]), 750));
                             }
                             else
                             {
-                                v = new Vector3(2 * Convert.ToInt32(command[2]) + transform.position.x,0.5f + transform.position.y,2 * Convert.ToInt32(command[3]) + transform.position.z);
+                                v = new Vector3(2 * Convert.ToInt32(command[3]) + transform.position.x,0.5f + transform.position.y,2 * Convert.ToInt32(command[4]) + transform.position.z);
                                 g = Instantiate(P[i].prefab, v, Quaternion.Euler(-90, 0, 0), transform);
-                                g.GetComponent<Trap>().ID = Convert.ToInt32(command[4]);
-                                listpieges.Add((new ListPrefab(g, command[4]), 750));
+                                g.GetComponent<Trap>().ID = Convert.ToInt32(command[5]);
+                                listpieges.Add((new ListPrefab(g, command[5]), 750));
                             }
                         }
                     }
-                    if (Convert.ToInt32(command[1]) == P.Length)
+                    if (Convert.ToInt32(command[2]) == P.Length)
                     {
                         if (!compteur.Item1)
                         {
@@ -102,7 +105,9 @@ public class addtrap : MonoBehaviour
                             {
                                 lamp.GetComponent<Switch>().switching();
                             }
+                            Debug.Log("light off");
                             compteur = (true, 500);
+                            Debug.Log(compteur);
                         }
                     }
                 }
@@ -114,12 +119,14 @@ public class addtrap : MonoBehaviour
     {
         if (created && playing)
         {
+            Debug.Log("passing");
+            Debug.Log(compteur);
             if (!equiped)
             {
                 player = GameObject.Find("Player(Clone)");
-                player.GetComponent<Inventory>().AddItem(clothes);
-                player.GetComponent<Inventory>().AddItem(compass);
-                player.GetComponent<Inventory>().AddItem(light);
+                player.GetComponentInChildren<Inventory>().AddItem(clothes);
+                player.GetComponentInChildren<Inventory>().AddItem(compass);
+                player.GetComponentInChildren<Inventory>().AddItem(light);
                 lamps = parent.GetComponent<Generator>().lamps;
                 equiped = true;
             }
@@ -140,6 +147,7 @@ public class addtrap : MonoBehaviour
 
             if (compteur.Item1)
             {
+                Debug.Log("dab");
                 int c = compteur.Item2;
                 c -= 1;
                 if (c == 0)

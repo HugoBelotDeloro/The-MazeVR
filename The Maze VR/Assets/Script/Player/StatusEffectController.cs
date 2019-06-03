@@ -28,13 +28,16 @@ public class StatusEffectController : MonoBehaviour
     private void FixedUpdate()
     {
         int length = statusEffects.Count;
-        for (int i = length - 1; i >= 0; i--)
+        if (length > 0)
         {
-            StatusEffect effect = statusEffects[i];
-            if (!effect.Update())
+            for (int i = length - 1; i >= 0; i--)
             {
-                effect.StatusEffectEnd();
-                statusEffects.RemoveAt(i);
+                StatusEffect effect = statusEffects[i];
+                if (!effect.Update())
+                {
+                    effect.StatusEffectEnd();
+                    statusEffects.RemoveAt(i);
+                }
             }
         }
     }

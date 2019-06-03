@@ -316,17 +316,17 @@ public class placetrap : MonoBehaviour
         GameObject.Find("Client").GetComponent<client>().GameCmd(s);
     }
 
-    public void receive(string s)
+    public void Receive(string s)
     {
         string[] command = s.Split(':');
-        switch (command[0])
+        switch (command[1])
         {
             case ("pos"):
-                Vector3 playerpos = new Vector3(Convert.ToInt32(command[1])+transform.position.x,(float)1.5 +transform.position.y,Convert.ToInt32(command[2])+transform.position.z);
+                Vector3 playerpos = new Vector3(Convert.ToSingle(command[2]),(float)1.5,Convert.ToSingle(command[3]));
                 player.transform.position = playerpos;
                 break;
             case ("end"):
-                switch (command[1])
+                switch (command[2])
                 {
                     case ("1"):
                         win.text = "DEFEAT";
@@ -342,7 +342,7 @@ public class placetrap : MonoBehaviour
             case ("act"):
                 for (int i = 0; i < piegesplaces.Count; i++)
                 {
-                    if (piegesplaces[i].name == command[1])
+                    if (piegesplaces[i].name == command[2])
                     {
                         GameObject g = piegesplaces[i].prefab;
                         piegesplaces.Remove(piegesplaces[i]);

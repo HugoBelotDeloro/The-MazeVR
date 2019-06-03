@@ -6,8 +6,8 @@ public class Generator : MonoBehaviour
     public ListPrefab[] P;
 
     public string code;
-    
-    private Parser p = new Parser();
+
+    private Parser p;
 
     private int[,] map;
 
@@ -104,7 +104,7 @@ public class Generator : MonoBehaviour
                             break;
                         case ("Light"):
                             v=new Vector3(2*x+transform.position.x,(float)3.95 +transform.position.y,2*y+transform.position.z);
-                            Instantiate(G.prefab, v, Quaternion.Euler(-90,0,0), transform);
+                            lamps.Add(Instantiate(G.prefab, v, Quaternion.Euler(-90,0,0), transform));
                             break;
                         case ("FalseWall"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
@@ -142,6 +142,8 @@ public class Generator : MonoBehaviour
     
     void Start()
     {
+        lamps = new List<GameObject>();
+        p = gameObject.AddComponent<Parser>();
         map = p.codeToMap(code);
         GenerateLab();
     }
