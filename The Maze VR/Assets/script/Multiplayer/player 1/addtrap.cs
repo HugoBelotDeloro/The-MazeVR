@@ -84,7 +84,7 @@ public class addtrap : MonoBehaviour
                             if (i == 3)
                             {
                                 v = new Vector3(2 * Convert.ToInt32(command[4]) + transform.position.x,2.5f + transform.position.y,2 * Convert.ToInt32(command[3]) + transform.position.z);
-                                if (command[6]=="r")
+                                if (command[6]=="n")
                                     g = Instantiate(P[i].prefab, v, Quaternion.identity, transform);
                                 else
                                     g = Instantiate(P[i].prefab, v, Quaternion.Euler(0, 90, 0), transform);
