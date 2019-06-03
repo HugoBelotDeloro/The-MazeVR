@@ -13,7 +13,7 @@ public class Trap : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.GetComponent<StatusEffectController>().AddStatusEffect(effect, duration);
-            GameObject g = GameObject.Find("Game Player 1");
+            GameObject g = GameObject.Find("Game player 1");
             g.GetComponent<addtrap>().remove.Add(ID);
             Destroy(gameObject);
         }
