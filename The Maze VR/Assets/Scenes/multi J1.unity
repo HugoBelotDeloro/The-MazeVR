@@ -432,12 +432,11 @@ MonoBehaviour:
   - prefab: {fileID: 5425786798305972634, guid: cf77d700d168ff74eb981be23f36e7bf,
       type: 3}
     name: FalseWall
-  parent: {fileID: 1407380322}
+  parent: {fileID: 2115068685}
   remove: 
   compass: {fileID: 11400000, guid: e0ab07ebdbf18da47b20f90a2db6d4ba, type: 2}
   clothes: {fileID: 11400000, guid: 2735d7188515711429a894c767c66c3f, type: 2}
   light: {fileID: 11400000, guid: c3b93ed339f0743469aaff83cc3c802b, type: 2}
-  stone: {fileID: 0}
   win: 0
   can: {fileID: 465252399}
   winmessage: {fileID: 908683084}
@@ -620,6 +619,12 @@ PrefabInstance:
 --- !u!4 &2115068684 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5486197906077452635, guid: 0dd376f331bc5834d98ed1fef0e0aa82,
+    type: 3}
+  m_PrefabInstance: {fileID: 2115068683}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2115068685 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5486197906077452637, guid: 0dd376f331bc5834d98ed1fef0e0aa82,
     type: 3}
   m_PrefabInstance: {fileID: 2115068683}
   m_PrefabAsset: {fileID: 0}
