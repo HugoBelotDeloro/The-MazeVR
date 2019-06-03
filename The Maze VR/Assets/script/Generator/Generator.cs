@@ -142,6 +142,7 @@ public class Generator : MonoBehaviour
     
     void Start()
     {
+        lamps = new List<GameObject>();
         p = gameObject.AddComponent<Parser>();
         map = p.codeToMap(code);
         GenerateLab();

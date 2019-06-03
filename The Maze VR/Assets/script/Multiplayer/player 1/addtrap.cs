@@ -46,9 +46,12 @@ public class addtrap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        remove = new List<int>();
+        listpieges = new List<(ListPrefab, int)>();
         created = false;
         equiped = false;
         win = false;
+        playing = true;
     }
 
     public void send(string s)
