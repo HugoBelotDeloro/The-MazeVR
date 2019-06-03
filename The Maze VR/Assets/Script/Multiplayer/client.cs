@@ -119,7 +119,7 @@ public class client : MonoBehaviour
             case "cta":
                 Debug.Log(evt[1] + " wants to play");
                 //To do: accept or decline
-                var pu = GameObject.Find("popup");
+                var pu = GameObject.Find("popupfinder").GetComponent<storeobject>().stored;
                 if (pu != null)
                 {
                     pu.GetComponentInChildren<Text>().text = evt[1] + " wants to play !";
