@@ -147,7 +147,7 @@ public class client : MonoBehaviour
         }
         else
         {
-            GameObject.Find("Game player 2").GetComponent<placetrap>().Receive(cmd);
+            GameObject.Find("Editor").GetComponent<placetrap>().Receive(cmd);
         }
     }
 
