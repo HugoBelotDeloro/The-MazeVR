@@ -94,6 +94,7 @@ public class client : MonoBehaviour
                 }
             case "gameid":
                 gameID = int.Parse(evt[1]);
+                sayready(false);
                 //START THE GAME HERE
                 // GameCmd("salut"); //test
                 if (S == "VR")
@@ -119,7 +120,7 @@ public class client : MonoBehaviour
             case "cta":
                 Debug.Log(evt[1] + " wants to play");
                 //To do: accept or decline
-                var pu = GameObject.Find("popup");
+                var pu = GameObject.Find("popupfinder").GetComponent<storeobject>().stored;
                 if (pu != null)
                 {
                     pu.GetComponentInChildren<Text>().text = evt[1] + " wants to play !";
@@ -136,6 +137,7 @@ public class client : MonoBehaviour
     public void ask(string pseudo)
     {
         message("ask:"+S+":"+pseudo);
+        Debug.Log("asking if " + pseudo + "wants to play");
     }
     void GameAction(string cmd)
     {
@@ -157,8 +159,9 @@ public class client : MonoBehaviour
         }
         else
         {
+
+            Debug.Log("connectin with " + pseudo);
             message("connectto:" + S + ":" + pseudo); //attempt to connect with CTRLplayer
-            sayready(false);
         }
     }
 
