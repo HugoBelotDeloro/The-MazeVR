@@ -1,20 +1,20 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Teleporter : MonoBehaviour
 {
 	[SerializeField] private GameObject output;
-	[SerializeField] private string inputScene;
-	[SerializeField] private string outputScene;
+	[SerializeField] private string labyCode;
+	[SerializeField] private GameObject labyCreator;
     [SerializeField] private Light lampIn;
     [SerializeField] private Light lampOut;
     [SerializeField] private Color color;
     [SerializeField] private Item key;
+    [SerializeField] private GameObject goal;
 	private int _timer;
-	private bool _currentlyTeleporting;
+	private bool _open;
+	private bool _generated;
 	private Vector3 _destination;
-	private AsyncOperation _unloadingScene;
-	private GameObject _target;
-    private bool Open;
 
 	private void Start()
 	{
@@ -29,27 +29,21 @@ public class Teleporter : MonoBehaviour
 		{
 			_timer--;
 		}
-
-		if (_currentlyTeleporting)
-		{
-			if (_unloadingScene.isDone)
-			{
-				_target.transform.position = _destination;
-				_currentlyTeleporting = false;
-			}
-		}
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
-        if (Open)
+        if (_open)
         {
             Teleport(other.gameObject);
         }
-        else if (other.CompareTag("Player") && other.GetComponentInChildren<Inventory>().RemoveItem(key))
+        else if (other.CompareTag("Player"))
         {
-            Open = true;
-            Teleport(other.gameObject);
+	        if (key.Type == Equipment.ItemType.Null || other.GetComponentInChildren<Inventory>().RemoveItem(key))
+	        {
+		        _open = true;
+		        Teleport(other.gameObject);
+	        }
         }
 	}
 
@@ -57,13 +51,31 @@ public class Teleporter : MonoBehaviour
     {
         if (_timer == 0)
         {
-            _timer = 80;
-            _target = entity;
-            GameManager.Instance.LoadScene(outputScene);
-            _unloadingScene = GameManager.Instance.UnloadSingleScene(inputScene);
-            _currentlyTeleporting = true;
-            _destination = output.transform.position;
+	        if (!_generated)
+            {
+	            GameObject laby = Instantiate(labyCreator, output.transform.position, new Quaternion());
+	            Generator generator = laby.GetComponent<Generator>();
+	            generator.code = labyCode;
+	            generator.P[8].prefab = goal;
+	            generator.enabled = true;
+	            _generated = true;
+	            StartCoroutine(SetTeleport(entity));
+            }
+            else
+            {
+	            entity.transform.position = output.transform.position;
+	            _timer = 80;
+            }
         }
+    }
+
+    private IEnumerator SetTeleport(GameObject entity)
+    {
+	    yield return new WaitUntil(() => !(PlzTPMe.LastCallForHelp is null));
+	    PlzTPMe plzTpMe = PlzTPMe.LastCallForHelp;
+	    Vector3 position = plzTpMe.gameObject.transform.position;
+	    output.transform.position = position;
+	    Teleport(entity);
     }
 
 	public void TeleportBack(GameObject entity)
@@ -71,11 +83,7 @@ public class Teleporter : MonoBehaviour
 		if (_timer == 0)
 		{
 			_timer = 80;
-			_target = entity;
-			GameManager.Instance.LoadScene(inputScene);
-			_unloadingScene = GameManager.Instance.UnloadSingleScene(inputScene);
-			_currentlyTeleporting = true;
-			_destination = gameObject.transform.position;
+			entity.transform.position = gameObject.transform.position;
 		}
 	}
 }
