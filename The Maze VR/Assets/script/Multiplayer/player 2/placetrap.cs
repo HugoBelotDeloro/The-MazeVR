@@ -63,11 +63,12 @@ public class placetrap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        begingame begin = parent.GetComponent<begingame>();
+        begingame begin = parent.GetComponentInChildren<begingame>();
         trapname = 0;
         currentobject = 0;
         piegesplaces = new List<ListPrefab>();
         Incode = begin.code;
+        send("cd:"+Incode);
         map = p.codeToMap(Incode);
         finished = false;
         posX = 0;
