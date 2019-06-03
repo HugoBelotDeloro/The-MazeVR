@@ -159,6 +159,7 @@ public class placetrap : MonoBehaviour
                         case ("Player"):
                             v=new Vector3(2*x+transform.position.x,(float)1.5 +transform.position.y,2*y+transform.position.z);
                             player = Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            map[y, x] = -1;
                             break;
                         case ("Door"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
