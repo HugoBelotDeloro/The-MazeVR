@@ -7,7 +7,7 @@ public class PlayerHealth : MonoBehaviour
     private int _health;
     private const int MaxHealth = 1000;
     private int _framesSinceLastHit;
-    private const int FramesToRegen = 100;
+    private const int FramesToRegen = 250;
     private const int HealthPerFrame = 1;
     [SerializeField]private Image BloodOverlay;
     [SerializeField]private GameObject deathScreen;
