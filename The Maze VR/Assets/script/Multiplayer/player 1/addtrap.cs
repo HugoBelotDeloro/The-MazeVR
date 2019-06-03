@@ -83,7 +83,7 @@ public class addtrap : MonoBehaviour
                         {
                             if (i == 3)
                             {
-                                v = new Vector3(2 * Convert.ToInt32(command[3]) + transform.position.x,2.5f + transform.position.y,2 * Convert.ToInt32(command[4]) + transform.position.z);
+                                v = new Vector3(2 * Convert.ToInt32(command[4]) + transform.position.x,2.5f + transform.position.y,2 * Convert.ToInt32(command[3]) + transform.position.z);
                                 if (command[6]=="r")
                                     g = Instantiate(P[i].prefab, v, Quaternion.identity, transform);
                                 else
@@ -93,7 +93,7 @@ public class addtrap : MonoBehaviour
                             }
                             else
                             {
-                                v = new Vector3(2 * Convert.ToInt32(command[3]) + transform.position.x,0.5f + transform.position.y,2 * Convert.ToInt32(command[4]) + transform.position.z);
+                                v = new Vector3(2 * Convert.ToInt32(command[4]) + transform.position.x,0.5f + transform.position.y,2 * Convert.ToInt32(command[3]) + transform.position.z);
                                 g = Instantiate(P[i].prefab, v, Quaternion.Euler(-90, 0, 0), transform);
                                 g.GetComponent<Trap>().ID = Convert.ToInt32(command[5]);
                                 listpieges.Add((new ListPrefab(g, command[5]), 750));
@@ -108,10 +108,8 @@ public class addtrap : MonoBehaviour
                             {
                                 lamp.GetComponent<Switch>().switching();
                             }
-                            Debug.Log("light off");
                             compteur = true;
                             c = 500;
-                            Debug.Log(compteur);
                         }
                     }
                 }
@@ -123,8 +121,6 @@ public class addtrap : MonoBehaviour
     {
         if (created && playing)
         {
-            Debug.Log("passing");
-            Debug.Log(compteur);
             if (!equiped)
             {
                 player = GameObject.Find("Player(Clone)");
@@ -151,7 +147,6 @@ public class addtrap : MonoBehaviour
 
             if (compteur)
             {
-                Debug.Log("dab");
                 c -= 1;
                 if (c == 0)
                 {
