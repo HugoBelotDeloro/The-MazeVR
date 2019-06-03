@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Latest news section -->
+<div class="latest-news-section">
+  <div class="news-ticker">
+    <div class="news-ticker-contant">
+      <div class="nt-item"><span class="new">New</span>Create an account to play on multiplayer mode ! </div>
+      <div class="nt-item"><span class="strategy">Tip</span>Try to win the game as fast as you can, or the monster will catch you</div>
+      <div class="nt-item"><span class="racing">Project</span>This game was made using Unity. It is an Epita student project </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Page section -->
+<section class="page-section review-page spad">
+  <div class="container">
+    <div class="section-title">
+      <h2>The S-Team</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="review-item">
+          <div class="review-cover set-bg" data-setbg="{% static 'img/us/geoffroy.jpg' %}">
+          </div>
+          <div class="review-text">
+            <h4>G. DU MESNIL DU BUISSON</h4>
+            <p>Responsable projet</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="review-item">
+          <div class="review-cover set-bg" data-setbg="{% static 'img/us/hugo.jpg' %}">
+          </div>
+          <div class="review-text">
+            <h4>H. BELOT-DELORO</h4>
+            <p>Developpeur polyvalent</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="review-item">
+          <div class="review-cover set-bg" data-setbg="{% static 'img/us/lucien.jpg' %}">
+          </div>
+          <div class="review-text">
+            <h4>L. LESEIGLE</h4>
+            <p>Developpeur / Webmaster</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="review-item">
+          <div class="review-cover set-bg" data-setbg="{% static 'img/us/martin.jpg' %}">
+          </div>
+          <div class="review-text">
+            <h4>M. CAMINCHER</h4>
+
+            <p>Developpeur polyvalent</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Page section end -->
+
+<!-- Recent game section  -->
+<section class="recent-game-section spad set-bg" data-setbg="img/recent-game-bg.png">
+  <div class="container">
+    <div class="section-title">
+      <div class="cata new">download</div>
+      <h2>Project-related files</h2>
+    </div>
+    <div class="row">
+      <div class="col-lg-4 col-md-6">
+        <div class="recent-game-item">
+          <div class="rgi-content">
+            <h5>Cahier des charges</h5>
+            <a href="{% static 'downloads/Cahier_des_charges.pdf' %}" class="site-btn">Display pdf</a>
+            <div class="rgi-extra">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="recent-game-item">
+          <div class="rgi-content">
+            <h5>Rapport de soutenance 1</h5>
+            <a href="{% static 'downloads/Rapport_soutenance_1.pdf' %}" class="site-btn">Display pdf</a>
+            <div class="rgi-extra">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="recent-game-item">
+          <div class="rgi-content">
+            <h5>Rapport de soutenance 2</h5>
+            <a href="{% static 'downloads/Rapport_soutenance_2.pdf' %}" class="site-btn">Display pdf</a>
+            <div class="rgi-extra">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="recent-game-item">
+          <div class="rgi-content">
+            <h5>Rapport de soutenance finale</h5>
+            <a href="{% static 'downloads/Rapport_soutenance_finale.pdf' %}" class="site-btn">Display pdf</a>
+            <div class="rgi-extra">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Recent game section end -->
+
+
+
+
+<!-- Page section end -->
+<!-- Latest news section end -->
+{% endblock %}
