@@ -41,7 +41,9 @@ public class addtrap : MonoBehaviour
     
     public List<GameObject> lamps;
 
-    public (bool, int) compteur;
+    public bool compteur;
+    
+    private int c;
     
     // Start is called before the first frame update
     void Start()
@@ -52,7 +54,8 @@ public class addtrap : MonoBehaviour
         equiped = false;
         win = false;
         playing = true;
-        compteur = (false, 0);
+        c = 0;
+        compteur = false;
     }
 
     public void send(string s)
@@ -99,14 +102,15 @@ public class addtrap : MonoBehaviour
                     }
                     if (Convert.ToInt32(command[2]) == P.Length)
                     {
-                        if (!compteur.Item1)
+                        if (!compteur)
                         {
                             foreach (GameObject lamp in lamps)
                             {
                                 lamp.GetComponent<Switch>().switching();
                             }
                             Debug.Log("light off");
-                            compteur = (true, 500);
+                            compteur = true;
+                            c = 500;
                             Debug.Log(compteur);
                         }
                     }
@@ -145,10 +149,9 @@ public class addtrap : MonoBehaviour
                 finishing();
             }
 
-            if (compteur.Item1)
+            if (compteur)
             {
                 Debug.Log("dab");
-                int c = compteur.Item2;
                 c -= 1;
                 if (c == 0)
                 {
@@ -156,7 +159,7 @@ public class addtrap : MonoBehaviour
                     {
                         lamp.GetComponent<Switch>().switching();
                     }
-                    compteur.Item1 = false;
+                    compteur = false;
                 }
             }
             while (remove.Count>0)
