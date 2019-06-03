@@ -6,8 +6,8 @@ public class Generator : MonoBehaviour
     public ListPrefab[] P;
 
     public string code;
-    
-    private Parser p = new Parser();
+
+    private Parser p;
 
     private int[,] map;
 
@@ -142,6 +142,7 @@ public class Generator : MonoBehaviour
     
     void Start()
     {
+        p = gameObject.AddComponent<Parser>();
         map = p.codeToMap(code);
         GenerateLab();
     }
