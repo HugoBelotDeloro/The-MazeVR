@@ -423,10 +423,10 @@ MonoBehaviour:
   - prefab: {fileID: 2110104130132854221, guid: 6511019d26b3652478cccae20ce00b0e,
       type: 3}
     name: EMP
-  - prefab: {fileID: 4658237617780847587, guid: 9bb6b62778b1cc6408fdbc54382f95e2,
+  - prefab: {fileID: 6938830281432370052, guid: 5c0e6c06ddcb5aa4da86372bb43a12f7,
       type: 3}
     name: Damage
-  - prefab: {fileID: 6938830281432370052, guid: 5c0e6c06ddcb5aa4da86372bb43a12f7,
+  - prefab: {fileID: 4658237617780847587, guid: 9bb6b62778b1cc6408fdbc54382f95e2,
       type: 3}
     name: Slow
   - prefab: {fileID: 5425786798305972634, guid: cf77d700d168ff74eb981be23f36e7bf,
@@ -441,6 +441,7 @@ MonoBehaviour:
   can: {fileID: 465252399}
   winmessage: {fileID: 908683084}
   lamps: []
+  compteur: 0
 --- !u!4 &1407380324
 Transform:
   m_ObjectHideFlags: 0
