@@ -58,7 +58,6 @@ public class addtrap : MonoBehaviour
     public void send(string s)
     {
         GameObject.Find("Client").GetComponent<client>().GameCmd(s);
-        compteur = (false, 0);
     }
     
     public void Receive(string s)
@@ -106,7 +105,9 @@ public class addtrap : MonoBehaviour
                             {
                                 lamp.GetComponent<Switch>().switching();
                             }
+                            Debug.Log("light off");
                             compteur = (true, 500);
+                            Debug.Log(compteur);
                         }
                     }
                 }
@@ -118,6 +119,8 @@ public class addtrap : MonoBehaviour
     {
         if (created && playing)
         {
+            Debug.Log("passing");
+            Debug.Log(compteur);
             if (!equiped)
             {
                 player = GameObject.Find("Player(Clone)");
@@ -144,6 +147,7 @@ public class addtrap : MonoBehaviour
 
             if (compteur.Item1)
             {
+                Debug.Log("dab");
                 int c = compteur.Item2;
                 c -= 1;
                 if (c == 0)
