@@ -130,13 +130,13 @@ public class addtrap : MonoBehaviour
                 player.GetComponentInChildren<Inventory>().AddItem(compass);
                 player.GetComponentInChildren<Inventory>().AddItem(light);
                 GameObject iasp = Instantiate(IAspawner, Vector3.zero,Quaternion.identity,transform);
-                iasp.GetComponent<AIspawn>().Player = GameObject.Find("Player(clone)");
+                iasp.GetComponent<AIspawn>().Player = GameObject.Find("Player(Clone)");
                 lamps = parent.GetComponent<Generator>().lamps;
                 equiped = true;
             }
             health = player.GetComponent<PlayerHealth>().Health;
             send("pos:" + player.transform.position.x + ":" + player.transform.position.z);
-            if (GameObject.Find("IA(clone)" )!= null)
+            if (GameObject.Find("IA(clone)" )!= null) //je crois que ya tj des majuscules a clone
             {
                 Ia = GameObject.Find("IA(clone");
                 send("IA:1:"+Ia.transform.position.x+":"+Ia.transform.position.z);
