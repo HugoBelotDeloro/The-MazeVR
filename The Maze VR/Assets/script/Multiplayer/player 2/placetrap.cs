@@ -8,6 +8,8 @@ public class placetrap : MonoBehaviour
 {
     public GameObject parent;
 
+    public Button b;
+
     public int[,] map;
 
     public ListPrefab[] structs;
@@ -39,8 +41,6 @@ public class placetrap : MonoBehaviour
     private GameObject cursorprefab;
 
     public Text nameobject;
-    
-    private Parser p = new Parser();
 
     public Canvas can;
 
@@ -54,6 +54,8 @@ public class placetrap : MonoBehaviour
 
     private int compteur;
 
+    private Parser p;
+
     public Text energydisplay;
 
     public Text trapcost;
@@ -63,11 +65,13 @@ public class placetrap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        begingame begin = parent.GetComponent<begingame>();
+        begingame begin = b.GetComponent<begingame>();
+        p = gameObject.AddComponent<Parser>();
         trapname = 0;
         currentobject = 0;
         piegesplaces = new List<ListPrefab>();
         Incode = begin.code;
+        send("cd:"+Incode);
         map = p.codeToMap(Incode);
         finished = false;
         posX = 0;

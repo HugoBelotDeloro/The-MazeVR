@@ -432,12 +432,11 @@ MonoBehaviour:
   - prefab: {fileID: 5425786798305972634, guid: cf77d700d168ff74eb981be23f36e7bf,
       type: 3}
     name: FalseWall
-  parent: {fileID: 1407380322}
+  parent: {fileID: 2115068685}
   remove: 
   compass: {fileID: 11400000, guid: e0ab07ebdbf18da47b20f90a2db6d4ba, type: 2}
   clothes: {fileID: 11400000, guid: 2735d7188515711429a894c767c66c3f, type: 2}
   light: {fileID: 11400000, guid: c3b93ed339f0743469aaff83cc3c802b, type: 2}
-  stone: {fileID: 0}
   win: 0
   can: {fileID: 465252399}
   winmessage: {fileID: 908683084}
@@ -610,11 +609,22 @@ PrefabInstance:
       propertyPath: code
       value: 4nxU[4QesZ4QesZ4QesZ4QesZ4QesZ4QesO600023g4h.JK4QL[D4kG]W4O9BB502Xi04kG]Y4ORs!4OfHA502mk14h.Y:4h.Y:4kG]W4ORs!4Og/g4Qev44QesZ502Xgv6000220800000000502mUi4O9Ci4MBFA4ORt24ORs!4MBTX4QN-0500KK0500KIZ4h.Y_502VtC4ORt24ORs!4MBFB4kG]W502mk0502mUi600021?4QN_X4OV6m4MBFA4ORt94ORs!4MBTN4i5dK4QN-04QL]t4QN_Y4kG]L4Og/g4QeeD4kG]L4MBTM502mmk502mUi6000220502oJW4QeeD4kI;K4kG]L4Og/g502Xgt600021?500KK04QL[D4kG]W4O9BB4QeeC4O9BB4Qev44QL[D4i5de4QN-C60002204ORt24O9BB502Vt14MBTX502VtC7000001h4QN-C502mpG4i5dL4MBTX4QeeC4ORs!4MBFA4O9Ch4QL]t4QL[D4i5dK4QN_X4ORs!4MBTX4QesZ4QeeC4O9Ch60000Kz4i5de500S-P502mkB4Qev44QeeC4O9BB502Xh_4O9Cj4L(;t7000001h4QL[D4i5qB4ORt24ORt24ORt24ORt24ORt21B
       objectReference: {fileID: 0}
+    - target: {fileID: 5486197906077452634, guid: 0dd376f331bc5834d98ed1fef0e0aa82,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dd376f331bc5834d98ed1fef0e0aa82, type: 3}
 --- !u!4 &2115068684 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5486197906077452635, guid: 0dd376f331bc5834d98ed1fef0e0aa82,
+    type: 3}
+  m_PrefabInstance: {fileID: 2115068683}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2115068685 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5486197906077452637, guid: 0dd376f331bc5834d98ed1fef0e0aa82,
     type: 3}
   m_PrefabInstance: {fileID: 2115068683}
   m_PrefabAsset: {fileID: 0}

@@ -13,25 +13,30 @@ public class begingame : MonoBehaviour
     public InputField I3;
 
     public string code;
-    
-    private Parser p = new Parser();
 
     public Camera c;
-    
+
+    private Parser p;
+
+    private void Start()
+    {
+        p = gameObject.AddComponent<Parser>();
+    }
+
     // Start is called before the first frame update
     public void clicking()
     {
-        try
-        {
+        //try
+        //{
             code = I3.text;
-            p.codeToMap(code);
+            //p.codeToMap(code);
             c.GetComponent<Move>().activated = true;
             canvas.GetComponent<Canvas>().enabled = false;
             parent.GetComponent<placetrap>().enabled = true;
-        }
+        /*}
         catch (Exception)
         {
             I3.text = "";
-        }
+        }*/
     }
 }

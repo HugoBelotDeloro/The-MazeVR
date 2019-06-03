@@ -31,8 +31,6 @@ public class addtrap : MonoBehaviour
     
     [SerializeField] private Item light;
 
-    [SerializeField] private Item stone;
-
     private bool equiped;
 
     public bool win;
@@ -66,8 +64,8 @@ public class addtrap : MonoBehaviour
         switch (command[0])
         {
             case ("cd"):
-                parent.GetComponentInChildren<Generator>().code = command[1];
-                parent.GetComponentInChildren<Generator>().enabled = true;
+                parent.GetComponent<Generator>().code = command[1];
+                parent.GetComponent<Generator>().enabled = true;
                 created = true;
                 break;
             case ("pi"):
@@ -122,7 +120,7 @@ public class addtrap : MonoBehaviour
                 player.GetComponent<Inventory>().AddItem(clothes);
                 player.GetComponent<Inventory>().AddItem(compass);
                 player.GetComponent<Inventory>().AddItem(light);
-                lamps = parent.GetComponentInChildren<Generator>().lamps;
+                lamps = parent.GetComponent<Generator>().lamps;
                 equiped = true;
             }
             health = player.GetComponent<PlayerHealth>().Health;
