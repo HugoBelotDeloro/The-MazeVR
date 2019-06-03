@@ -99,14 +99,34 @@ public class server : MonoBehaviour
     {
         NetworkConnection session = netMessage.conn;
         Debug.Log("s: Cient disconnected");
+            foreach (VRplayer vrp in VRplayers)
+            {
+                if (vrp.nc == session)
+                {
+                    VRplayers.Remove(vrp);
+                    break;
+                }
+            }
+        foreach (CTRLplayer ctrlp in CTRLplayers)
+        {
+            if (ctrlp.nc == session)
+            {
+                CTRLplayers.Remove(ctrlp);
+                break;
+            }
+        }
     }
 
     void OnMessageReceived(NetworkMessage netMessage)
     {
         NetworkConnection session = netMessage.conn;
         string msg = netMessage.reader.ReadString();
-        Debug.Log("s: message received: "+msg);
         string[] evt = msg.Split(':');
+        if (evt.Length>=3&&evt[2] != "pos")
+        {
+            Debug.Log("s: message received: " + msg);
+
+        }
         switch (evt[0])
         {
             case "log":
@@ -185,6 +205,65 @@ public class server : MonoBehaviour
                     }
                 }
                 break;
+            case "ask":
+                string whosasking = null;
+                if (evt[1] == "VR") //a VR player is asking a ctrl player
+                {
+                    foreach (VRplayer vrp in VRplayers) //find VRplayer by session
+                    {
+                        if (vrp.nc == session)
+                        {
+                            if (vrp.ingame)
+                            {
+                                Debug.Log(vrp.pseudo + " is already in a match");
+                                message("error: " + vrp.pseudo + " is already in a match", session);
+                                return;
+                            }
+                            whosasking = vrp.pseudo;
+                            break;
+                        }
+                    }
+                    foreach (CTRLplayer ctrlp in CTRLplayers) //find CTRLplayer by pseudo
+                    {
+                        if (ctrlp.pseudo == evt[2])
+                        {
+                            if (ctrlp.ingame)
+                            {
+                                Debug.Log(ctrlp.pseudo + " is already in a match");
+                                message("error: " + ctrlp.pseudo + " is already in a match", session);
+                                return;
+                            }
+                            message("cta:" + whosasking, ctrlp.nc);
+                            break;
+                        }
+                    }
+                }
+                else //a CTRLplayer is trying to connect to a VRplayer
+                {
+                    foreach (CTRLplayer ctrlp in CTRLplayers) //find CTRLplayer by session
+                    {
+                        if (ctrlp.nc == session)
+                        {
+                            if (ctrlp.ingame)
+                            {
+                                Debug.Log(ctrlp.pseudo + " is already in a match");
+                                message("error: " + ctrlp.pseudo + " is already in a match", session);
+                                return;
+                            }
+                            whosasking = ctrlp.pseudo;
+                            break;
+                        }
+                    }
+                    foreach (VRplayer vrp in VRplayers.ToList()) //find VRplayer by pseudo
+                    {
+                        if (vrp.pseudo == evt[2] && !vrp.ingame)
+                        {
+                            message("cta:" + whosasking, vrp.nc);
+                            break;
+                        }
+                    }
+                }
+                break;
             case "connectto":
                 Game game = new Game(0, null, null);
                 if (evt[1]=="VR") //a VR player is trying  to connect to a ctrl player
@@ -201,7 +280,6 @@ public class server : MonoBehaviour
                             }
                             game.ctrlp = ctrlp;
                             message("connected", session);
-                            message("cta:" + ctrlp.pseudo, ctrlp.nc); //connection attempt                           
                             break;
                         }
                     }
@@ -222,27 +300,30 @@ public class server : MonoBehaviour
                 }
                 else //a CTRLplayer is trying to connect to a VRplayer
                 {
-                    foreach (VRplayer vrp in VRplayers) //find VRplayer by pseudo
+                    foreach (VRplayer vrp in VRplayers.ToList()) //find VRplayer by pseudo
                     {
                         if (vrp.pseudo == evt[2]&&!vrp.ingame)
                         {
                             game.vrp = vrp;
                             Debug.Log("Connected to " + evt[2]);
                             vrp.ingame = true;
-                            VRplayers.Remove(vrp);
                         }
+                        break;
                     }
-                    foreach (CTRLplayer ctrlp in CTRLplayers) //find CTRLplayer by session
+                    foreach (CTRLplayer ctrlp in CTRLplayers.ToList()) //find CTRLplayer by session
                     {
                         if (ctrlp.nc == session&&!ctrlp.ingame)
                         {
                             game.ctrlp = ctrlp;
                             Debug.Log("Connected to " + evt[2]);
-                            CTRLplayers.Remove(ctrlp);
-
                         }
+                        break;
                     }
                 }
+               
+                Debug.Log(game.id);
+                Debug.Log(game.vrp.pseudo);
+                Debug.Log(game.ctrlp.pseudo);
                 count += 1;
                 game.id = count;
                 message("gameid:" + game.id, game.vrp.nc);
@@ -257,7 +338,6 @@ public class server : MonoBehaviour
                 Games = Games.Where(g => g.id.ToString() != evt[1]).ToList();
                 Debug.Log("game id:" + evt[1] + "has ended");
                 break;
-
             case "win":
                 foreach (Game g in Games)//find game by id
                 {
