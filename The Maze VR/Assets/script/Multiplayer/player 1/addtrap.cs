@@ -87,11 +87,14 @@ public class addtrap : MonoBehaviour
                     }
                     if (Convert.ToInt32(command[1]) == pieges.Length)
                     {
-                        foreach (GameObject lamp in lamps)
+                        if (!compteur.Item1)
                         {
-                            lamp.GetComponent<Switch>().switching();
+                            foreach (GameObject lamp in lamps)
+                            {
+                                lamp.GetComponent<Switch>().switching();
+                            }
+                            compteur = (true, 500);
                         }
-                        compteur = (true, 500);
                     }
                 }
                 break;
@@ -112,7 +115,7 @@ public class addtrap : MonoBehaviour
                 equiped = true;
             }
             health = player.GetComponent<PlayerHealth>().Health;
-            send("pos:" + player.transform.position.x + ":" + player.transform.position.z +":"+health);
+            send("pos:" + player.transform.position.x + ":" + player.transform.position.z);
             if (health<=0)
             {
                 winmessage.text = "DEFEAT";

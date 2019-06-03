@@ -142,7 +142,9 @@ public class Edit : MonoBehaviour
                     else if (c== 3)
                         create("Player",i,j,false);
                     else if (c==8)
-                            create("Goal",i,j,false);
+                        create("Goal",i,j,false);
+                    else if (c == 10)
+                        create("Key",i,j,false);
                     create("GroundTile", i, j,false);
                 }
             }

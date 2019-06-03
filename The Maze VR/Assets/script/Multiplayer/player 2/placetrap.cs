@@ -16,7 +16,7 @@ public class placetrap : MonoBehaviour
 
     private List<ListPrefab> piegesplaces;
 
-    public int currentobject = 0;
+    public int currentobject;
 
     public int posX = 0;
 
@@ -46,22 +46,33 @@ public class placetrap : MonoBehaviour
 
     public string Incode;
 
-    private int energy;
+    private float energy;
 
     private int trapname;
 
     public Text win;
+
+    private int compteur;
+
+    public Text energydisplay;
+
+    public Text trapcost;
+
+    private GameObject player;
     
     // Start is called before the first frame update
     void Start()
     {
         begingame begin = parent.GetComponent<begingame>();
         trapname = 0;
+        currentobject = 0;
         piegesplaces = new List<ListPrefab>();
         Incode = begin.code;
         map = p.codeToMap(Incode);
         finished = false;
         posX = 0;
+        energy = 20;
+        compteur = 0;
         posY = map.GetLength(0) - 1;
         GenerateLab();
         Place();
@@ -89,6 +100,8 @@ public class placetrap : MonoBehaviour
                         create("FalseWall", i, j,true);
                     else if (c == 7)
                         create("IlluWall", i, j,true);
+                    else if (c == 9)
+                        create("DoorLock", i, j,true);
                 }
                 else if (i % 2 == 0 && j % 2 == 1)
                 {
@@ -100,6 +113,8 @@ public class placetrap : MonoBehaviour
                         create("FalseWall", i, j,false);
                     else if (c == 7)
                         create("IlluWall", i, j,false);
+                    else if (c == 9)
+                        create("DoorLock", i, j,false);
                 }
                 else if (i % 2 == 1 && j % 2 == 1)
                 {
@@ -107,6 +122,10 @@ public class placetrap : MonoBehaviour
                         create("Light",i,j,false);
                     if (c== 3)
                         create("Player",i,j,false);
+                    else if (c==8)
+                        create("Goal",i,j,false);
+                    else if (c == 10)
+                        create("Key",i,j,false);
                     create("GroundTile", i, j,false);
                 }
             }
@@ -139,7 +158,7 @@ public class placetrap : MonoBehaviour
                             break;
                         case ("Player"):
                             v=new Vector3(2*x+transform.position.x,(float)1.5 +transform.position.y,2*y+transform.position.z);
-                            Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            player = Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
                         case ("Door"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
@@ -166,6 +185,21 @@ public class placetrap : MonoBehaviour
                             else
                                 Instantiate(G.prefab, v, Quaternion.identity, transform);
                             break;
+                        case ("Goal"):
+                            v=new Vector3(2*x+transform.position.x,(float)4.5 +transform.position.y,2*y+transform.position.z);
+                            Instantiate(G.prefab, v, Quaternion.Euler(0,45,0), transform);
+                            break;
+                        case ("DoorLock"):
+                            v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
+                            if (!rotate)
+                                Instantiate(G.prefab, v,Quaternion.Euler(new Vector3(0,90,0)), transform);
+                            else
+                                Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            break;
+                        case ("Key"):
+                            v=new Vector3(2*x+transform.position.x,(float)4.5 +transform.position.y,2*y+transform.position.z);
+                            Instantiate(G.prefab, v, Quaternion.Euler(0,45,0), transform);
+                            break;
                     }
                 }
             }
@@ -179,7 +213,7 @@ public class placetrap : MonoBehaviour
         Vector3 v;
         Vector3 cv;
         //wall et door
-        if (currentobject == 3)//TODO
+        if (currentobject == 3)
         {
             //rectifie position
             if (posX % 2 == 0 && posY % 2 == 0)
@@ -212,7 +246,7 @@ public class placetrap : MonoBehaviour
             placing = true;
         }
         //player et light
-        else if (currentobject == 0 || currentobject == 1 || currentobject == 2) //TODO
+        else if (currentobject == 0 || currentobject == 1 || currentobject == 2)
         {
             //rectifie position
             if (posX % 2 == 0)
@@ -277,12 +311,14 @@ public class placetrap : MonoBehaviour
         GameObject.Find("client").GetComponent<client>().GameCmd(s);
     }
 
-    public void receive(string s)//TODO
+    public void receive(string s)
     {
         string[] command = s.Split(':');
         switch (command[0])
         {
             case ("pos"):
+                Vector3 playerpos = new Vector3(Convert.ToInt32(command[1])+transform.position.x,(float)1.5 +transform.position.y,Convert.ToInt32(command[2])+transform.position.z);
+                player.transform.position = playerpos;
                 break;
             case ("end"):
                 switch (command[1])
@@ -298,17 +334,46 @@ public class placetrap : MonoBehaviour
                 }
                 finished = true;
                 break;
+            case ("act"):
+                for (int i = 0; i < piegesplaces.Count; i++)
+                {
+                    if (piegesplaces[i].name == command[1])
+                    {
+                        GameObject g = piegesplaces[i].prefab;
+                        piegesplaces.Remove(piegesplaces[i]);
+                        Destroy(g);
+                    }
+                }
+                break;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (energy < 20)
+        {
+            if (compteur == 25)
+            {
+                energy+=0.25f;
+                compteur = 0;
+            }
+            else
+            {
+                compteur++;
+            }
         }
     }
 
     void Update()
     {
         if (currentobject == pieges.Length)
-            nameobject.text = "current trap : No lights";
+            nameobject.text = "Current trap : No lights";
         else
-            nameobject.text = "current trap : "+pieges[currentobject].name;
+            nameobject.text = "Current trap : "+pieges[currentobject].name;
+        energydisplay.text = "Energy : " + energy+"/20";
         Vector3 v;
         Vector3 cv;
+        
         if (placing)
         {
             if (Input.GetKeyDown(KeyCode.KeypadPlus))
@@ -341,13 +406,19 @@ public class placetrap : MonoBehaviour
             }
             else if (currentobject == pieges.Length)
             {
+                trapcost.text = "Cost : 10";
                 if (Input.GetKeyDown(KeyCode.Keypad5))
                 {
-                    send("pi:"+pieges.Length);
+                    if (energy >= 10)
+                    {
+                        energy -= 10;
+                        send("pi:" + pieges.Length);
+                    }
                 }
             }
-            else if (currentobject == 3) //TODO
+            else if (currentobject == 3)
             {
+                trapcost.text = "Cost : 5";
                 if (Input.GetKeyDown(KeyCode.Keypad1))
                 {
                     Debug.Log("1");
@@ -440,16 +511,24 @@ public class placetrap : MonoBehaviour
                         cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
                     }
                 }
-                else if (Input.GetKeyDown(KeyCode.Keypad5))//TODO
+                else if (Input.GetKeyDown(KeyCode.Keypad5))
                 {
                     Debug.Log("5");
                     if (currentgameobjectprefab != null)
                     {
-                        send("pi:"+currentobject+":"+posY+":"+posX+":"+trapname);
-                        piegesplaces.Add(new ListPrefab(currentgameobjectprefab,trapname.ToString()));
-                        map[posY, posX] = currentobject;
-                        currentgameobjectprefab = null;
-                        trapname++;
+                        if (energy >= 5)
+                        {
+                            energy -= 5;
+                            send("pi:" + currentobject + ":" + posY + ":" + posX + ":" + trapname);
+                            piegesplaces.Add(new ListPrefab(currentgameobjectprefab, trapname.ToString()));
+                            map[posY, posX] = currentobject;
+                            currentgameobjectprefab = null;
+                            trapname++;
+                        }
+                        else
+                        {
+                            Destroy(currentgameobjectprefab);
+                        }
                     }
                     Destroy(cursorprefab);
                     done = true;
@@ -547,8 +626,9 @@ public class placetrap : MonoBehaviour
                     }
                 }
             }
-            else if (currentobject == 0 || currentobject == 1 || currentobject == 2)//TODO
+            else if (currentobject == 0 || currentobject == 1 || currentobject == 2)
             {
+                trapcost.text = "Cost : 7.5";
                 if (Input.GetKeyDown(KeyCode.Keypad1))
                 {
                     Debug.Log("1");
@@ -631,16 +711,24 @@ public class placetrap : MonoBehaviour
                         cursorprefab = Instantiate(cursor, cv, Quaternion.Euler(90,0,0), transform);
                     }
                 }
-                else if (Input.GetKeyDown(KeyCode.Keypad5))//TODO
+                else if (Input.GetKeyDown(KeyCode.Keypad5))
                 {
                     Debug.Log("5");
                     if (currentgameobjectprefab != null)
                     {
-                        send("pi:"+currentobject+":"+posY+":"+posX+":"+trapname);
-                        piegesplaces.Add(new ListPrefab(currentgameobjectprefab,trapname.ToString()));
-                        map[posY, posX] = currentobject;
-                        currentgameobjectprefab = null;
-                        trapname++;
+                        if (energy >= 7.5f)
+                        {
+                            energy -= 7.5f;
+                            send("pi:" + currentobject + ":" + posY + ":" + posX + ":" + trapname);
+                            piegesplaces.Add(new ListPrefab(currentgameobjectprefab, trapname.ToString()));
+                            map[posY, posX] = currentobject;
+                            currentgameobjectprefab = null;
+                            trapname++;
+                        }
+                        else
+                        {
+                            Destroy(currentgameobjectprefab);
+                        }
                     }
                     Destroy(cursorprefab);
                     done = true;
