@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2615825776654441612}
   - component: {fileID: 4276284161341977932}
   - component: {fileID: -2038761452946641828}
+  - component: {fileID: 4073316590947234703}
   m_Layer: 0
   m_Name: Space Stone
   m_TagString: Untagged
@@ -107,7 +108,7 @@ Light:
   m_Type: 2
   m_Color: {r: 0.08235294, g: 0.18431373, b: 1, a: 1}
   m_Intensity: 10
-  m_Range: 9.850439
+  m_Range: 3
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -167,3 +168,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb0b02dd992ea144ab15934e8f9b93e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &4073316590947234703
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2615825776654441613}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.546145, y: 1.2539656, z: 1.9846923}
+  m_Center: {x: 0.06645682, y: 0.3883775, z: 0.031895}

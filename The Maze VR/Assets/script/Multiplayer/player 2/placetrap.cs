@@ -8,13 +8,15 @@ public class placetrap : MonoBehaviour
 {
     public GameObject parent;
 
+    public Button b;
+
     public int[,] map;
 
     public ListPrefab[] structs;
 
     public ListPrefab[] pieges;
 
-    private List<ListPrefab> piegesplaces;
+    private List<(ListPrefab,int,int)> piegesplaces;
 
     public int currentobject;
 
@@ -39,8 +41,6 @@ public class placetrap : MonoBehaviour
     private GameObject cursorprefab;
 
     public Text nameobject;
-    
-    private Parser p = new Parser();
 
     public Canvas can;
 
@@ -54,20 +54,32 @@ public class placetrap : MonoBehaviour
 
     private int compteur;
 
+    private Parser p;
+
     public Text energydisplay;
 
     public Text trapcost;
 
     private GameObject player;
+
+    public GameObject IA;
+
+    private GameObject IApos;
+
+    public GameObject IAghost;
+
+    private GameObject IAghostpos;
     
     // Start is called before the first frame update
     void Start()
     {
-        begingame begin = parent.GetComponent<begingame>();
+        begingame begin = b.GetComponent<begingame>();
+        p = gameObject.AddComponent<Parser>();
         trapname = 0;
         currentobject = 0;
-        piegesplaces = new List<ListPrefab>();
+        piegesplaces = new List<(ListPrefab, int, int)>();
         Incode = begin.code;
+        send("cd:"+Incode);
         map = p.codeToMap(Incode);
         finished = false;
         posX = 0;
@@ -159,6 +171,7 @@ public class placetrap : MonoBehaviour
                         case ("Player"):
                             v=new Vector3(2*x+transform.position.x,(float)1.5 +transform.position.y,2*y+transform.position.z);
                             player = Instantiate(G.prefab, v, Quaternion.identity, transform);
+                            map[y, x] = -1;
                             break;
                         case ("Door"):
                             v = new Vector3(2 * x+transform.position.x, (float) 2.5+transform.position.y, 2 * y+transform.position.z);
@@ -311,17 +324,17 @@ public class placetrap : MonoBehaviour
         GameObject.Find("Client").GetComponent<client>().GameCmd(s);
     }
 
-    public void receive(string s)
+    public void Receive(string s)
     {
         string[] command = s.Split(':');
-        switch (command[0])
+        switch (command[1])
         {
             case ("pos"):
-                Vector3 playerpos = new Vector3(Convert.ToInt32(command[1])+transform.position.x,(float)1.5 +transform.position.y,Convert.ToInt32(command[2])+transform.position.z);
+                Vector3 playerpos = new Vector3(Convert.ToSingle(command[2]),(float)1.5,Convert.ToSingle(command[3]));
                 player.transform.position = playerpos;
                 break;
             case ("end"):
-                switch (command[1])
+                switch (command[2])
                 {
                     case ("1"):
                         win.text = "DEFEAT";
@@ -337,13 +350,33 @@ public class placetrap : MonoBehaviour
             case ("act"):
                 for (int i = 0; i < piegesplaces.Count; i++)
                 {
-                    if (piegesplaces[i].name == command[1])
+                    if (piegesplaces[i].Item1.name == command[2])
                     {
-                        GameObject g = piegesplaces[i].prefab;
+                        map[piegesplaces[i].Item3, piegesplaces[i].Item2] = -1;
+                        Destroy(piegesplaces[i].Item1.prefab);
                         piegesplaces.Remove(piegesplaces[i]);
-                        Destroy(g);
                     }
                 }
+                break;
+            case ("IA"):
+                if (command[2] == "1")
+                {
+                    if (IApos != null)
+                    {
+                        Vector3 iapos = new Vector3(Convert.ToSingle(command[3]),(float)1.5f,Convert.ToSingle(command[4]));
+                        IApos.transform.position = iapos;
+                    }
+                    else
+                    {
+                        Vector3 iapos = new Vector3(Convert.ToSingle(command[3]),(float)1.5f,Convert.ToSingle(command[4]));
+                        IApos = Instantiate(IA, iapos, Quaternion.identity, transform);
+                    }
+                }
+                else
+                {
+                    Destroy(IApos);
+                }
+
                 break;
         }
     }
@@ -523,7 +556,7 @@ public class placetrap : MonoBehaviour
                                 send("pi:" + currentobject + ":" + posY + ":" + posX + ":" + trapname+":r");
                             else
                                 send("pi:" + currentobject + ":" + posY + ":" + posX + ":" + trapname+":n");
-                            piegesplaces.Add(new ListPrefab(currentgameobjectprefab, trapname.ToString()));
+                            piegesplaces.Add((new ListPrefab(currentgameobjectprefab, trapname.ToString()),posX,posY));
                             map[posY, posX] = currentobject;
                             currentgameobjectprefab = null;
                             trapname++;
@@ -723,7 +756,7 @@ public class placetrap : MonoBehaviour
                         {
                             energy -= 7.5f;
                             send("pi:" + currentobject + ":" + posY + ":" + posX + ":" + trapname);
-                            piegesplaces.Add(new ListPrefab(currentgameobjectprefab, trapname.ToString()));
+                            piegesplaces.Add((new ListPrefab(currentgameobjectprefab, trapname.ToString()),posX,posY));
                             map[posY, posX] = currentobject;
                             currentgameobjectprefab = null;
                             trapname++;
@@ -894,7 +927,7 @@ public class placetrap : MonoBehaviour
                 else if (Input.GetKeyDown(KeyCode.Keypad5))//TODO
                 {
                     send("pi:"+currentobject+":"+posY+":"+posX+":"+trapname);
-                    piegesplaces.Add(new ListPrefab(currentgameobjectprefab,trapname.ToString()));
+                    piegesplaces.Add((new ListPrefab(currentgameobjectprefab,trapname.ToString()),posX,posY));
                     map[posY, posX] = currentobject;
                     currentgameobjectprefab = null;
                     Destroy(cursorprefab);

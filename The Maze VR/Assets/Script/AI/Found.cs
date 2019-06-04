@@ -7,10 +7,10 @@ public class Found : MonoBehaviour
     // Start is called before the first frame update
     void OnCollisionEnter(Collision hit)
     {
-        if (hit.transform.gameObject.name == "Player")
+        if (hit.gameObject.CompareTag("Player"))
         {
-            Debug.Log("The monster has found the player");
-            //add game over here
+            hit.gameObject.GetComponent<PlayerHealth>().Damage(1000);
+            Destroy(gameObject);
         }
     }
 }

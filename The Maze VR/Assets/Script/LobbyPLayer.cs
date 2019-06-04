@@ -15,6 +15,6 @@ public class LobbyPLayer : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("Startgame " + player);
-        GameObject.Find("Client").GetComponent<client>().connectTo(player);
+        GameObject.Find("Client").GetComponent<client>().ask(player);
     }
 }

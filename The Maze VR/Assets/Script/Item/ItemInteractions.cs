@@ -6,14 +6,9 @@ public class ItemInteractions : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") && other.gameObject.GetComponentInChildren<Inventory>().AddItem(item))
         {
-            Inventory inventory = other.gameObject.GetComponentInChildren<Inventory>();
-            if (inventory.AddItem(item))
-            {
-                Debug.Log("Goodbye");
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
     }
 }

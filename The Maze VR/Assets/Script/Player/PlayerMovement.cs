@@ -2,6 +2,7 @@
 
 public class PlayerMovement : MonoBehaviour
 {
+    public AudioSource footsteps;
     public Camera PlayerView;
     private const float MovementAmount = 0.1f;
     private const float RotationAmount = 2f;
@@ -55,6 +56,15 @@ public class PlayerMovement : MonoBehaviour
             r.Set(clamped, r.y, r.z, r.w);
             PlayerView.transform.localRotation = r;*/
             _playerRigidbody.angularVelocity = Vector3.zero;
+        }
+
+        if (Input.GetKeyDown("z")||Input.GetKeyUp("s"))
+        {
+            footsteps.Play();
+        }
+        else if (Input.GetKeyUp("z")||Input.GetKeyUp("s"))
+        {
+            footsteps.Stop();
         }
     }
 

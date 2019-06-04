@@ -1,0 +1,96 @@
+<!-- templates/base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}TheMazeVR{% endblock %}</title>
+  <head>
+  	<meta charset="UTF-8">
+  	<meta name="description" content="S-Team">
+  	<meta name="keywords" content="horror, game, VR">
+  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<!-- Favicon -->
+  	<link href="{% static 'img/favicon.ico' %}" rel="shortcut icon"/>
+
+  	<!-- Google Fonts -->
+  	<link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i" rel="stylesheet">
+
+  	<!-- Stylesheets -->
+  	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+  	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"/>
+  	<link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}"/>
+  	<link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+  	<link rel="stylesheet" href="{% static 'css/animate.css' %}"/>
+
+
+  	<!--[if lt IE 9]>
+  	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+
+  </head>
+</head>
+<body>
+  <!-- Header section -->
+  <header class="header-section">
+    <div class="container">
+      <!-- logo -->
+      <a class="site-logo" href="{% url 'home' %}">
+        <img src="{% static 'img/logo.jpg' %}" alt="">
+      </a>
+      <div class="user-panel">
+        {% if user.is_authenticated %}
+          <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+          <a href="{% url 'login' %}">Login</a>  /  <a href="{% url 'signup' %}">Signup</a>
+        {% endif %}
+      </div>
+      <!-- responsive -->
+      <div class="nav-switch">
+        <i class="fa fa-bars"></i>
+      </div>
+      <!-- site menu -->
+      <nav class="main-menu">
+        <ul>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'download' %}">Download</a></li>
+          <li><a href="{% url 'stats' %}">Stats</a></li>
+          <li><a href="{% url 'project' %}">Our project</a></li>
+
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <!-- Header section end -->
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <!-- Footer section -->
+  <footer class="footer-section">
+    <div class="container">
+      <ul class="footer-menu">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'download' %}">Download</a></li>
+        <li><a href="{% url 'stats' %}">Stats</a></li>
+        <li><a href="{% url 'project' %}">Our project</a></li>
+      </ul>
+      <p class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> S-TEAM   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  </p>
+    </div>
+  </footer>
+  <!-- Footer section end -->
+
+
+  <!--====== Javascripts & Jquery ======-->
+	<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'js/jquery.marquee.min.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
