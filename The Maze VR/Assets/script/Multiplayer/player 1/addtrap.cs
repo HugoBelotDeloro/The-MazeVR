@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -39,8 +40,6 @@ public class addtrap : MonoBehaviour
     
     public Canvas can;
     
-    public Text winmessage;
-    
     public List<GameObject> lamps;
 
     public GameObject Ia;
@@ -48,6 +47,10 @@ public class addtrap : MonoBehaviour
     public bool compteur;
     
     private int c;
+
+    public TextMeshProUGUI won;
+
+    public TextMeshProUGUI lost;
     
     // Start is called before the first frame update
     void Start()
@@ -136,9 +139,9 @@ public class addtrap : MonoBehaviour
             }
             health = player.GetComponent<PlayerHealth>().Health;
             send("pos:" + player.transform.position.x + ":" + player.transform.position.z);
-            if (GameObject.Find("IA(clone)" )!= null) //je crois que ya tj des majuscules a clone
+            if (GameObject.Find("IA(Clone)" )!= null) //je crois que ya tj des majuscules a clone / thx, j'avais oublié
             {
-                Ia = GameObject.Find("IA(clone");
+                Ia = GameObject.Find("IA(Clone");
                 send("IA:1:"+Ia.transform.position.x+":"+Ia.transform.position.z);
             }
             else
@@ -147,13 +150,13 @@ public class addtrap : MonoBehaviour
             }
             if (health<=0)
             {
-                winmessage.text = "DEFEAT";
+                lost.GetComponent<TextMeshProUGUI>().enabled = true;
                 send("end:2");
                 finishing();
             }
             if (win)
             {
-                winmessage.text = "VICTORY";
+                won.GetComponent<TextMeshProUGUI>().enabled = true;
                 send("end:1");
                 finishing();
             }
@@ -193,6 +196,7 @@ public class addtrap : MonoBehaviour
     public void finishing()
     {
         can.GetComponent<Canvas>().enabled = true;
+        can.GetComponent<GoToMainMenu>().enabled = true;
         playing = false;
     }
 }

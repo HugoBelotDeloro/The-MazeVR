@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,8 +51,6 @@ public class placetrap : MonoBehaviour
 
     private int trapname;
 
-    public Text win;
-
     private int compteur;
 
     private Parser p;
@@ -69,6 +68,10 @@ public class placetrap : MonoBehaviour
     public GameObject IAghost;
 
     private GameObject IAghostpos;
+
+    public TextMeshProUGUI won;
+
+    public TextMeshProUGUI lost;
     
     // Start is called before the first frame update
     void Start()
@@ -337,11 +340,11 @@ public class placetrap : MonoBehaviour
                 switch (command[2])
                 {
                     case ("1"):
-                        win.text = "DEFEAT";
+                        lost.GetComponent<TextMeshProUGUI>().enabled = true;
                         GameObject.Find("Client").GetComponent<client>().Win();
                         break;
                     case ("2"):
-                        win.text = "VICTORY";
+                        won.GetComponent<TextMeshProUGUI>().enabled = true;
                         GameObject.Find("Client").GetComponent<client>().GameOver();
                         break;
                 }
@@ -1021,5 +1024,6 @@ public class placetrap : MonoBehaviour
     public void finishing()
     {
         can.GetComponent<Canvas>().enabled = true;
+        can.GetComponent<GoToMainMenu>().enabled = true;
     }
 }

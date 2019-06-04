@@ -399,7 +399,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1611624350}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -557,7 +557,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798301098}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -704,7 +704,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Singleplayer
+  m_Text: Start
 --- !u!224 &298961620435914009
 RectTransform:
   m_ObjectHideFlags: 0
@@ -852,7 +852,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 298961622101244150}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 298961620435914009}
@@ -861,7 +861,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 449, y: 176}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &298961622101244150
@@ -1102,11 +1102,12 @@ MonoBehaviour:
   nameobject: {fileID: 3721388145299267808}
   can: {fileID: 2481604749472602384}
   Incode: 
-  win: {fileID: 0}
   energydisplay: {fileID: 1586729910}
   trapcost: {fileID: 1501345732}
   IA: {fileID: 446008828144559919, guid: a7b86d279fe6f67409a317b05c4d8c08, type: 3}
   IAghost: {fileID: 3030617598091258348, guid: cd0e9c6d7bd4a84408dbfd24e432b7c0, type: 3}
+  won: {fileID: 1798301100}
+  lost: {fileID: 1611624352}
 --- !u!114 &1993747701980530096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1211,13 +1212,26 @@ GameObject:
   - component: {fileID: 2481604749472602384}
   - component: {fileID: 2481604749472602385}
   - component: {fileID: 2481604749472602398}
+  - component: {fileID: 2481604749472602400}
   m_Layer: 5
   m_Name: Canvasend
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
+--- !u!114 &2481604749472602400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2481604749472602399}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 307e31e501f975942a49a83aa89d67e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3721388145299267808
 MonoBehaviour:
   m_ObjectHideFlags: 0
