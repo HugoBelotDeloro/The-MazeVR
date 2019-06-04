@@ -132,14 +132,14 @@ public class addtrap : MonoBehaviour
                 player.GetComponentInChildren<Inventory>().AddItem(clothes);
                 player.GetComponentInChildren<Inventory>().AddItem(compass);
                 player.GetComponentInChildren<Inventory>().AddItem(light);
-                GameObject iasp = Instantiate(IAspawner, Vector3.zero,Quaternion.identity,transform);
-                iasp.GetComponent<AIspawn>().Player = GameObject.Find("Player(Clone)");
+                //GameObject iasp = Instantiate(IAspawner, Vector3.zero,Quaternion.identity,transform);
+                //iasp.GetComponent<AIspawn>().Player = GameObject.Find("Player(Clone)");
                 lamps = parent.GetComponent<Generator>().lamps;
                 equiped = true;
             }
             health = player.GetComponent<PlayerHealth>().Health;
             send("pos:" + player.transform.position.x + ":" + player.transform.position.z);
-            if (GameObject.Find("IA(Clone)" )!= null) //je crois que ya tj des majuscules a clone / thx, j'avais oublié
+            /*if (GameObject.Find("IA(Clone)" )!= null) //je crois que ya tj des majuscules a clone / thx, j'avais oublié
             {
                 Ia = GameObject.Find("IA(Clone");
                 send("IA:1:"+Ia.transform.position.x+":"+Ia.transform.position.z);
@@ -147,7 +147,7 @@ public class addtrap : MonoBehaviour
             else
             {
                 send("IA:0");
-            }
+            }*/
             if (health<=0)
             {
                 lost.GetComponent<TextMeshProUGUI>().enabled = true;
