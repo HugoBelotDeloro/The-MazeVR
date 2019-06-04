@@ -117,6 +117,8 @@ public class addtrap : MonoBehaviour
                             c = 500;
                         }
                     }
+                    
+                    
                 }
                 break;
         }
