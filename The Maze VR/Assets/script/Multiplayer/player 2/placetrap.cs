@@ -361,7 +361,7 @@ public class placetrap : MonoBehaviour
                     }
                 }
                 break;
-            case ("IA"):
+            /*case ("IA"):
                 if (command[2] == "1")
                 {
                     if (IApos != null)
@@ -380,7 +380,7 @@ public class placetrap : MonoBehaviour
                     Destroy(IApos);
                 }
 
-                break;
+                break;*/
         }
     }
 
