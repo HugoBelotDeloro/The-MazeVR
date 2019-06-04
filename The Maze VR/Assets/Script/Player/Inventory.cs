@@ -11,6 +11,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private ItemSlot emptyItemSlot;
     [SerializeField] private ItemSlot keySlot;
     [SerializeField] private Text keyAmount;
+    [SerializeField] private Sprite emptySprite;
 
     private void Start()
     {
@@ -77,7 +78,7 @@ public class Inventory : MonoBehaviour
         if (i != maxItems)
         {
             _items[i].item = emptyItem;
-            _items[i].itemImage = emptyImage;
+            _items[i].itemImage.sprite = emptySprite;
             return true;
         }
         return false;

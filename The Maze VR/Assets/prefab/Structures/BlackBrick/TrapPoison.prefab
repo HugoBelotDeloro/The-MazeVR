@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effect: 2
-  duration: 125
-  ID: 0
+  duration: 250
+  act: 0
 --- !u!65 &8976186764560835198
 BoxCollider:
   m_ObjectHideFlags: 0

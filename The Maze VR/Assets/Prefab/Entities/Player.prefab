@@ -539,8 +539,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75ea45e2bb4ef7c46aa0bd846fb88581, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier:
+  footsteps: {fileID: 0}
   PlayerView: {fileID: 1325187586470353979}
   pauseMenu: {fileID: 4724379311327137535}
 --- !u!54 &1325187585815849333
@@ -843,6 +844,7 @@ MonoBehaviour:
     type: 3}
   keySlot: {fileID: 1751572997133027997}
   keyAmount: {fileID: 338214900746255340}
+  emptySprite: {fileID: 21300000, guid: 5a096113c4983c24f9ff969ff12bd336, type: 3}
 --- !u!1 &1325187586006315040
 GameObject:
   m_ObjectHideFlags: 0

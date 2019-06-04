@@ -1375,6 +1375,7 @@ public class Edit : MonoBehaviour
     public void finishing()
     {
         can.GetComponent<Canvas>().enabled = true;
+        can.GetComponent<GoToMainMenu>().enabled = true;
         code.text = p.mapToCode(map);
         Debug.Log(p.mapToCode(map));
     }
