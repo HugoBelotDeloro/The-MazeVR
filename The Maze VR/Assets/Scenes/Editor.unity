@@ -1796,6 +1796,7 @@ GameObject:
   - component: {fileID: 1496471755}
   - component: {fileID: 1496471754}
   - component: {fileID: 1496471753}
+  - component: {fileID: 1496471756}
   m_Layer: 5
   m_Name: StartButton
   m_TagString: Untagged
@@ -1865,7 +1866,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1496471754}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1496471756}
+        m_MethodName: click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, Unity.ugui, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1496471754
@@ -1906,6 +1918,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1496471751}
   m_CullTransparentMesh: 0
+--- !u!114 &1496471756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1496471751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 722089cc8b7df4747833862611013339, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 2087891581}
+  canvas: {fileID: 2138222434}
+  I1: {fileID: 792896073}
+  I2: {fileID: 1949550375}
+  H: 0
+  L: 0
+  create: 0
+  I3: {fileID: 1716792754}
+  code: 
+  ok: 0
 --- !u!1 &1610756292
 GameObject:
   m_ObjectHideFlags: 0
@@ -2644,7 +2678,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2087891583}
-  - component: {fileID: 2087891582}
   - component: {fileID: 2087891584}
   - component: {fileID: 2087891585}
   m_Layer: 0
@@ -2654,29 +2687,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2087891582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2087891581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 722089cc8b7df4747833862611013339, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parent: {fileID: 2087891581}
-  valid: {fileID: 1496471753}
-  activated: 0
-  canvas: {fileID: 2138222434}
-  I1: {fileID: 792896073}
-  I2: {fileID: 1949550375}
-  H: 0
-  L: 0
-  create: 0
-  I3: {fileID: 1716792754}
-  code: 
 --- !u!4 &2087891583
 Transform:
   m_ObjectHideFlags: 0
@@ -2704,7 +2714,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1759c9be8edcb354998d6efec70c15df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 2087891581}
+  parent: {fileID: 1496471751}
   P:
   - prefab: {fileID: 5227186979417502374, guid: 3d66a83b340133743ab3c44fa4eff36e,
       type: 3}

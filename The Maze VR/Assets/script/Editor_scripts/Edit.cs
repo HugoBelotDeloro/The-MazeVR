@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 public class Edit : MonoBehaviour
 {
-    public GameObject parent;
+    [SerializeField] private GameObject parent;
 
     public int[,] map;
 
@@ -366,7 +366,7 @@ public class Edit : MonoBehaviour
                     Destroy(currentgameobjectprefab);
                     Destroy(cursorprefab);
                     finished = true;
-                    done = true;
+                    placing = false;
                 }
             }
             if (Input.GetKeyDown(KeyCode.KeypadPlus))
