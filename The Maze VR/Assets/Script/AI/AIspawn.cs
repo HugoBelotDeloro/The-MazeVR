@@ -18,6 +18,7 @@ public class AIspawn : MonoBehaviour
     void Start()
     {
         timer = starttime;
+        AI.GetComponent<AIMove>().target = Player;
     }
 
     // Update is called once per frame
@@ -28,7 +29,7 @@ public class AIspawn : MonoBehaviour
         {   
             timer = starttime; //reset timer
             starttime *= incr_timer; //decrease
-            if (GameObject.Find("AI(Clone)") == null)
+            if (!AI.activeSelf)
             {
                 spawn(20, 40);
                 Debug.Log("AI spawned!");
@@ -46,17 +47,17 @@ public class AIspawn : MonoBehaviour
         Vector3 position;
         if (Random.Range(0, 10) > 5)
         {
-            position = new Vector3(Player.transform.position.x + Random.Range(minrange, startrange), (float)1.5 +transform.position.y, Player.transform.position.z + Random.Range(minrange, startrange));
+            position = new Vector3(Player.transform.position.x + Random.Range(minrange, startrange), (float) transform.position.y, Player.transform.position.z + Random.Range(minrange, startrange));
         }
         else
         {
-            position = new Vector3(Player.transform.position.x + Random.Range(-minrange, -startrange), (float)1.5 +transform.position.y, Player.transform.position.z + Random.Range(-minrange, -startrange));
+            position = new Vector3(Player.transform.position.x + Random.Range(-minrange, -startrange), (float)transform.position.y, Player.transform.position.z + Random.Range(-minrange, -startrange));
         }
-        var ai = Instantiate(AI, position, Quaternion.identity) as GameObject;
-        ai.GetComponent<AIMove>().target = Player;
-        ai.GetComponent<NavMeshAgent>().speed = startspeed;
-        ai.GetComponent<AIMove>().life = startlife;
-        ai.GetComponent<animations>().Player = Player;
+        AI.SetActive(true);
+        AI.transform.position = position;
+        AI.GetComponent<NavMeshAgent>().speed = startspeed;
+        AI.GetComponent<AIMove>().life = startlife;
+        AI.GetComponent<animations>().Player = Player;
         startspeed *= incr_speed;
         startlife *= incr_life;
     }

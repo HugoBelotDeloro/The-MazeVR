@@ -23,7 +23,7 @@ public class AIMove : MonoBehaviour
         life -= Time.deltaTime;
         if (life <= 0)
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
             Debug.Log("AI died");
         }
     }
