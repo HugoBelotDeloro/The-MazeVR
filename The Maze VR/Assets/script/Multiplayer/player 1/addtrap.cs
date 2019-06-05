@@ -178,7 +178,7 @@ public class addtrap : MonoBehaviour
                 (ListPrefab, int) piaij = listpieges[i];
                 piaij.Item2 -= 1;
                 listpieges[i] = piaij;
-                Debug.Log(piaij.Item2);
+                //Debug.Log(piaij.Item2);
                 if (piaij.Item2 <= 0)
                 {
                     listpieges[i].Item1.prefab.GetComponent<Trap>().act = true;

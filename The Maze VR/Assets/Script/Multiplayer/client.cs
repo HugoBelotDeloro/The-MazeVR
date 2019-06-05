@@ -7,7 +7,6 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class client : MonoBehaviour
@@ -19,6 +18,8 @@ public class client : MonoBehaviour
     private List<string> players; //all players looking for a game
     private int gameID;
     private bool ingame;
+    private GameManager _gameManager = GameManager.Instance;
+    
     void Start()
     {
         DontDestroyOnLoad(gameObject); //keep the client object (in menus ans ingame)
@@ -51,19 +52,19 @@ public class client : MonoBehaviour
 
     public void login(string password, string username)
     {
-        Debug.Log("attempting to log in as " + username);
+        //Debug.Log("attempting to log in as " + username);
         message("log:" + username + ":" + password);
     }
 
     void OnMessageReceived(NetworkMessage netMessage)
     {
         string message = netMessage.reader.ReadString();
-        Debug.Log(me+": message received: " + message);
+        //Debug.Log(me+": message received: " + message);
         string[] evt = message.Split(':');
         switch (evt[0])
         {
            case "suc": //login success
-                Debug.Log("authentification successfull");
+                //Debug.Log("authentification successfull");
                 //login successfull
                 sayready(true);
                 if (S == "CTRL") //get ctrl players if ur playing vr
@@ -75,11 +76,11 @@ public class client : MonoBehaviour
                     getCTRLplist();
                 }
                 Thread.Sleep(1000);
-                SceneManager.LoadScene("lobby", LoadSceneMode.Single); //get to lobby
+                _gameManager.SwitchScenes("lobby");//get to lobby
 
                 break;
             case "fai":
-                Debug.Log("authentification failed");
+                //Debug.Log("authentification failed");
                 //login failed
                 break;  
             case "pl":
@@ -99,11 +100,11 @@ public class client : MonoBehaviour
                 // GameCmd("salut"); //test
                 if (S == "VR")
                 {
-                    SceneManager.LoadScene("multi J1", LoadSceneMode.Single);
+                    _gameManager.SwitchScenes("multi J1");
                 }
                 else
                 {
-                    SceneManager.LoadScene("multi J2", LoadSceneMode.Single);
+                    _gameManager.SwitchScenes("multi J2");
                 }
 
                 break;
@@ -114,11 +115,11 @@ public class client : MonoBehaviour
                 //Debug.Log(evt[1]);
                 break;
             case "connected":
-                Debug.Log("connection successfull");
+                //Debug.Log("connection successfull");
                 //this.message("startgame:"+S);                
                 break;
             case "cta":
-                Debug.Log(evt[1] + " wants to play");
+                //Debug.Log(evt[1] + " wants to play");
                 //To do: accept or decline
                 var pu = GameObject.Find("popupfinder").GetComponent<storeobject>().stored;
                 if (pu != null)
@@ -137,7 +138,7 @@ public class client : MonoBehaviour
     public void ask(string pseudo)
     {
         message("ask:"+S+":"+pseudo);
-        Debug.Log("asking if " + pseudo + "wants to play");
+        //Debug.Log("asking if " + pseudo + "wants to play");
     }
     void GameAction(string cmd)
     {
@@ -155,12 +156,12 @@ public class client : MonoBehaviour
     {
         if (pseudo==null)
         {
-            Debug.Log("This client does not exist"); //pbly useless with the interface, will be deleted
+            //Debug.Log("This client does not exist"); //pbly useless with the interface, will be deleted
         }
         else
         {
 
-            Debug.Log("connectin with " + pseudo);
+            //Debug.Log("connectin with " + pseudo);
             message("connectto:" + S + ":" + pseudo); //attempt to connect with CTRLplayer
         }
     }
@@ -184,13 +185,13 @@ public class client : MonoBehaviour
     public void GameOver()
     {
         message("go:" + gameID);
-        Debug.Log(me + ": game has ended");
+        //Debug.Log(me + ": game has ended");
     }
 
     public void Win()
     {
         message("win:" + gameID);
-        Debug.Log(me + ": won the game");
+        //Debug.Log(me + ": won the game");
 
     }
     void sayready(bool rdy) //become visible to ther players, and see them
@@ -198,13 +199,13 @@ public class client : MonoBehaviour
         if (rdy)
         {
             message("ready:"+S+":"+me);
-            Debug.Log(me+": visible by other players as " + me);
+            //Debug.Log(me+": visible by other players as " + me);
             ingame = true;
         }
         else
         {
             message("notready:" + S + ":" + me);
-            Debug.Log(me+": not visible anymore");
+            //Debug.Log(me+": not visible anymore");
             ingame = true;
         }
     }
@@ -217,7 +218,7 @@ public class client : MonoBehaviour
 
     public void OnConnected(NetworkMessage netMsg)
     {
-        Debug.Log(me+": Connected to server");
+        //Debug.Log(me+": Connected to server");
 
     }
 
