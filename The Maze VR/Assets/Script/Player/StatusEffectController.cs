@@ -5,17 +5,17 @@ public class StatusEffectController : MonoBehaviour
 {
     List<StatusEffect> statusEffects;
 
-    [SerializeField] PlayerHealth health;
-    [SerializeField] PlayerMovement movement;
-    [SerializeField] Light lamp;
-    [SerializeField] Equipment equipment;
+    [SerializeField] private PlayerHealth health;
+    [SerializeField] private PlayerMovement movement;
+    [SerializeField] private Light lamp;
+    [SerializeField] private Equipment equipment;
 
     private void Start()
     {
         statusEffects = new List<StatusEffect>();
-        StatusEffectToGenerator.Add(StatusEffects.POISON, PoisonCreator);
-        StatusEffectToGenerator.Add(StatusEffects.SLOW, SlowCreator);
-        StatusEffectToGenerator.Add(StatusEffects.POWEROFF, PowerOffCreator);
+        StatusEffectToGenerator[StatusEffects.POISON] = PoisonCreator;
+        StatusEffectToGenerator[StatusEffects.POWEROFF] = PowerOffCreator;
+        StatusEffectToGenerator[StatusEffects.SLOW] = SlowCreator;
     }
 
     public void AddStatusEffect(StatusEffects type, int duration)
