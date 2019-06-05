@@ -31,7 +31,7 @@ public class AIspawn : MonoBehaviour
             starttime *= incr_timer; //decrease
             if (!AI.activeSelf)
             {
-                spawn(20, 40);
+                spawn(50, 70);
                 Debug.Log("AI spawned!");
             }
             else
