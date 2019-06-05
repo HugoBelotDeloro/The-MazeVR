@@ -22,6 +22,8 @@ public class DoorActivate : MonoBehaviour
     void Update()
     {
         player = GameObject.Find("Player(Clone)");
+        if (player == null)
+            player = GameObject.Find("Player");
         pc = player.GetComponent<PlayerCursor>();
         if (pc.LookingGameObject == trigger)
         {
