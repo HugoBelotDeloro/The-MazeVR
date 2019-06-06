@@ -175,19 +175,22 @@ public class addtrap : MonoBehaviour
             }
             for (int i = 0; i < listpieges.Count; i++)
             {
-                (ListPrefab, int) piaij = listpieges[i];
-                piaij.Item2 -= 1;
-                listpieges[i] = piaij;
-                Debug.Log(piaij.Item2);
-                if (piaij.Item2 <= 0)
-                {
-                    listpieges[i].Item1.prefab.GetComponent<Trap>().act = true;
-                }
                 if (listpieges[i].Item1.prefab.GetComponent<Trap>().act)
                 {
                     Destroy(listpieges[i].Item1.prefab);
                     send("act:"+listpieges[i].Item1.name);
                     listpieges.Remove(listpieges[i]);
+                }
+                else
+                {
+                    (ListPrefab, int) piaij = listpieges[i];
+                    piaij.Item2 -= 1;
+                    listpieges[i] = piaij;
+                    Debug.Log(piaij.Item2);
+                    if (piaij.Item2 <= 0)
+                    {
+                        listpieges[i].Item1.prefab.GetComponent<Trap>().act = true;
+                    }
                 }
             }
         }
