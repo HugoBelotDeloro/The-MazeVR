@@ -10,17 +10,17 @@ public class Edit : MonoBehaviour
 {
     [SerializeField] private GameObject parent;
 
-    public int[,] map;
+    private int[,] map;
 
     private GameObject[,] mapgo;
 
-    public ListPrefab[] P;
+    [SerializeField] private ListPrefab[] P;
 
-    public int currentobject = 1;
+    private int currentobject = 1;
 
-    public int posX = 0;
+    private int posX = 0;
 
-    public int posY = 0;
+    private int posY = 0;
 
     private ConsoleKey c;
 
@@ -36,25 +36,25 @@ public class Edit : MonoBehaviour
 
     private bool finished;
 
-    public Color prefabcolor;
+    private Color prefabcolor;
 
-    public List<Color> prefabcolorlist;
+    private List<Color> prefabcolorlist;
 
-    public GameObject cursor;
+    [SerializeField] private GameObject cursor;
 
     private GameObject cursorprefab;
 
-    public Text nameobject;
+    [SerializeField] private Text nameobject;
     
     private Parser p = new Parser();
 
-    public InputField code;
+    [SerializeField] private InputField code;
 
-    public Canvas can;
+    [SerializeField] private Canvas can;
 
-    public bool creating;
+    private bool creating;
 
-    public string Incode;
+    private string Incode;
 
     private bool player;
 
