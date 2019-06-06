@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
@@ -51,6 +52,8 @@ public class addtrap : MonoBehaviour
     public TextMeshProUGUI won;
 
     public TextMeshProUGUI lost;
+
+    private List<(string,int)> trapwait;
     
     // Start is called before the first frame update
     void Start()
@@ -84,39 +87,7 @@ public class addtrap : MonoBehaviour
             case ("pi"):
                 if (created)
                 {
-                    for (int i = 0; i < P.Length; i++)
-                    {
-                        if (i == Convert.ToInt32(command[2]))
-                        {
-                            if (i == 3)
-                            {
-                                v = new Vector3(2 * Convert.ToInt32(command[4]) + transform.position.x,2.5f + transform.position.y,2 * Convert.ToInt32(command[3]) + transform.position.z);
-                                if (command[6]=="n")
-                                    g = Instantiate(P[i].prefab, v, Quaternion.identity, transform);
-                                else
-                                    g = Instantiate(P[i].prefab, v, Quaternion.Euler(0, 90, 0), transform);
-                                listpieges.Add((new ListPrefab(g, command[5]), 750));
-                            }
-                            else
-                            {
-                                v = new Vector3(2 * Convert.ToInt32(command[4]) + transform.position.x,0.5f + transform.position.y,2 * Convert.ToInt32(command[3]) + transform.position.z);
-                                g = Instantiate(P[i].prefab, v, Quaternion.Euler(-90, 0, 0), transform);
-                                listpieges.Add((new ListPrefab(g, command[5]), 750));
-                            }
-                        }
-                    }
-                    if (Convert.ToInt32(command[2]) == P.Length)
-                    {
-                        if (!compteur)
-                        {
-                            foreach (GameObject lamp in lamps)
-                            {
-                                lamp.GetComponent<Switch>().switching();
-                            }
-                            compteur = true;
-                            c = 500;
-                        }
-                    }
+                    trapwait.Add((s,250));
                 }
                 break;
         }
@@ -191,6 +162,53 @@ public class addtrap : MonoBehaviour
                     {
                         listpieges[i].Item1.prefab.GetComponent<Trap>().act = true;
                     }
+                }
+            }
+            for (int j = 0; j < trapwait.Count; j++)
+            {
+                Vector3 v;
+                string[] command = trapwait[j].Item1.Split(':');
+                if (trapwait[j].Item2 <= 0)
+                {
+                    for (int i = 0; i < P.Length; i++)
+                    {
+                        if (i == Convert.ToInt32(command[2]))
+                        {
+                            if (i == 3)
+                            {
+                                v = new Vector3(2 * Convert.ToInt32(command[4]) + transform.position.x,2.5f + transform.position.y,2 * Convert.ToInt32(command[3]) + transform.position.z);
+                                if (command[6]=="n")
+                                    g = Instantiate(P[i].prefab, v, Quaternion.identity, transform);
+                                else
+                                    g = Instantiate(P[i].prefab, v, Quaternion.Euler(0, 90, 0), transform);
+                                listpieges.Add((new ListPrefab(g, command[5]), 750));
+                            }
+                            else
+                            {
+                                v = new Vector3(2 * Convert.ToInt32(command[4]) + transform.position.x,0.5f + transform.position.y,2 * Convert.ToInt32(command[3]) + transform.position.z);
+                                g = Instantiate(P[i].prefab, v, Quaternion.Euler(-90, 0, 0), transform);
+                                listpieges.Add((new ListPrefab(g, command[5]), 750));
+                            }
+                        }
+                    }
+                    if (Convert.ToInt32(command[2]) == P.Length)
+                    {
+                        if (!compteur)
+                        {
+                            foreach (GameObject lamp in lamps)
+                            {
+                                lamp.GetComponent<Switch>().switching();
+                            }
+                            compteur = true;
+                            c = 500;
+                        }
+                    }
+                }
+                else
+                {
+                    int n = trapwait[j].Item2;
+                    n--;
+                    trapwait[j] = (trapwait[j].Item1, n);
                 }
             }
         }

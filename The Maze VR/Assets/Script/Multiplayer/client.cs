@@ -77,8 +77,8 @@ public class client : MonoBehaviour
                     getCTRLplist();
                 }
                 Thread.Sleep(1000);
-                //_gameManager.SwitchScenes("lobby");//get to lobby
-                SceneManager.LoadScene("lobby", LoadSceneMode.Single);//TODO
+                _gameManager.SwitchScenes("lobby");//get to lobby
+                //SceneManager.LoadScene("lobby", LoadSceneMode.Single);//TODO
 
                 break;
             case "fai":
@@ -102,13 +102,13 @@ public class client : MonoBehaviour
                 // GameCmd("salut"); //test
                 if (S == "VR")
                 {
-                    //_gameManager.SwitchScenes("multi J1");
-                    SceneManager.LoadScene("multi J1", LoadSceneMode.Single);//TODO
+                    _gameManager.SwitchScenes("multi J1");
+                    //SceneManager.LoadScene("multi J1", LoadSceneMode.Single);//TODO
                 }
                 else
                 {
-                    //_gameManager.SwitchScenes("multi J2");
-                    SceneManager.LoadScene("multi J2", LoadSceneMode.Single);//TODO
+                    _gameManager.SwitchScenes("multi J2");
+                    //SceneManager.LoadScene("multi J2", LoadSceneMode.Single);//TODO
                 }
 
                 break;
