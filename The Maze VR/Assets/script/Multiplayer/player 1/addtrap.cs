@@ -66,6 +66,7 @@ public class addtrap : MonoBehaviour
         playing = true;
         c = 0;
         compteur = false;
+        trapwait = new List<(string, int)>();
     }
 
     public void send(string s)
@@ -88,6 +89,7 @@ public class addtrap : MonoBehaviour
                 if (created)
                 {
                     trapwait.Add((s,250));
+                    Debug.Log("trap added");
                 }
                 break;
         }
@@ -181,7 +183,6 @@ public class addtrap : MonoBehaviour
                                     g = Instantiate(P[i].prefab, v, Quaternion.identity, transform);
                                 else
                                     g = Instantiate(P[i].prefab, v, Quaternion.Euler(0, 90, 0), transform);
-                                listpieges.Add((new ListPrefab(g, command[5]), 750));
                             }
                             else
                             {
@@ -203,6 +204,7 @@ public class addtrap : MonoBehaviour
                             c = 500;
                         }
                     }
+                    trapwait.Remove(trapwait[j]);
                 }
                 else
                 {
