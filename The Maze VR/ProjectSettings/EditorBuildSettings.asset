@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/multi J2.unity
     guid: 1da829ba33cf01345bef78f05b1dd755
+  - enabled: 1
+    path: Assets/Scenes/Editor.unity
+    guid: b72466856bd4f7f49828c827e3658b35
   m_configObjects: {}

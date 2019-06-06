@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -717,6 +717,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 629799236}
     m_Modifications:
+    - target: {fileID: 411886432650965351, guid: 6028620ed19ccba4f82c7a57ff788439,
+        type: 3}
+      propertyPath: m_Name
+      value: OptionsPanel
+      objectReference: {fileID: 0}
     - target: {fileID: 411886432650965350, guid: 6028620ed19ccba4f82c7a57ff788439,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -821,11 +826,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 411886432650965351, guid: 6028620ed19ccba4f82c7a57ff788439,
-        type: 3}
-      propertyPath: m_Name
-      value: OptionsPanel
       objectReference: {fileID: 0}
     - target: {fileID: 615294664190663064, guid: 6028620ed19ccba4f82c7a57ff788439,
         type: 3}
@@ -1810,6 +1810,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2104040070}
     m_Modifications:
+    - target: {fileID: 411886432650965351, guid: 6028620ed19ccba4f82c7a57ff788439,
+        type: 3}
+      propertyPath: m_Name
+      value: OptionsPanel
+      objectReference: {fileID: 0}
     - target: {fileID: 411886432650965350, guid: 6028620ed19ccba4f82c7a57ff788439,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1914,11 +1919,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 411886432650965351, guid: 6028620ed19ccba4f82c7a57ff788439,
-        type: 3}
-      propertyPath: m_Name
-      value: OptionsPanel
       objectReference: {fileID: 0}
     - target: {fileID: 615294664190663064, guid: 6028620ed19ccba4f82c7a57ff788439,
         type: 3}

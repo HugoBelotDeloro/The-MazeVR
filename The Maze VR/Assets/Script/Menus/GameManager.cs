@@ -52,6 +52,12 @@ public class GameManager : MonoBehaviour
         return SceneManager.UnloadSceneAsync(sceneName);
     }
 
+    public void SwitchScenes(string sceneName)
+    {
+        UnloadScene(mainScene);
+        LoadScene(sceneName);
+    }
+
     private IEnumerator Unload(string scene)
     {
         yield return null;

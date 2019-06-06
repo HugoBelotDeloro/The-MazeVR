@@ -7,17 +7,13 @@ using UnityEngine.UI;
 
 public class Begin : MonoBehaviour
 {
-    public GameObject parent;
+    [SerializeField] private GameObject parent;
 
-    public Button valid;
+    [SerializeField] private Canvas canvas;
 
-    public bool activated = false;
+    [SerializeField] private InputField I1;
 
-    public Canvas canvas;
-
-    public InputField I1;
-
-    public InputField I2;
+    [SerializeField] private InputField I2;
 
     public int H;
 
@@ -25,53 +21,47 @@ public class Begin : MonoBehaviour
 
     public bool create;
 
-    public InputField I3;
+    [SerializeField] private InputField I3;
 
     public string code;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        StartCoroutine(Begining());
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        valid.onClick.AddListener(OnClickThing);
-    }
+    [SerializeField] private bool ok;
 
-    IEnumerator Begining()
+    public void click()
     {
-        while (!activated)
+        try
         {
-            yield return new WaitUntil((() => activated));
-            try
+            ok = true;
+            code = I3.text;
+            if (code != "")
+                create = false;
+            else
             {
-                code = I3.text;
-                if (code != "")
-                    create = false;
-                else
-                {
-                    L = Convert.ToInt32(I1.text);
-                    H = Convert.ToInt32(I2.text);
+                L = Convert.ToInt32(I1.text);
+                H = Convert.ToInt32(I2.text);
+                if (L*H>=2)
                     create = true;
-                }
+                else
+                    ok = false;
+            }
+            if (ok)
+            {
                 parent.GetComponentInChildren<Move>().activated = true;
                 canvas.GetComponent<Canvas>().enabled = false;
                 parent.GetComponent<Edit>().enabled = true;
             }
-            catch (Exception)
+            else
             {
-                OnClickThing();
                 I1.text = "";
                 I2.text = "";
+                I3.text = "";
             }
         }
-    }
-    
-    void OnClickThing()
-    {
-        activated = !activated;
+        catch (Exception)
+        {
+            I1.text = "";
+            I2.text = "";
+            I3.text = "";
+        }
     }
 }

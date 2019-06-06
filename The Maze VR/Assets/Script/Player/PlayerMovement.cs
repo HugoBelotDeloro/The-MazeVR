@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private int _timer;
     [SerializeField] private GameObject pauseMenu;
     private float speed = 1;
+    public Canvas end;
 
     public float GetSpeed()
     {

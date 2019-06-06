@@ -884,11 +884,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1813556134}
     m_Modifications:
-    - target: {fileID: 954384596463482511, guid: 50c5aaa052bb02c4f8bb9fb23776ce51,
-        type: 3}
-      propertyPath: m_Name
-      value: CtrlButton
-      objectReference: {fileID: 0}
     - target: {fileID: 954384596463482508, guid: 50c5aaa052bb02c4f8bb9fb23776ce51,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -994,6 +989,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 954384596463482511, guid: 50c5aaa052bb02c4f8bb9fb23776ce51,
+        type: 3}
+      propertyPath: m_Name
+      value: CtrlButton
+      objectReference: {fileID: 0}
     - target: {fileID: 954384594899043169, guid: 50c5aaa052bb02c4f8bb9fb23776ce51,
         type: 3}
       propertyPath: m_Text
@@ -1073,7 +1073,6 @@ GameObject:
   - component: {fileID: 1597891950}
   - component: {fileID: 1597891949}
   - component: {fileID: 1597891948}
-  - component: {fileID: 1597891951}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1146,20 +1145,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1597891951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1597891947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de669a8146def6b4d94bd66d1049312f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameManager: {fileID: 6433430612421892827, guid: 3639424686ed6ae47ae936332575f9df,
-    type: 3}
 --- !u!1 &1782458553
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,11 +1577,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1813556134}
     m_Modifications:
-    - target: {fileID: 954384596463482511, guid: 50c5aaa052bb02c4f8bb9fb23776ce51,
-        type: 3}
-      propertyPath: m_Name
-      value: VRButton
-      objectReference: {fileID: 0}
     - target: {fileID: 954384596463482508, guid: 50c5aaa052bb02c4f8bb9fb23776ce51,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1701,6 +1681,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 954384596463482511, guid: 50c5aaa052bb02c4f8bb9fb23776ce51,
+        type: 3}
+      propertyPath: m_Name
+      value: VRButton
       objectReference: {fileID: 0}
     - target: {fileID: 954384594899043169, guid: 50c5aaa052bb02c4f8bb9fb23776ce51,
         type: 3}
@@ -1922,11 +1907,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2104040070}
     m_Modifications:
-    - target: {fileID: 411886432650965351, guid: 6028620ed19ccba4f82c7a57ff788439,
-        type: 3}
-      propertyPath: m_Name
-      value: OptionsPanel
-      objectReference: {fileID: 0}
     - target: {fileID: 411886432650965350, guid: 6028620ed19ccba4f82c7a57ff788439,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2031,6 +2011,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 411886432650965351, guid: 6028620ed19ccba4f82c7a57ff788439,
+        type: 3}
+      propertyPath: m_Name
+      value: OptionsPanel
       objectReference: {fileID: 0}
     - target: {fileID: 615294664190663064, guid: 6028620ed19ccba4f82c7a57ff788439,
         type: 3}

@@ -390,7 +390,7 @@ PrefabInstance:
     - target: {fileID: 954384594899043169, guid: 50c5aaa052bb02c4f8bb9fb23776ce51,
         type: 3}
       propertyPath: m_Text
-      value: Edit
+      value: Editor
       objectReference: {fileID: 0}
     - target: {fileID: 954384596463482509, guid: 50c5aaa052bb02c4f8bb9fb23776ce51,
         type: 3}
