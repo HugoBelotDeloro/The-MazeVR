@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -78,15 +79,12 @@ public class GameManager : MonoBehaviour
 
     public void ResetScene()
     {
-        string[] activeScenes = ActiveScenes.ToArray();
-        foreach (string scene in activeScenes)
+        foreach (string scene in ActiveScenes)
         {
-            SceneManager.UnloadSceneAsync(scene);
+            SceneManager.UnloadScene(scene);
         }
-        foreach (string scene in activeScenes)
-        {
-            SceneManager.LoadScene(scene, LoadSceneMode.Additive);
-        }
+        ActiveScenes = new List<string>();
+        LoadScene(mainScene);
     }
 
     public void LoadMainMenu()
