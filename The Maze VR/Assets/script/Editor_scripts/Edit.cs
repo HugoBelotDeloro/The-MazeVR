@@ -70,6 +70,7 @@ public class Edit : MonoBehaviour
         Incode = begin.code;
         player = false;
         Goal = false;
+        prefabcolorlist = new List<Color>();
         if (creating)
         {
             map = new int[begin.H * 2 + 1, begin.L * 2 + 1];

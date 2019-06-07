@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,6 +10,12 @@ public class GameManager : MonoBehaviour
     public string mainScene;
     public List<string> ActiveScenes = new List<string>();
 
+    private void SetMainScene(string scene)
+    {
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(scene));
+        mainScene = scene;
+    }
+    
     private void Awake()
     {
         if (Instance != null)
@@ -17,18 +24,20 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             LoadScene("MainMenu");
-            mainScene = "MainMenu";
         }
     }
 
     public void LoadScene(string scene)
     {
-        SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
+        StartCoroutine(LoadSceneAsync(scene));
         ActiveScenes.Add(scene);
-        if (mainScene is null)
-        {
-            mainScene = scene;
-        }
+    }
+
+    private IEnumerator LoadSceneAsync(string scene)
+    {
+        AsyncOperation loading = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
+        yield return new WaitUntil(() => loading.isDone);
+        SetMainScene(scene);
     }
     
     public void UnloadScene(string scene)
@@ -70,15 +79,12 @@ public class GameManager : MonoBehaviour
 
     public void ResetScene()
     {
-        string[] activeScenes = ActiveScenes.ToArray();
-        foreach (string scene in activeScenes)
+        foreach (string scene in ActiveScenes)
         {
-            SceneManager.UnloadSceneAsync(scene);
+            SceneManager.UnloadScene(scene);
         }
-        foreach (string scene in activeScenes)
-        {
-            SceneManager.LoadScene(scene, LoadSceneMode.Additive);
-        }
+        ActiveScenes = new List<string>();
+        LoadScene(mainScene);
     }
 
     public void LoadMainMenu()
