@@ -14,7 +14,7 @@ mysql-connector-python==8.0.16
 numpy==1.16.1
 protobuf==3.6.1
 pytz==2019.1
-PyYAML==3.13
+PyYAML==5.4
 pyzmq==18.0.1
 scipy==1.2.0
 six==1.12.0
