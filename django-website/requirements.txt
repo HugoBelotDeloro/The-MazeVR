@@ -1,6 +1,6 @@
 absl-py==0.7.0
 astor==0.7.1
-Django==2.2.1
+Django==2.2.24
 django-crispy-forms==1.7.2
 django-template-debug==0.3.5
 gast==0.2.2
